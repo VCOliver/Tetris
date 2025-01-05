@@ -14,6 +14,9 @@ set(CMAKE_CXX_EXTENSIONS ON)
 # Include directories
 include_directories(include)
 
+# Find SDL2 package
+find_package(SDL2 REQUIRED)
+
 # Source files
 set(SOURCES
     src/main.cpp
@@ -22,4 +25,10 @@ set(SOURCES
 
 # Add the executables
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Include SDL2 headers
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
+
+# Link SDL2 library
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
 
