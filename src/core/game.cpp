@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "core/game.hpp"
-#include "components/renderComponents.hpp"
 
 Game::Game(int w, int h) : width(w), height(h){}
 
@@ -37,6 +36,9 @@ void Game::init(){
         SDL_Quit();
         exit(1);
     }
+
+    renderSystem = new RenderSystem(renderer);
+
 }
 
 void Game::run(){
@@ -48,30 +50,18 @@ void Game::run(){
             }
         }
 
-        // Limpar a tela
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Cor preta para o fundo
-        SDL_RenderClear(renderer);
+        renderSystem->setBackground();
+
+        auto block1 = std::make_shared<Block>(Position{0, 0});
+        auto block2 = std::make_shared<Block>(Position{1, 0});
 
         // Definir cor para o quadrado
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Cor vermelha
 
-        // Definir o retângulo (quadrado)
-        SDL_Rect square = { 0, 0, 20, 20 }; // x, y, largura, altura
+        renderSystem->addRenderComponent(block1);
+        renderSystem->addRenderComponent(block2);
 
-        // Desenhar o quadrado (bordas)
-        SDL_RenderDrawRect(renderer, &square);
-
-        // Preencher o quadrado (opcional)
-        SDL_RenderFillRect(renderer, &square);
-
-        // Definir o retângulo (quadrado)
-        square = { 20, 0, 20, 20 }; // x, y, largura, altura
-
-        // Desenhar o quadrado (bordas)
-        SDL_RenderDrawRect(renderer, &square);
-
-        // Preencher o quadrado (opcional)
-        SDL_RenderFillRect(renderer, &square);
+        renderSystem->render();
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);
@@ -79,7 +69,8 @@ void Game::run(){
 }
 
 void Game::close(){
-        // Clean up
+    // Clean up
+    delete renderSystem;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

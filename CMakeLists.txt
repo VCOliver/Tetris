@@ -23,6 +23,7 @@ set(SOURCES
     src/core/game.cpp
     src/utils/position.cpp
     src/components/renderComponents.cpp
+    src/systems/renderSystem.cpp
 )
 
 # Add the executables
