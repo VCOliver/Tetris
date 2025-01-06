@@ -1,5 +1,7 @@
-#include "core/game.hpp"
 #include <iostream>
+
+#include "core/game.hpp"
+#include "components/renderComponents.hpp"
 
 Game::Game(int w, int h) : width(w), height(h){}
 
@@ -14,8 +16,8 @@ void Game::init(){
         "SDL2 Tutorial",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        800,
-        600,
+        width,
+        height,
         SDL_WINDOW_SHOWN
     );
 
@@ -38,6 +40,7 @@ void Game::init(){
 }
 
 void Game::run(){
+
     while(true){
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -53,7 +56,16 @@ void Game::run(){
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Cor vermelha
 
         // Definir o retângulo (quadrado)
-        SDL_Rect square = { 300, 200, 20, 20 }; // x, y, largura, altura
+        SDL_Rect square = { 0, 0, 20, 20 }; // x, y, largura, altura
+
+        // Desenhar o quadrado (bordas)
+        SDL_RenderDrawRect(renderer, &square);
+
+        // Preencher o quadrado (opcional)
+        SDL_RenderFillRect(renderer, &square);
+
+        // Definir o retângulo (quadrado)
+        square = { 20, 0, 20, 20 }; // x, y, largura, altura
 
         // Desenhar o quadrado (bordas)
         SDL_RenderDrawRect(renderer, &square);

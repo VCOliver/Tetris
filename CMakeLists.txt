@@ -4,7 +4,7 @@
 # -------------------------------------------------------------------
 
 cmake_minimum_required(VERSION 3.25.1)
-project(tetris VERSION 0.0.1 LANGUAGES CXX)
+project(tetris VERSION 0.0.2 LANGUAGES CXX)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -21,6 +21,8 @@ find_package(SDL2 REQUIRED)
 set(SOURCES
     src/main.cpp
     src/core/game.cpp
+    src/utils/position.cpp
+    src/components/renderComponents.cpp
 )
 
 # Add the executables
@@ -31,4 +33,3 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 
 # Link SDL2 library
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
-
