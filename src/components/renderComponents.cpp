@@ -3,6 +3,28 @@
 #include "components/renderComponents.hpp"
 #include "utils/colors.hpp"
 
+BorderLine::BorderLine(Position start_pos, int thickness)
+    : thickness(thickness){
+    Position p = start_pos.getRealPosition();
+    this->lines[0] = {p.x, p.y, thickness, STD_BLOCK_H};
+    this->lines[1] = {p.x, p.y, STD_BLOCK_W, thickness};
+}
+
+void BorderLine::render(SDL_Renderer* renderer) const {
+    Color color = Colors::WHITE;
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // Enable blending mode
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
+
+    // Draw upper border lines
+    SDL_RenderDrawRect(renderer, &lines[0]);
+    SDL_RenderFillRect(renderer, &lines[0]);
+    SDL_RenderDrawRect(renderer, &lines[1]);
+    SDL_RenderFillRect(renderer, &lines[1]);
+
+    // Deactivate blending mode
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+}
+
 Block::Block(Position pos, int w, int h, int alpha)
             : pos(pos), width(w), height(h){
     if(alpha > 255 || alpha < 0){
@@ -11,29 +33,27 @@ Block::Block(Position pos, int w, int h, int alpha)
     }
 
     this->alpha = alpha;
+
+    border = new BorderLine(pos);
+}
+
+Block::~Block(){
+    delete border;
 }
 
 void Block::render(SDL_Renderer* renderer) const {
-    int x = this->pos.x * 20;
-    int y = this->pos.y * 20;
+    Position p = this->pos.getRealPosition();
     int h = this->height;
     int w = this->width;
 
-    // Definir o retângulo (quadrado)
-    SDL_Rect square = { x, y, w, h }; // x, y, largura, altura
+    SDL_Rect square = { p.x, p.y, w, h }; // x, y, width, height
 
-    // Desenhar o quadrado (bordas)
+    // Draw square (borders)
     SDL_RenderDrawRect(renderer, &square);
 
-    // Preencher o quadrado
+    // Fill square
     SDL_RenderFillRect(renderer, &square);
 
-    Color color = Colors::WHITE;
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // Enable blending mode
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
-    SDL_Point points[] = {{x, y+STD_BLOCK_H}, {x, y}, {x+STD_BLOCK_W, y}};
-    SDL_RenderDrawLines(renderer, points, 3);
+    border->render(renderer);
 
-    // Deactivate blending mode
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }

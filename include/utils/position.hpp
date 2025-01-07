@@ -5,4 +5,5 @@ struct Position {
     int y;
 
     bool operator==(const Position& other) const;
+    Position getRealPosition() const;
 };
