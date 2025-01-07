@@ -7,6 +7,7 @@
 #define STD_BLOCK_W 20
 #define STD_BLOCK_H 20 
 #define STD_LINE_THICKNESS 2
+#define BLENDMODE SDL_BLENDMODE_BLEND
 
 /// @brief Render components Interface
 class IRenderComponent{
@@ -17,7 +18,7 @@ public:
 
 class BorderLine : public IRenderComponent {
     int thickness;
-    SDL_Rect lines[2];
+    SDL_Rect lines[4];
 
 public:
     BorderLine(Position start_pos, int thickness=STD_LINE_THICKNESS);

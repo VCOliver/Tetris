@@ -7,19 +7,30 @@ BorderLine::BorderLine(Position start_pos, int thickness)
     : thickness(thickness){
     Position p = start_pos.getRealPosition();
     this->lines[0] = {p.x, p.y, thickness, STD_BLOCK_H};
-    this->lines[1] = {p.x, p.y, STD_BLOCK_W, thickness};
+    this->lines[1] = {p.x+thickness, p.y, STD_BLOCK_W-thickness, thickness};
+    this->lines[2] = {p.x + STD_BLOCK_W - thickness, p.y+thickness, thickness, STD_BLOCK_H-thickness};
+    this->lines[3] = {p.x+thickness, p.y + STD_BLOCK_H - thickness, STD_BLOCK_W-2*thickness, thickness};
 }
 
 void BorderLine::render(SDL_Renderer* renderer) const {
     Color color = Colors::WHITE;
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // Enable blending mode
+    SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
     SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
 
     // Draw upper border lines
-    SDL_RenderDrawRect(renderer, &lines[0]);
-    SDL_RenderFillRect(renderer, &lines[0]);
-    SDL_RenderDrawRect(renderer, &lines[1]);
-    SDL_RenderFillRect(renderer, &lines[1]);
+    for(int i = 0; i < 2; i++){
+        //SDL_RenderDrawRect(renderer, &lines[i]);
+        SDL_RenderFillRect(renderer, &lines[i]);  
+    }
+
+    color = Colors::BLACK;
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
+
+    // Draw lower border lines
+    for(int i = 2; i < 4; i++){
+        //SDL_RenderDrawRect(renderer, &lines[i]);
+        SDL_RenderFillRect(renderer, &lines[i]);  
+    }
 
     // Deactivate blending mode
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
