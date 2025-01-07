@@ -24,6 +24,7 @@ set(SOURCES
     src/utils/position.cpp
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
+    src/utils/colors.cpp
 )
 
 # Add the executables
