@@ -3,11 +3,7 @@
 #include <SDL2/SDL.h>
 
 #include "utils/position.hpp"
-
-#define STD_BLOCK_W 20
-#define STD_BLOCK_H 20 
-#define STD_LINE_THICKNESS 2
-#define BLENDMODE SDL_BLENDMODE_BLEND
+#include "component.hpp"
 
 /// @brief Render components Interface
 class IRenderComponent{

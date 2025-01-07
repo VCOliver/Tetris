@@ -7,9 +7,13 @@ const Position render::getWindowCenter(SDL_Window* window){
     int w;
     int h;
     SDL_GetWindowSize(window, &w, &h);
-    w = w/STD_BLOCK_W;
-    h = h/STD_BLOCK_H;
-    return {w/2, h/2};
+    w /= 2;
+    h /= 2;
+    // w -= (STD_BLOCK_W/2);
+    // h -= (STD_BLOCK_H/2);
+    w /= STD_BLOCK_W;
+    h /= STD_BLOCK_H;
+    return {w, h};
 }
 
 RenderSystem::RenderSystem(SDL_Renderer* renderer)
