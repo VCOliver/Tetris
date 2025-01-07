@@ -52,11 +52,12 @@ void Game::run(){
 
         renderSystem->setBackground(Colors::BLACK);
 
-        auto block1 = std::make_shared<Block>(Position{STD_WIDTH/40, STD_HEIGHT/40});
-        auto block2 = std::make_shared<Block>(Position{0, 0});
+        const Position center = render::getWindowCenter(window);
+        auto block1 = std::make_shared<Block>(center);
+        auto block2 = std::make_shared<Block>(Position{center.x+1, center.y});
 
         renderSystem->addRenderComponent(block1, Colors::RED);
-        renderSystem->addRenderComponent(block2, Colors::CYAN);
+        //renderSystem->addRenderComponent(block2, Colors::CYAN);
 
         renderSystem->render();
 

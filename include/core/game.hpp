@@ -4,9 +4,6 @@
 
 #include "systems/renderSystem.hpp"
 
-#define STD_WIDTH 800
-#define STD_HEIGHT 600
-
 class Game {
     int width, height;
 

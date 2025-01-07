@@ -1,6 +1,16 @@
 #include <algorithm>
+#include <iostream>
 
 #include "systems/renderSystem.hpp"
+
+const Position render::getWindowCenter(SDL_Window* window){
+    int w;
+    int h;
+    SDL_GetWindowSize(window, &w, &h);
+    w = w/STD_BLOCK_W;
+    h = h/STD_BLOCK_H;
+    return {w/2, h/2};
+}
 
 RenderSystem::RenderSystem(SDL_Renderer* renderer)
     : renderer(renderer){}

@@ -5,10 +5,18 @@
 #include <memory>
 
 #include "utils/colors.hpp"
+#include "utils/position.hpp"
 #include "components/renderComponents.hpp"
+
+#define STD_WIDTH 800
+#define STD_HEIGHT 600
 
 using renderComponent_ptr = std::shared_ptr<IRenderComponent>;
 using coloredComponents = std::tuple<renderComponent_ptr, Color>;
+
+namespace render {
+    const Position getWindowCenter(SDL_Window* window);
+}
 
 class RenderSystem {
 

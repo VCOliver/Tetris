@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "components/renderComponents.hpp"
+#include "utils/colors.hpp"
 
 Block::Block(Position pos, int w, int h, int alpha)
             : pos(pos), width(w), height(h){
@@ -26,4 +27,13 @@ void Block::render(SDL_Renderer* renderer) const {
 
     // Preencher o quadrado
     SDL_RenderFillRect(renderer, &square);
+
+    Color color = Colors::WHITE;
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); // Enable blending mode
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
+    SDL_Point points[] = {{x, y+STD_BLOCK_H}, {x, y}, {x+STD_BLOCK_W, y}};
+    SDL_RenderDrawLines(renderer, points, 3);
+
+    // Deactivate blending mode
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }
