@@ -14,10 +14,6 @@
 using renderComponent_ptr = std::shared_ptr<IRenderComponent>;
 using coloredComponents = std::tuple<renderComponent_ptr, Color>;
 
-namespace render {
-    const Position getWindowCenter(SDL_Window* window);
-}
-
 class RenderSystem {
 
     SDL_Renderer* renderer;

@@ -2,34 +2,50 @@
 
 #include "components/renderComponents.hpp"
 #include "utils/colors.hpp"
+#include "utils/renderUtils.hpp"
 
-BorderLine::BorderLine(Position start_pos, int thickness)
-    : thickness(thickness){
-    Position p = start_pos.getRealPosition();
-    this->lines[0] = {p.x, p.y, thickness, STD_BLOCK_H};
-    this->lines[1] = {p.x+thickness, p.y, STD_BLOCK_W-thickness, thickness};
-    this->lines[2] = {p.x + STD_BLOCK_W - thickness, p.y+thickness, thickness, STD_BLOCK_H-thickness};
-    this->lines[3] = {p.x+thickness, p.y + STD_BLOCK_H - thickness, STD_BLOCK_W-2*thickness, thickness};
+BlockBorder::BlockBorder(Position start_position, int thickness)
+    : thickness(thickness)
+{
+    Position start_pos = start_position.getRealPosition();
+    light[0] =  {start_pos, 
+                {start_pos.x + thickness, start_pos.y+thickness}, 
+                {start_pos.x, start_pos.y + STD_BLOCK_H}, 
+                {start_pos.x + thickness, start_pos.y + STD_BLOCK_H - thickness}};
+    light[1] =  {start_pos, 
+                {start_pos.x + STD_BLOCK_W, start_pos.y}, 
+                {start_pos.x+thickness, start_pos.y + thickness}, 
+                {start_pos.x + STD_BLOCK_H - thickness, start_pos.y + thickness}};
+    Position end_pos = {start_pos.x + STD_BLOCK_W, start_pos.y + STD_BLOCK_H};
+    shadow[0] = {{end_pos.x-STD_BLOCK_W+thickness, end_pos.y-thickness}, 
+                {end_pos.x -thickness, end_pos.y-thickness}, 
+                {end_pos.x-STD_BLOCK_W, end_pos.y}, 
+                end_pos};
+    shadow[1] = {{end_pos.x-thickness, end_pos.y-STD_BLOCK_H+thickness}, 
+                {end_pos.x, end_pos.y-STD_BLOCK_H}, 
+                {end_pos.x-thickness, end_pos.y-thickness}, 
+                end_pos};
 }
 
-void BorderLine::render(SDL_Renderer* renderer) const {
+
+void BlockBorder::render(SDL_Renderer* renderer) const {
     Color color = Colors::WHITE;
     SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 80);
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
+
+    render::renderFillTrapz(renderer, light[0]);
 
     // Draw upper border lines
     for(int i = 0; i < 2; i++){
-        //SDL_RenderDrawRect(renderer, &lines[i]);
-        SDL_RenderFillRect(renderer, &lines[i]);  
+        render::renderDrawTrapz(renderer, light[i]);  
     }
 
     color = Colors::BLACK;
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
 
     // Draw lower border lines
-    for(int i = 2; i < 4; i++){
-        //SDL_RenderDrawRect(renderer, &lines[i]);
-        SDL_RenderFillRect(renderer, &lines[i]);  
+    for(int i = 0; i < 2; i++){
+        render::renderDrawTrapz(renderer, shadow[i]);  
     }
 
     // Deactivate blending mode
@@ -45,7 +61,7 @@ Block::Block(Position pos, int w, int h, int alpha)
 
     this->alpha = alpha;
 
-    border = new BorderLine(pos);
+    border = new BlockBorder(pos);
 }
 
 Block::~Block(){

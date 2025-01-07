@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 
 class Game {

@@ -12,12 +12,23 @@ public:
     virtual void render(SDL_Renderer* renderer) const = 0;        
 };
 
-class BorderLine : public IRenderComponent {
+struct Trapezium {
+    Position top_left;
+    Position top_right;
+    Position bottom_left;
+    Position bottom_right;
+
+    Trapezium() = default;
+};
+
+class BlockBorder : public IRenderComponent {
+private:
     int thickness;
-    SDL_Rect lines[4];
+    Trapezium light[2];
+    Trapezium shadow[2];
 
 public:
-    BorderLine(Position start_pos, int thickness=STD_LINE_THICKNESS);
+    BlockBorder(Position start_position, int thickness=STD_LINE_THICKNESS);
 
     void render(SDL_Renderer* renderer) const;
 };
@@ -27,7 +38,7 @@ class Block : public IRenderComponent{
     int width;
     int height;
     int alpha;
-    BorderLine* border;
+    BlockBorder* border;
 
 public:
     Block(Position pos, int w=STD_BLOCK_W, int h=STD_BLOCK_H, int alpha=255);

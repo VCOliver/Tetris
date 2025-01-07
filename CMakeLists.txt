@@ -21,10 +21,12 @@ find_package(SDL2 REQUIRED)
 set(SOURCES
     src/main.cpp
     src/core/game.cpp
-    src/utils/position.cpp
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
+    src/utils/position.cpp
     src/utils/colors.cpp
+    src/utils/renderUtils.cpp
+    src/utils/mathUtils.cpp
 )
 
 # Add the executables
