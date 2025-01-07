@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "core/game.hpp"
-#include "utils/colors.hpp"
 
 Game::Game(int w, int h) : width(w), height(h){}
 
@@ -51,16 +50,13 @@ void Game::run(){
             }
         }
 
-        renderSystem->setBackground();
+        renderSystem->setBackground(Colors::BLACK);
 
-        auto block1 = std::make_shared<Block>(Position{0, 0});
-        auto block2 = std::make_shared<Block>(Position{1, 0});
+        auto block1 = std::make_shared<Block>(Position{STD_WIDTH/40, STD_HEIGHT/40});
+        auto block2 = std::make_shared<Block>(Position{0, 0});
 
-        // Definir cor para o quadrado
-        SDL_SetRenderDrawColor(renderer, Colors::RED.red, 0, 0, 255); // Cor vermelha
-
-        renderSystem->addRenderComponent(block1);
-        renderSystem->addRenderComponent(block2);
+        renderSystem->addRenderComponent(block1, Colors::RED);
+        renderSystem->addRenderComponent(block2, Colors::CYAN);
 
         renderSystem->render();
 
