@@ -33,12 +33,12 @@ void BlockBorder::render(SDL_Renderer* renderer) const {
     SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
     SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
 
-    render::renderFillTrapz(renderer, light[0]);
-
     // Draw upper border lines
     for(int i = 0; i < 2; i++){
         render::renderDrawTrapz(renderer, light[i]);  
     }
+
+    test::drawFilledTrapeziumPixel(renderer, const_cast<Trapezium*>(&light[0]));
 
     color = Colors::BLACK;
     SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);

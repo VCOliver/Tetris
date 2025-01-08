@@ -12,6 +12,7 @@ public:
     virtual void render(SDL_Renderer* renderer) const = 0;        
 };
 
+
 struct Trapezium {
     Position top_left;
     Position top_right;
