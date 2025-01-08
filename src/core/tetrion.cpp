@@ -1,3 +1,5 @@
+
+
 #include "core/tetrion.hpp"
 
 Tetrion::Tetrion(Position start_pos)
@@ -7,12 +9,25 @@ Tetrion::Tetrion(Position start_pos)
     for(int y = 0; y<TETRION_H; y++){
         for(int x = 0; x<TETRION_W; x++){
             p = {start_pos.x + x, start_pos.y + y};
-            if(x == 0 || y == 0 || x == TETRION_W-1 || y == TETRION_H){
+            if(x == 0 || y == 0 || x == TETRION_W-1 || y == TETRION_H-1){
                 visible=true;
             }
-            matrix[x][y] = std::make_tuple(p, visible);
+            matrix[y][x] = std::make_tuple(p, visible);
             visible=false;
         }
     }
 }
 
+void Tetrion::render(SDL_Renderer* renderer) const {
+    Block* block;
+    for(auto& row : matrix){
+        for(auto& [pos, visible] : row){
+            if(visible){
+                render::setRenderDrawColor(renderer, Colors::GRAY);
+                block =  new Block(pos);
+                block->render(renderer);
+            }
+        }
+    }
+    delete block;
+}
