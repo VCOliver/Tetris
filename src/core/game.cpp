@@ -61,10 +61,10 @@ void Game::run(){
 
         renderSystem->addRenderComponent(block1, Colors::RED);
         renderSystem->addRenderComponent(block2, Colors::CYAN);
-        renderSystem->addRenderComponent(block3, Colors::ORANGE);
-        renderSystem->addRenderComponent(block4, Colors::PURPLE);
-        renderSystem->addRenderComponent(block5, Colors::YELLOW);
-        renderSystem->addRenderComponent(block6, Colors::GREEN);
+        // renderSystem->addRenderComponent(block3, Colors::ORANGE);
+        // renderSystem->addRenderComponent(block4, Colors::PURPLE);
+        // renderSystem->addRenderComponent(block5, Colors::YELLOW);
+        // renderSystem->addRenderComponent(block6, Colors::GREEN);
 
 
         renderSystem->render();
