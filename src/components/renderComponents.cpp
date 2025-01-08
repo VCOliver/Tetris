@@ -38,7 +38,7 @@ void BlockBorder::render(SDL_Renderer* renderer) const {
         render::renderDrawTrapz(renderer, light[i]);  
     }
 
-    test::drawFilledTrapeziumPixel(renderer, const_cast<Trapezium*>(&light[0]));
+    render::renderFillTrapz(renderer, light[0]);
 
     color = Colors::BLACK;
     SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
