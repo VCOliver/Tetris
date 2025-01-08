@@ -1,6 +1,3 @@
-#include <algorithm>
-#include <iostream>
-
 #include "utils/renderUtils.hpp"
 #include "utils/mathUtils.hpp"
 
@@ -10,15 +7,17 @@ const Position render::getWindowCenter(SDL_Window* window){
     SDL_GetWindowSize(window, &w, &h);
     w /= 2;
     h /= 2;
-    // w -= (STD_BLOCK_W/2);
-    // h -= (STD_BLOCK_H/2);
     w /= STD_BLOCK_W;
     h /= STD_BLOCK_H;
     return {w, h};
 }
 
+void render::setRenderDrawColor(SDL_Renderer* renderer, Color color, rgba_t alpha){
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, alpha);
+}
+
 // Helper function to check if a point is inside the trapezium
-int render::isPointInTrapezium(int px, int py, const Trapezium& trapz) {
+bool render::isPointInTrapezium(int px, int py, const Trapezium& trapz) {
     SDL_Point p = {px, py};
     Triangle tri1 = {{trapz.top_left.x, trapz.top_left.y},
                      {trapz.top_right.x, trapz.top_right.y},
@@ -31,8 +30,7 @@ int render::isPointInTrapezium(int px, int py, const Trapezium& trapz) {
     return isPointInTriangle(p, tri1) || isPointInTriangle(p, tri2);
 }
 
-// Helper function to check if a point is inside a triangle
-int render::isPointInTriangle(SDL_Point p, Triangle& tri) {
+bool render::isPointInTriangle(SDL_Point p, Triangle& tri) {
     int px = p.x;
     int py = p.y;
 

@@ -8,7 +8,7 @@ RenderSystem::RenderSystem(SDL_Renderer* renderer)
 
 void RenderSystem::setBackground(Color color){
     // Limpar a tela
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 255); // Cor preta para o fundo
+    render::setRenderDrawColor(renderer, color); // Cor preta para o fundo
     SDL_RenderClear(renderer);
 }
 
@@ -29,10 +29,10 @@ void RenderSystem::clearComponents(){
     renderComponents.clear();
 }
 
-void RenderSystem::render() {
+void RenderSystem::render() const {
     for (const auto& [component, color] : renderComponents) {
         // Set the color for this component
-        SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 255);
+        render::setRenderDrawColor(renderer, color);
         
         // Render the component
         if (component) {

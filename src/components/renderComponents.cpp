@@ -29,17 +29,15 @@ BlockBorder::BlockBorder(Position start_position, int thickness)
 
 
 void BlockBorder::render(SDL_Renderer* renderer) const {
-    Color color = Colors::WHITE;
     SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 80);
+    render::setRenderDrawColor(renderer, Colors::WHITE, 80);
 
     // Draw upper border lines
     for(int i = 0; i < 2; i++){
         render::renderFillTrapz(renderer, light[i]);  
     }
-
-    color = Colors::BLACK;
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
+    
+    render::setRenderDrawColor(renderer, Colors::BLACK, 127);
 
     // Draw lower border lines
     for(int i = 0; i < 2; i++){
@@ -72,9 +70,6 @@ void Block::render(SDL_Renderer* renderer) const {
     int w = this->width;
 
     SDL_Rect square = { p.x, p.y, w, h }; // x, y, width, height
-
-    // Draw square (borders)
-    SDL_RenderDrawRect(renderer, &square);
 
     // Fill square
     SDL_RenderFillRect(renderer, &square);

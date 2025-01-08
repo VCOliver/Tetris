@@ -1,34 +1,38 @@
 #pragma once
 
-#include <stdexcept> // For exception handling 
+typedef u_int8_t rgba_t;
 
-struct Color
-{
-    int red;
-    int green;
-    int blue;
+/**
+ * @struct Color
+ * @brief Represents an RGB color.
+ */
+struct Color {
+    rgba_t red; ///< Red component of the color.
+    rgba_t green; ///< Green component of the color.
+    rgba_t blue; ///< Blue component of the color.
 
-    constexpr Color(int r, int g, int b) : red(r), green(g), blue(b) {
-        if (!isValidValue(r) || !isValidValue(g) || !isValidValue(b)) {
-            throw std::invalid_argument("RGB values should be between 0 and 255");
-        }
-    }
-
-private:
-    constexpr bool isValidValue(int value) const {
-        return (value <= 255 && value >= 0);
-    }
+    /**
+     * @brief Constructs a Color with the specified red, green, and blue components.
+     * 
+     * @param r Red component.
+     * @param g Green component.
+     * @param b Blue component.
+     */
+    constexpr Color(rgba_t r, rgba_t g, rgba_t b) : red(r), green(g), blue(b) {}
 };
 
-namespace Colors
-{
-    constexpr Color RED(255, 0, 0);
-    constexpr Color GREEN(0, 255, 0);
-    constexpr Color BLUE(0, 0, 255);
-    constexpr Color WHITE(255, 255, 255);
-    constexpr Color BLACK(0, 0, 0);
-    constexpr Color CYAN(0, 255, 255);
-    constexpr Color YELLOW(255, 255, 0);
-    constexpr Color PURPLE(128, 0, 128);
-    constexpr Color ORANGE(255, 165, 0);
+/**
+ * @namespace Colors
+ * @brief Contains predefined colors.
+ */
+namespace Colors {
+    constexpr Color RED(255, 0, 0); ///< Predefined red color.
+    constexpr Color GREEN(0, 255, 0); ///< Predefined green color.
+    constexpr Color BLUE(0, 0, 255); ///< Predefined blue color.
+    constexpr Color WHITE(255, 255, 255); ///< Predefined white color.
+    constexpr Color BLACK(0, 0, 0); ///< Predefined black color.
+    constexpr Color CYAN(0, 255, 255); ///< Predefined cyan color.
+    constexpr Color YELLOW(255, 255, 0); ///< Predefined yellow color.
+    constexpr Color PURPLE(128, 0, 128); ///< Predefined purple color.
+    constexpr Color ORANGE(255, 165, 0); ///< Predefined orange color.
 }

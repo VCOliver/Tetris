@@ -49,7 +49,7 @@ void Game::run(){
             }
         }
 
-        renderSystem->setBackground(Colors::BLACK);
+        renderSystem->setBackground();
 
         const Position center = render::getWindowCenter(window);
         auto block1 = std::make_shared<Block>(center);
