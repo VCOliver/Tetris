@@ -2,8 +2,8 @@
 
 #include <SDL2/SDL.h>
 
-#define STD_BLOCK_W 150
-#define STD_BLOCK_H 150 
-#define STD_LINE_THICKNESS 12
+#define STD_BLOCK_W 20
+#define STD_BLOCK_H 20 
+#define STD_LINE_THICKNESS 2
 #define BLENDMODE SDL_BLENDMODE_BLEND
 #define OPAQUE SDL_ALPHA_OPAQUE

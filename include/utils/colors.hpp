@@ -1,6 +1,8 @@
 #pragma once
 
-typedef u_int8_t rgba_t;
+#include <cstdint>
+
+typedef std::uint8_t rgba_t;
 
 /**
  * @struct Color
