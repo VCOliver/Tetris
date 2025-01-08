@@ -31,21 +31,19 @@ BlockBorder::BlockBorder(Position start_position, int thickness)
 void BlockBorder::render(SDL_Renderer* renderer) const {
     Color color = Colors::WHITE;
     SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 80);
 
     // Draw upper border lines
     for(int i = 0; i < 2; i++){
-        render::renderDrawTrapz(renderer, light[i]);  
+        render::renderFillTrapz(renderer, light[i]);  
     }
 
-    render::renderFillTrapz(renderer, light[0]);
-
     color = Colors::BLACK;
-    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, OPAQUE);
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, 127);
 
     // Draw lower border lines
     for(int i = 0; i < 2; i++){
-        render::renderDrawTrapz(renderer, shadow[i]);  
+        render::renderFillTrapz(renderer, shadow[i]);  
     }
 
     // Deactivate blending mode
