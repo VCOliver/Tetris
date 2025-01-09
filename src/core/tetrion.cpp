@@ -19,15 +19,13 @@ Tetrion::Tetrion(Position start_pos)
 }
 
 void Tetrion::render(SDL_Renderer* renderer) const {
-    Block* block;
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
                 render::setRenderDrawColor(renderer, Colors::GRAY);
-                block =  new Block(pos);
-                block->render(renderer);
+                Block block = Block(pos);
+                block.render(renderer);
             }
         }
     }
-    delete block;
 }
