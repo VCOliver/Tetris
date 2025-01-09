@@ -32,6 +32,14 @@ public:
     RenderSystem(SDL_Renderer* renderer);
 
     /**
+     * @brief Destructor for the RenderSystem class.
+     * 
+     * This destructor is responsible for cleaning up any resources
+     * that the RenderSystem class may have allocated during its lifetime.
+     */
+    ~RenderSystem();
+
+    /**
      * @brief Sets the background color for the renderer.
      * 
      * @param color The background color to set. Default is Colors::BLACK.
