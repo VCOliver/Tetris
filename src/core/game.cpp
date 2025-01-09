@@ -59,12 +59,16 @@ void Game::run(){
         auto block5 = std::make_shared<Block>(Position{center.x-1, center.y-1});
         auto block6 = std::make_shared<Block>(Position{center.x, center.y-1});
 
-        renderSystem->addRenderComponent(block1, Colors::RED);
-        renderSystem->addRenderComponent(block2, Colors::CYAN);
-        renderSystem->addRenderComponent(block3, Colors::ORANGE);
-        renderSystem->addRenderComponent(block4, Colors::PURPLE);
-        renderSystem->addRenderComponent(block5, Colors::YELLOW);
-        renderSystem->addRenderComponent(block6, Colors::GREEN);
+        auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
+
+        renderSystem->addRenderComponent(wall, Colors::GRAY);
+
+        // renderSystem->addRenderComponent(block1, Colors::RED);
+        // renderSystem->addRenderComponent(block2, Colors::CYAN);
+        // renderSystem->addRenderComponent(block3, Colors::ORANGE);
+        // renderSystem->addRenderComponent(block4, Colors::PURPLE);
+        // renderSystem->addRenderComponent(block5, Colors::YELLOW);
+        // renderSystem->addRenderComponent(block6, Colors::GREEN);
 
 
         renderSystem->render();

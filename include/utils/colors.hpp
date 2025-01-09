@@ -37,4 +37,5 @@ namespace Colors {
     constexpr Color YELLOW(255, 255, 0); ///< Predefined yellow color.
     constexpr Color PURPLE(128, 0, 128); ///< Predefined purple color.
     constexpr Color ORANGE(255, 165, 0); ///< Predefined orange color.
+    constexpr Color GRAY(128, 128, 128);
 }

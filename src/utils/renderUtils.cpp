@@ -1,7 +1,8 @@
 #include "utils/renderUtils.hpp"
 #include "utils/mathUtils.hpp"
 
-const Position render::getWindowCenter(SDL_Window* window){
+namespace render {
+    const Position getWindowCenter(SDL_Window* window){
     int w;
     int h;
     SDL_GetWindowSize(window, &w, &h);
@@ -12,12 +13,12 @@ const Position render::getWindowCenter(SDL_Window* window){
     return {w, h};
 }
 
-void render::setRenderDrawColor(SDL_Renderer* renderer, Color color, rgba_t alpha){
+void setRenderDrawColor(SDL_Renderer* renderer, Color color, rgba_t alpha){
     SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, alpha);
 }
 
 // Helper function to check if a point is inside the trapezium
-bool render::isPointInTrapezium(int px, int py, const Trapezium& trapz) {
+bool isPointInTrapezium(int px, int py, const Trapezium& trapz) {
     SDL_Point p = {px, py};
     Triangle tri1 = {{trapz.top_left.x, trapz.top_left.y},
                      {trapz.top_right.x, trapz.top_right.y},
@@ -30,7 +31,7 @@ bool render::isPointInTrapezium(int px, int py, const Trapezium& trapz) {
     return isPointInTriangle(p, tri1) || isPointInTriangle(p, tri2);
 }
 
-bool render::isPointInTriangle(SDL_Point p, Triangle& tri) {
+bool isPointInTriangle(SDL_Point p, Triangle& tri) {
     int px = p.x;
     int py = p.y;
 
@@ -46,7 +47,7 @@ bool render::isPointInTriangle(SDL_Point p, Triangle& tri) {
     return !(has_neg && has_pos);
 }
 
-void render::renderFillTrapz(SDL_Renderer* renderer, const Trapezium& trapezium) {
+void renderFillTrapz(SDL_Renderer* renderer, const Trapezium& trapezium) {
     int minX = SDL_min(SDL_min(trapezium.top_left.x, trapezium.top_right.x), SDL_min(trapezium.bottom_left.x, trapezium.bottom_right.x));
     int maxX = SDL_max(SDL_max(trapezium.top_left.x, trapezium.top_right.x), SDL_max(trapezium.bottom_left.x, trapezium.bottom_right.x));
     int minY = SDL_min(SDL_min(trapezium.top_left.y, trapezium.top_right.y), SDL_min(trapezium.bottom_left.y, trapezium.bottom_right.y));
@@ -61,9 +62,11 @@ void render::renderFillTrapz(SDL_Renderer* renderer, const Trapezium& trapezium)
     }
 }
 
-void render::renderDrawTrapz(SDL_Renderer* renderer, Trapezium trapz){
+void renderDrawTrapz(SDL_Renderer* renderer, Trapezium trapz){
     SDL_RenderDrawLine(renderer, trapz.top_left.x, trapz.top_left.y, trapz.top_right.x, trapz.top_right.y);
     SDL_RenderDrawLine(renderer, trapz.top_right.x, trapz.top_right.y, trapz.bottom_right.x, trapz.bottom_right.y);
     SDL_RenderDrawLine(renderer, trapz.bottom_right.x, trapz.bottom_right.y, trapz.bottom_left.x, trapz.bottom_left.y);
     SDL_RenderDrawLine(renderer, trapz.bottom_left.x, trapz.bottom_left.y, trapz.top_left.x, trapz.top_left.y);
 }
+}
+
