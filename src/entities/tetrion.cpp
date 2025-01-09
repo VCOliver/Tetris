@@ -1,6 +1,6 @@
 
 
-#include "core/tetrion.hpp"
+#include "entities/tetrion.hpp"
 
 Tetrion::Tetrion(Position start_pos)
     : start_pos(START_POSITION){

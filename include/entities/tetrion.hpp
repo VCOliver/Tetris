@@ -9,9 +9,9 @@
 #define TETRION_H 24
 #define TETRION_W 12
 
+class Tetrion : public IRenderComponent{
 using Matrix = std::array<std::array<std::tuple<Position, bool>, TETRION_W>, TETRION_H>;
 
-class Tetrion : public IRenderComponent{
 private:
     Matrix matrix;
 

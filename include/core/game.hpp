@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "tetrion.hpp"
+#include "entities/tetrion.hpp"
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 
