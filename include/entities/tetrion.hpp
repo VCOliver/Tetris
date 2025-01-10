@@ -5,12 +5,13 @@
 
 #include "components/renderComponents.hpp"
 #include "utils/renderUtils.hpp"
+#include "utils/mathUtils.hpp"
 
 #define TETRION_H 24
 #define TETRION_W 12
 
 class Tetrion : public IRenderComponent{
-using Matrix = std::array<std::array<std::tuple<Position, bool>, TETRION_W>, TETRION_H>;
+using Matrix = math::Matrix<std::tuple<Position, bool>, TETRION_W, TETRION_H>;
 
 private:
     Matrix matrix;

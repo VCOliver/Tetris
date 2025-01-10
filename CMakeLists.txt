@@ -27,7 +27,7 @@ set(SOURCES
     src/utils/colors.cpp
     src/utils/renderUtils.cpp
     src/utils/mathUtils.cpp
-    src/core/tetrion.cpp
+    src/entities/tetrion.cpp
 )
 
 # Add the executables
