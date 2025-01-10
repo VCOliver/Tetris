@@ -11,7 +11,7 @@
 #define TETRION_W 12
 
 class Tetrion : public IRenderComponent{
-using Matrix = math::Matrix<std::tuple<Position, bool>, TETRION_W, TETRION_H>;
+using Matrix = math::Matrix<std::tuple<Position, bool>, TETRION_H, TETRION_W>;
 
 private:
     Matrix matrix;
