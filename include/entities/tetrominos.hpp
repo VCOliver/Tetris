@@ -1,18 +1,19 @@
 #pragma once
 
+#include <array>
+#include <tuple>
 #include <unordered_map>
 
 #include "utils/shapes.hpp"
+#include "utils/mathUtils.hpp"
 #include "components/renderComponents.hpp"
 
-#define TETROMINOS_MATRIX_H 4
-#define TETROMINOS_MATRIX_W 4
-
 class Tetrominos {
+using Matrix = math::Matrix<std::tuple<Position, bool>, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
 using shapes_map = std::unordered_map<char, shapes::Matrix>;
 
 private:
-    shapes::Matrix matrix;
+    Matrix matrix;
     shapes_map shapes;
     Position start_pos;
 
