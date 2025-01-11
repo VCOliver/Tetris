@@ -9,42 +9,42 @@
 #define EMPTY 0
 
 namespace shapes{
-    using s_matrix = math::Matrix<int, SHAPES_MATRIX_W, SHAPES_MATRIX_H>;
+    using Matrix = math::Matrix<int, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
     
-    inline const s_matrix square_tetromino = {{0, 0, 0, 0},
-                                              {0, 1, 1, 0},
-                                              {0, 1, 1, 0},
-                                              {0, 0, 0, 0}};   
-
-    inline const s_matrix L_tetromino = {{0, 0, 0, 0},
-                                         {0, 1, 0, 0},
-                                         {0, 1, 0, 0},
-                                         {0, 1, 1, 0}};   
-
-    inline const s_matrix inv_L_tetromino = {{0, 0, 0, 0},
-                                             {0, 0, 1, 0},
-                                             {0, 0, 1, 0},
-                                             {0, 1, 1, 0}};
-
-    inline const s_matrix straight_tetromino = {{0, 1, 0, 0},
-                                                {0, 1, 0, 0},
-                                                {0, 1, 0, 0},
-                                                {0, 1, 0, 0}};
-
-    inline const s_matrix T_tetromino = {{0, 0, 0, 0},
-                                         {0, 1, 0, 0},
-                                         {1, 1, 1, 0},
-                                         {0, 0, 0, 0}}; 
-
-    inline const s_matrix skew_tetromino = {{0, 0, 0, 0},
+    inline const Matrix square_tetromino = {{0, 0, 0, 0},
                                             {0, 1, 1, 0},
-                                            {1, 1, 0, 0},
-                                            {0, 0, 0, 0}}; 
+                                            {0, 1, 1, 0},
+                                            {0, 0, 0, 0}};   
 
-    inline const s_matrix inv_skew_tetromino = {{0, 0, 0, 0},
-                                                {0, 1, 1, 0},
-                                                {0, 0, 1, 1},
-                                                {0, 0, 0, 0}}; 
+    inline const Matrix L_tetromino = {{0, 0, 0, 0},
+                                       {0, 1, 0, 0},
+                                       {0, 1, 0, 0},
+                                       {0, 1, 1, 0}};   
+
+    inline const Matrix inv_L_tetromino = {{0, 0, 0, 0},
+                                           {0, 0, 1, 0},
+                                           {0, 0, 1, 0},
+                                           {0, 1, 1, 0}};
+
+    inline const Matrix straight_tetromino = {{0, 1, 0, 0},
+                                              {0, 1, 0, 0},
+                                              {0, 1, 0, 0},
+                                              {0, 1, 0, 0}};
+
+    inline const Matrix T_tetromino = {{0, 0, 0, 0},
+                                       {0, 1, 0, 0},
+                                       {1, 1, 1, 0},
+                                       {0, 0, 0, 0}}; 
+
+    inline const Matrix skew_tetromino = {{0, 0, 0, 0},
+                                          {0, 1, 1, 0},
+                                          {1, 1, 0, 0},
+                                          {0, 0, 0, 0}}; 
+
+    inline const Matrix inv_skew_tetromino = {{0, 0, 0, 0},
+                                              {0, 1, 1, 0},
+                                              {0, 0, 1, 1},
+                                              {0, 0, 0, 0}}; 
                                     
 
 }

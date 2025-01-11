@@ -28,6 +28,8 @@ set(SOURCES
     src/utils/renderUtils.cpp
     src/utils/mathUtils.cpp
     src/entities/tetrion.cpp
+    src/entities/tetrominos.cpp
+    src/utils/shapes.cpp
 )
 
 # Add the executables
