@@ -14,11 +14,12 @@ using shapes_map = std::unordered_map<char, shapes::Matrix>;
 
 private:
     Matrix matrix;
-    shapes_map shapes;
     Position start_pos;
 
 public:
     Tetrominos(Position start_pos);
+
+    shapes::Matrix getRandomShape() const;
 
     void render(SDL_Renderer* renderer) const;
 };
