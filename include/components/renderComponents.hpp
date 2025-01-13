@@ -4,6 +4,7 @@
 
 #include "utils/position.hpp"
 #include "component.hpp"
+#include "utils/colors.hpp"
 
 /// @brief Render components Interface
 /**
@@ -66,9 +67,10 @@ public:
  */
 class Block : public IRenderComponent {
     Position pos; ///< Position of the block.
+    Color color;
     int width; ///< Width of the block.
     int height; ///< Height of the block.
-    int alpha; ///< Alpha transparency value of the block.
+    rgba_t alpha; ///< Alpha transparency value of the block.
     BlockBorder* border; ///< Pointer to the block's border.
 
 public:
@@ -80,7 +82,7 @@ public:
      * @param h The height of the block. Default is STD_BLOCK_H.
      * @param alpha The alpha transparency value of the block. Default is 255.
      */
-    Block(Position pos, int w=STD_BLOCK_W, int h=STD_BLOCK_H, int alpha=255);
+    Block(Position pos, Color color, int w=STD_BLOCK_W, int h=STD_BLOCK_H, rgba_t alpha=255);
 
     /**
      * @brief Destructor for the Block.

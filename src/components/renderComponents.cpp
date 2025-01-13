@@ -48,14 +48,8 @@ void BlockBorder::render(SDL_Renderer* renderer) const {
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }
 
-Block::Block(Position pos, int w, int h, int alpha)
-            : pos(pos), width(w), height(h){
-    if(alpha > 255 || alpha < 0){
-        std::cerr << "Opacity cannot be lower than 0\% or greater than 100\%" << std::endl;
-        exit(1);
-    }
-
-    this->alpha = alpha;
+Block::Block(Position pos, Color color, int w, int h, rgba_t alpha)
+            : pos(pos), color(color), width(w), height(h), alpha(alpha){
 
     border = new BlockBorder(pos);
 }
@@ -70,6 +64,8 @@ void Block::render(SDL_Renderer* renderer) const {
     int w = this->width;
 
     SDL_Rect square = { p.x, p.y, w, h }; // x, y, width, height
+
+    render::setRenderDrawColor(renderer, color);
 
     // Fill square
     SDL_RenderFillRect(renderer, &square);
