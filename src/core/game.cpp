@@ -42,6 +42,8 @@ void Game::init(){
 
 void Game::run(){
 
+    auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
+
     while(true){
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -60,8 +62,10 @@ void Game::run(){
         auto block6 = std::make_shared<Block>(Position{center.x, center.y-1});
 
         auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
+        
 
-        renderSystem->addRenderComponent(wall, Colors::GRAY);
+        //renderSystem->addRenderComponent(wall, Colors::GRAY);
+        renderSystem->addRenderComponent(tetro, Colors::PURPLE);
 
         // renderSystem->addRenderComponent(block1, Colors::RED);
         // renderSystem->addRenderComponent(block2, Colors::CYAN);
