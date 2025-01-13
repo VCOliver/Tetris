@@ -78,6 +78,7 @@ void Game::run(){
 
         //renderSystem->render();
 
+        //Write to screen
         fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
 
         // Atualizar a tela
