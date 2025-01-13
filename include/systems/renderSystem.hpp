@@ -58,6 +58,8 @@ public:
      * @brief Removes a render component.
      * 
      * @param component Shared pointer to the render component to remove.
+     * 
+     * @note Not in use
      */
     void removeRenderComponent(const renderComponent_ptr& component);
 
