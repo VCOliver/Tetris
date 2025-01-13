@@ -35,8 +35,7 @@ void Tetrominos::render(SDL_Renderer* renderer) const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
-                render::setRenderDrawColor(renderer, color);
-                Block block = Block(pos);
+                Block block = Block(pos,color);
                 block.render(renderer);
             }
         }

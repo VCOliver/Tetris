@@ -22,8 +22,7 @@ void Tetrion::render(SDL_Renderer* renderer) const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
-                render::setRenderDrawColor(renderer, Colors::GRAY);
-                Block block = Block(pos);
+                Block block = Block(pos, Colors::GRAY);
                 block.render(renderer);
             }
         }

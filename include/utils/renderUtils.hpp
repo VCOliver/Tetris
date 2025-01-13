@@ -6,6 +6,8 @@
 #include "utils/colors.hpp"
 #include "components/renderComponents.hpp"
 
+using Renderable = IRenderComponent;
+
 /**
  * @struct Triangle
  * @brief Represents a triangle using three SDL_Point vertices.

@@ -54,25 +54,25 @@ void Game::run(){
         renderSystem->setBackground();
 
         const Position center = render::getWindowCenter(window);
-        auto block1 = std::make_shared<Block>(center);
-        auto block2 = std::make_shared<Block>(Position{center.x+1, center.y});
-        auto block3 = std::make_shared<Block>(Position{center.x-1, center.y});
-        auto block4 = std::make_shared<Block>(Position{center.x+1, center.y-1});
-        auto block5 = std::make_shared<Block>(Position{center.x-1, center.y-1});
-        auto block6 = std::make_shared<Block>(Position{center.x, center.y-1});
+        auto block1 = std::make_shared<Block>(center, Colors::RED);
+        auto block2 = std::make_shared<Block>(Position{center.x+1, center.y}, Colors::CYAN);
+        auto block3 = std::make_shared<Block>(Position{center.x-1, center.y}, Colors::ORANGE);
+        auto block4 = std::make_shared<Block>(Position{center.x+1, center.y-1}, Colors::PURPLE);
+        auto block5 = std::make_shared<Block>(Position{center.x-1, center.y-1}, Colors::YELLOW);
+        auto block6 = std::make_shared<Block>(Position{center.x, center.y-1}, Colors::GREEN);
 
         auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
         
 
         //renderSystem->addRenderComponent(wall, Colors::GRAY);
-        renderSystem->addRenderComponent(tetro, Colors::PURPLE);
+        // renderSystem->addRenderComponent(tetro);
 
-        // renderSystem->addRenderComponent(block1, Colors::RED);
-        // renderSystem->addRenderComponent(block2, Colors::CYAN);
-        // renderSystem->addRenderComponent(block3, Colors::ORANGE);
-        // renderSystem->addRenderComponent(block4, Colors::PURPLE);
-        // renderSystem->addRenderComponent(block5, Colors::YELLOW);
-        // renderSystem->addRenderComponent(block6, Colors::GREEN);
+        renderSystem->addRenderComponent(block1);
+        renderSystem->addRenderComponent(block2);
+        renderSystem->addRenderComponent(block3);
+        renderSystem->addRenderComponent(block4);
+        renderSystem->addRenderComponent(block5);
+        renderSystem->addRenderComponent(block6);
 
 
         renderSystem->render();
