@@ -38,6 +38,8 @@ void Game::init(){
     }
 
     renderSystem = new RenderSystem(renderer);
+    fontSystem = new FontSystem();
+    fontSystem->loadFont();
 }   
 
 void Game::run(){
@@ -67,15 +69,16 @@ void Game::run(){
         //renderSystem->addRenderComponent(wall, Colors::GRAY);
         // renderSystem->addRenderComponent(tetro);
 
-        renderSystem->addRenderComponent(block1);
-        renderSystem->addRenderComponent(block2);
-        renderSystem->addRenderComponent(block3);
-        renderSystem->addRenderComponent(block4);
-        renderSystem->addRenderComponent(block5);
-        renderSystem->addRenderComponent(block6);
+        // renderSystem->addRenderComponent(block1);
+        // renderSystem->addRenderComponent(block2);
+        // renderSystem->addRenderComponent(block3);
+        // renderSystem->addRenderComponent(block4);
+        // renderSystem->addRenderComponent(block5);
+        // renderSystem->addRenderComponent(block6);
 
+        //renderSystem->render();
 
-        renderSystem->render();
+        fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);
@@ -85,6 +88,7 @@ void Game::run(){
 void Game::close(){
     // Clean up
     delete renderSystem;
+    delete fontSystem;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

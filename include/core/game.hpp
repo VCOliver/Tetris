@@ -6,6 +6,7 @@
 #include "entities/tetrion.hpp"
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
+#include "systems/fontSystem.hpp"
 
 /**
  * @class Game
@@ -19,6 +20,7 @@ class Game {
     SDL_Event event; ///< SDL_Event for handling events.
 
     RenderSystem* renderSystem; ///< Pointer to the RenderSystem for managing rendering.
+    FontSystem* fontSystem;
 
 public:
     /**

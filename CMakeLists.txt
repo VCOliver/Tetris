@@ -25,13 +25,14 @@ set(SOURCES
     src/core/game.cpp
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
+    src/systems/fontSystem.cpp
     src/utils/position.cpp
     src/utils/colors.cpp
     src/utils/renderUtils.cpp
     src/utils/mathUtils.cpp
+    src/utils/shapes.cpp
     src/entities/tetrion.cpp
     src/entities/tetrominos.cpp
-    src/utils/shapes.cpp
 )
 
 # Add the executables
@@ -41,7 +42,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 
 # Link SDL2 library
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} ${SDL2TTF_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
 
 # Copy assets folder after build
 add_custom_command(

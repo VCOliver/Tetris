@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <SDL2/SDL.h>
 
 typedef std::uint8_t rgba_t;
 
@@ -21,6 +22,8 @@ struct Color {
      * @param b Blue component.
      */
     constexpr Color(rgba_t r, rgba_t g, rgba_t b) : red(r), green(g), blue(b) {}
+
+    SDL_Color toSDL_Color();
 };
 
 /**

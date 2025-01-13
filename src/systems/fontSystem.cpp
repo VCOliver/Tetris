@@ -31,7 +31,7 @@ bool FontSystem::loadFont() {
 void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, Position pos, Color color) {
     if (!font) return;
 
-    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color.toSDL_Color());
     if (!surface) {
         std::cerr << "Failed to render text: " << TTF_GetError() << "\n";
         return;
@@ -45,7 +45,7 @@ void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, Pos
         return;
     }
 
-    SDL_Rect dst = {x, y, surface->w, surface->h};
+    SDL_Rect dst = {pos.x, pos.y, surface->w, surface->h};
     SDL_RenderCopy(renderer, texture, nullptr, &dst);
     SDL_DestroyTexture(texture);
 }
