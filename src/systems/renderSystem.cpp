@@ -16,15 +16,15 @@ void RenderSystem::setBackground(Color color){
     SDL_RenderClear(renderer);
 }
 
-void RenderSystem::addRenderComponent(const renderComponent_ptr& component, Color color){
-    renderComponents.emplace_back(component, color);
+void RenderSystem::addRenderComponent(const renderables_ptr& component){
+    renderComponents.emplace_back(component);
 }
 
-void RenderSystem::removeRenderComponent(const renderComponent_ptr& component) {
+void RenderSystem::removeRenderComponent(const renderables_ptr& component) {
     renderComponents.erase(std::remove_if(
         renderComponents.begin(), renderComponents.end(),
-        [&component](const coloredComponents& item) {
-            return std::get<0>(item) == component;
+        [&component](const renderables_ptr& item) {
+            return item == component;
         }),
         renderComponents.end());
 }
@@ -34,10 +34,8 @@ void RenderSystem::clearComponents(){
 }
 
 void RenderSystem::render() const {
-    for (const auto& [component, color] : renderComponents) {
-        // Set the color for this component
-        render::setRenderDrawColor(renderer, color);
-        
+    for (const auto& component : renderComponents) {
+
         // Render the component
         if (component) {
             component->render(renderer);

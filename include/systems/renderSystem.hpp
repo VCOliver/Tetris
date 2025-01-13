@@ -10,8 +10,7 @@
 #define STD_WIDTH 800
 #define STD_HEIGHT 600
 
-using renderComponent_ptr = std::shared_ptr<IRenderComponent>;
-using coloredComponents = std::tuple<renderComponent_ptr, Color>;
+using renderables_ptr = std::shared_ptr<Renderable>;
 
 /**
  * @class RenderSystem
@@ -21,7 +20,7 @@ class RenderSystem {
 
     SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
 
-    std::vector<coloredComponents> renderComponents; ///< Vector of render components with associated colors.
+    std::vector<renderables_ptr> renderComponents; ///< Vector of render components with associated colors.
 
 public:
     /**
@@ -50,9 +49,8 @@ public:
      * @brief Adds a render component with the specified color.
      * 
      * @param component Shared pointer to the render component.
-     * @param color The color associated with the component.
      */
-    void addRenderComponent(const renderComponent_ptr& component, Color color);
+    void addRenderComponent(const renderables_ptr& component);
 
     /**
      * @brief Removes a render component.
@@ -61,7 +59,7 @@ public:
      * 
      * @note Not in use
      */
-    void removeRenderComponent(const renderComponent_ptr& component);
+    void removeRenderComponent(const renderables_ptr& component);
 
     /**
      * @brief Clears all render components.
