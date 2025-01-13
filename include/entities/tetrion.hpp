@@ -10,7 +10,7 @@
 #define TETRION_H 24
 #define TETRION_W 12
 
-class Tetrion : public IRenderComponent{
+class Tetrion : public Renderable{
 using Matrix = math::Matrix<std::tuple<Position, bool>, TETRION_H, TETRION_W>;
 
 private:

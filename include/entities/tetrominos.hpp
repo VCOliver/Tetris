@@ -9,7 +9,7 @@
 #include "utils/mathUtils.hpp"
 #include "components/renderComponents.hpp"
 
-class Tetrominos : public IRenderComponent{
+class Tetrominos : public Renderable{
 using Matrix = math::Matrix<std::tuple<Position, bool>, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
 using shapes_map = std::unordered_map<char, shapes::Matrix>;
 

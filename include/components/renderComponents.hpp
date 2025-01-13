@@ -20,7 +20,6 @@ public:
     virtual void render(SDL_Renderer* renderer) const = 0;        
 };
 
-
 /**
  * @struct Trapezium
  * @brief Represents a trapezium shape with four positions.
