@@ -18,5 +18,5 @@ public:
 
     void setFontSize(int size);
     bool loadFont();
-    void renderText(SDL_Renderer* renderer, const std::string& text, Position pos, Color color);
+    void renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color);
 };

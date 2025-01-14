@@ -28,7 +28,7 @@ bool FontSystem::loadFont() {
     return true;
 }
 
-void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, Position pos, Color color) {
+void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) {
     if (!font) return;
 
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color.toSDL_Color());

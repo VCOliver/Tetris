@@ -1,6 +1,7 @@
 #include <chrono>
 
 #include "entities/stopwatch.hpp"   
+#include "utils/colors.hpp"
 
 Stopwatch::Stopwatch() : running(false){
 
@@ -45,8 +46,15 @@ StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem)
         
 }
 
-void StopwatchBlock::render(SDL_Renderer* renderer){
+void StopwatchBlock::render(SDL_Renderer* renderer) const {
     SDL_Point p = start_pos.getRealPosition();
-    SDL_Rect rect = {p.x, p.y, 4*STD_BLOCK_W, 5*STD_BLOCK_H};
-    SDL_RenderDrawRect(renderer, &rect);
+    SDL_Rect rect = {p.x, p.y, 6*STD_BLOCK_W, 4*STD_BLOCK_H};
+    render::setRenderDrawColor(renderer, Colors::GRAY);
+    SDL_RenderFillRect(renderer, &rect);
+    rect = {p.x+10, p.y+10, (int)(5*STD_BLOCK_W), (int)(3*STD_BLOCK_H)};
+    render::setRenderDrawColor(renderer, Colors::BLACK);
+    SDL_RenderFillRect(renderer, &rect);
+    fontSystem->renderText(renderer, "Time:", {p.x+25, p.y+10}, Colors::WHITE);
+    fontSystem->renderText(renderer, "00:00", {p.x+25, p.y+36}, Colors::WHITE);
+
 }

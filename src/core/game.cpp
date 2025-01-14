@@ -88,6 +88,7 @@ void Game::run(){
         auto block12 = std::make_shared<Block>(Position{center.x+3, center.y+2}, Colors::GRAY);
 
         auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
+        auto watch = std::make_shared<StopwatchBlock>(center, fontSystem);
         
 
         //renderSystem->addRenderComponent(wall, Colors::GRAY);
@@ -106,16 +107,18 @@ void Game::run(){
         // renderSystem->addRenderComponent(block11);
         // renderSystem->addRenderComponent(block12);
 
+        renderSystem->addRenderComponent(watch);
 
-        //renderSystem->render();
+
+        renderSystem->render();
 
         //Write to screen
-        //fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
-        {
-            std::lock_guard<std::mutex> lock(time_mutex);
-            current_time = time;
-        }
-        fontSystem->renderText(renderer, current_time, Position(START_POSITION), Colors::WHITE);
+        //fontSystem->renderText(renderer, "Hello, world!", SDL_Point(START_POSITION), Colors::WHITE);
+        // {
+        //     std::lock_guard<std::mutex> lock(time_mutex);
+        //     current_time = time;
+        // }
+        // fontSystem->renderText(renderer, current_time, SDL_Point(START_POSITION), Colors::WHITE);
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);

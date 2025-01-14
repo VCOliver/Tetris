@@ -75,5 +75,5 @@ private:
 public: 
     StopwatchBlock(Position start_pos, FontSystem* fontSystem);
 
-    void render(SDL_Renderer* renderer);
+    void render(SDL_Renderer* renderer) const;
 };
