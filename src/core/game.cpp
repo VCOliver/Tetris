@@ -50,17 +50,12 @@ void Game::run(){
     auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
 
     std::mutex time_mutex;
-    std::string time = "00:00";
-    std::string current_time = time;
+    auto watch = std::make_shared<StopwatchBlock>(Position{0, 0}, fontSystem, time_mutex);
 
     // Start the stopwatch with a callback to update the clock
-    stopwatch->start([&time, &time_mutex](int elapsed_seconds) {
-        int mins = elapsed_seconds / 60;
-        int secs = elapsed_seconds % 60;
-        {
-            std::lock_guard<std::mutex> lock(time_mutex);
-            time = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
-        }
+    stopwatch->start([&watch, &time_mutex](int elapsed_seconds) {
+        std::lock_guard<std::mutex> lock(time_mutex);
+        watch->setTime(elapsed_seconds);
     });
 
     while(true){
@@ -88,7 +83,6 @@ void Game::run(){
         auto block12 = std::make_shared<Block>(Position{center.x+3, center.y+2}, Colors::GRAY);
 
         auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
-        auto watch = std::make_shared<StopwatchBlock>(center, fontSystem);
         
 
         //renderSystem->addRenderComponent(wall, Colors::GRAY);
