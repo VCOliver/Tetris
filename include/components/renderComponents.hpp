@@ -26,10 +26,10 @@ public:
  * @brief Represents a trapezium shape with four positions.
  */
 struct Trapezium {
-    Position top_left; ///< Top-left position of the trapezium.
-    Position top_right; ///< Top-right position of the trapezium.
-    Position bottom_left; ///< Bottom-left position of the trapezium.
-    Position bottom_right; ///< Bottom-right position of the trapezium.
+    SDL_Point top_left; ///< Top-left position of the trapezium.
+    SDL_Point top_right; ///< Top-right position of the trapezium.
+    SDL_Point bottom_left; ///< Bottom-left position of the trapezium.
+    SDL_Point bottom_right; ///< Bottom-right position of the trapezium.
 
     Trapezium() = default;
 };

@@ -64,7 +64,7 @@ void Game::run(){
             }
         }
 
-        renderSystem->setBackground();
+        renderSystem->setBackground(Colors::BLACK);
 
         const Position center = render::getWindowCenter(window);
         auto block1 = std::make_shared<Block>(center, Colors::RED);
@@ -91,7 +91,7 @@ void Game::run(){
 
         //Write to screen
         //fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
-        fontSystem->renderText(renderer, time, Position(START_POSITION), Colors::WHITE);
+        fontSystem->renderText(renderer, time, Position(START_POSITION), Colors::BLACK);
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);
