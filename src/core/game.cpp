@@ -51,7 +51,7 @@ void Game::run(){
     std::string time = "00:00";
 
     // Start the stopwatch with a callback to update the clock
-    stopwatch->start([this, &time](int elapsed_seconds) {
+    stopwatch->start([&time](int elapsed_seconds) {
         int mins = elapsed_seconds / 60;
         int secs = elapsed_seconds % 60;
         time = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
