@@ -4,9 +4,12 @@
 #include <functional>
 #include <thread>
 #include <atomic>
+#include <tuple>
+#include <string>
 #include <SDL2/SDL.h>
 
 #include "utils/renderUtils.hpp"
+#include "utils/mathUtils.hpp"
 #include "systems/fontSystem.hpp"
 
 /**
@@ -69,8 +72,12 @@ public:
 
 class StopwatchBlock : public Renderable {
 private:
+    static constexpr int h = 5;
+    static constexpr int w = 6;
+    std::string time = "00:00";
     Position start_pos;
     FontSystem* fontSystem;
+    math::Matrix<std::tuple<Position, bool>, h, w> matrix;
 
 public: 
     StopwatchBlock(Position start_pos, FontSystem* fontSystem);

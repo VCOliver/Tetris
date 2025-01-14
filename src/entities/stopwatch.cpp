@@ -43,18 +43,30 @@ Stopwatch::~Stopwatch(){
 
 StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem) 
     : start_pos(start_pos), fontSystem(fontSystem){
-        
+    bool visible = false;
+    for(int y=0; y<h; y++){
+        for(int x=0; x<w; x++){
+            Position p = {start_pos.x + x, start_pos.y + y};
+            if(x == 0 || y == 0 || x == w-1 || y == h-1){
+                visible=true;
+            }
+            matrix(y, x) = std::make_tuple(p, visible);
+            visible=false;
+        }
+    }
 }
 
 void StopwatchBlock::render(SDL_Renderer* renderer) const {
+    for(auto& row : matrix){
+        for(auto& [pos, visible] : row){
+            if(visible){
+                Block block = Block(pos, Colors::GRAY);
+                block.render(renderer);
+            }
+        }
+    }
     SDL_Point p = start_pos.getRealPosition();
-    SDL_Rect rect = {p.x, p.y, 6*STD_BLOCK_W, 4*STD_BLOCK_H};
-    render::setRenderDrawColor(renderer, Colors::GRAY);
-    SDL_RenderFillRect(renderer, &rect);
-    rect = {p.x+10, p.y+10, (int)(5*STD_BLOCK_W), (int)(3*STD_BLOCK_H)};
-    render::setRenderDrawColor(renderer, Colors::BLACK);
-    SDL_RenderFillRect(renderer, &rect);
-    fontSystem->renderText(renderer, "Time:", {p.x+25, p.y+10}, Colors::WHITE);
-    fontSystem->renderText(renderer, "00:00", {p.x+25, p.y+36}, Colors::WHITE);
+    fontSystem->renderText(renderer, "Time:", {p.x+30, p.y+20}, Colors::WHITE);
+    fontSystem->renderText(renderer, "00:00", {p.x+30, p.y+45}, Colors::WHITE);
 
 }
