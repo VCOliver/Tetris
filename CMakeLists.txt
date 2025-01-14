@@ -33,6 +33,7 @@ set(SOURCES
     src/utils/shapes.cpp
     src/entities/tetrion.cpp
     src/entities/tetrominos.cpp
+    src/entities/stopwatch.cpp
 )
 
 # Add the executables
