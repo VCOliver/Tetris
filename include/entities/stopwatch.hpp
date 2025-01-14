@@ -4,8 +4,10 @@
 #include <functional>
 #include <thread>
 #include <atomic>
+#include <SDL2/SDL.h>
 
 #include "utils/renderUtils.hpp"
+#include "systems/fontSystem.hpp"
 
 /**
  * @class Stopwatch
@@ -63,4 +65,15 @@ public:
      * Ensures the thread is properly joined and resources are cleaned up.
      */
     ~Stopwatch();
+};
+
+class StopwatchBlock : public Renderable {
+private:
+    Position start_pos;
+    FontSystem* fontSystem;
+
+public: 
+    StopwatchBlock(Position start_pos, FontSystem* fontSystem);
+
+    void render(SDL_Renderer* renderer);
 };
