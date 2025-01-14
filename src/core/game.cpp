@@ -40,11 +40,22 @@ void Game::init(){
     renderSystem = new RenderSystem(renderer);
     fontSystem = new FontSystem();
     fontSystem->loadFont();
+
+    stopwatch = new Stopwatch();
 }   
 
 void Game::run(){
 
     auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
+
+    std::string time = "00:00";
+
+    // Start the stopwatch with a callback to update the clock
+    stopwatch->start([this, &time](int elapsed_seconds) {
+        int mins = elapsed_seconds / 60;
+        int secs = elapsed_seconds % 60;
+        time = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
+    });
 
     while(true){
         while (SDL_PollEvent(&event)) {
@@ -79,7 +90,8 @@ void Game::run(){
         //renderSystem->render();
 
         //Write to screen
-        fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
+        //fontSystem->renderText(renderer, "Hello, world!", Position(START_POSITION), Colors::WHITE);
+        fontSystem->renderText(renderer, time, Position(START_POSITION), Colors::WHITE);
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);
@@ -90,6 +102,7 @@ void Game::close(){
     // Clean up
     delete renderSystem;
     delete fontSystem;
+    delete stopwatch;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

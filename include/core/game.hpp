@@ -4,6 +4,7 @@
 
 #include "entities/tetrominos.hpp"
 #include "entities/tetrion.hpp"
+#include "entities/stopwatch.hpp"
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"
@@ -21,6 +22,7 @@ class Game {
 
     RenderSystem* renderSystem; ///< Pointer to the RenderSystem for managing rendering.
     FontSystem* fontSystem;
+    Stopwatch* stopwatch;
 
 public:
     /**
