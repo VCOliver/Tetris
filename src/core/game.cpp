@@ -48,14 +48,11 @@ void Game::init(){
 
 void Game::run(){
 
-    const auto tetrion_pos = Position({14, 3});
-    const auto score_pos = Position({tetrion_pos.x+TETRION_W, tetrion_pos.y});
-    const auto watch_pos = Position({score_pos.x, score_pos.y+4});
-    int x = std::rand() % (TETRION_W-1);
-    const auto tetro_pos = Position({tetrion_pos.x + x, 2});
+    const Position tetrion_pos = {14, 3};
+    const Position score_pos = {tetrion_pos.x+TETRION_W, tetrion_pos.y};
+    const Position watch_pos = {score_pos.x, score_pos.y+4};
 
     auto field = std::make_shared<Playfield>(tetrion_pos);
-    auto tetro = std::make_shared<Tetrominos>(tetro_pos, Colors::RED);
     auto score = std::make_shared<ScoreBlock>(score_pos, fontSystem);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos, fontSystem);
     watch->setTime(0);
@@ -65,7 +62,6 @@ void Game::run(){
         watch->setTime(elapsed_seconds);
     });
 
-    renderSystem->addRenderComponent(tetro);
     renderSystem->addRenderComponent(field);
     renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
