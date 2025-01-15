@@ -9,11 +9,11 @@
 
 class FontSystem {
     TTF_Font* font;
-    const std::string fontPath = "assets/fonts/PixelifySans-Regular.ttf";
+    const std::string fontPath = "assets/fonts/Minecraftia-Regular.ttf";
     int size;
 
 public:
-    FontSystem(int size = 24);
+    FontSystem(int size = 20);
     ~FontSystem();
 
     void setFontSize(int size);
