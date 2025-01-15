@@ -18,5 +18,7 @@ public:
 
     void setFontSize(int size);
     bool loadFont();
-    void renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color);
+    SDL_Surface* createSurface(const std::string& text, Color color);
+    void renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) const;
+    void renderText(SDL_Renderer* renderer, SDL_Surface* surface, SDL_Point pos, bool destroySurface=false) const;
 };

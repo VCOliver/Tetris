@@ -76,13 +76,13 @@ void StopwatchBlock::render(SDL_Renderer* renderer) const {
         }
     }
     SDL_Point p = start_pos.getRealPosition();
-    fontSystem->renderText(renderer, "Time:", {p.x+30, p.y+20}, Colors::WHITE);
+    fontSystem->renderText(renderer, "Time:", {p.x+50, p.y+20}, Colors::WHITE);
     int temp = getTime();
     if(temp > 0) current_time = temp;
     int mins = current_time / 60;
     int secs = current_time % 60;
     std::string time_s = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
 
-    fontSystem->renderText(renderer, time_s, {p.x+30, p.y+45}, Colors::WHITE);
+    fontSystem->renderText(renderer, time_s, {p.x+47, p.y+45}, Colors::WHITE);
 
 }

@@ -86,7 +86,7 @@ private:
     /**
      * @brief Width of the stopwatch block.
      */
-    static constexpr int w = 6;
+    static constexpr int w = 8;
 
     /**
      * @brief Current time of the stopwatch in atomic storage for thread safety.
