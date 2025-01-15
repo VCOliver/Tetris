@@ -9,6 +9,9 @@
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"
 
+constexpr int FRAME_RATE = 24;
+constexpr int FRAME_DELAY = 1000 / FRAME_RATE; // Time per frame in milliseconds
+
 /**
  * @class Game
  * @brief Manages the game lifecycle including initialization, running, and closing.

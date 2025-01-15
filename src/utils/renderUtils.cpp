@@ -2,6 +2,7 @@
 #include "utils/mathUtils.hpp"
 
 namespace render {
+
     const Position getWindowCenter(SDL_Window* window){
     int w;
     int h;

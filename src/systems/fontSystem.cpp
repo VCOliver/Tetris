@@ -15,8 +15,17 @@ FontSystem::~FontSystem() {
     TTF_Quit();
 }
 
-void FontSystem::setFontSize(int size){
-    this->size = size;
+void FontSystem::setFontSize(int size) {
+    if (this->size != size) {
+        this->size = size;
+        if (font) {
+            TTF_CloseFont(font);
+        }
+        font = TTF_OpenFont(fontPath.c_str(), size);
+        if (!font) {
+            std::cerr << "Failed to reload font: " << TTF_GetError() << "\n";
+        }
+    }
 }
 
 bool FontSystem::loadFont() {
@@ -29,7 +38,10 @@ bool FontSystem::loadFont() {
 }
 
 void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) {
-    if (!font) return;
+    if (!font) {
+        std::cerr << "Font not initialized!\n";
+        return;
+    }
 
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color.toSDL_Color());
     if (!surface) {

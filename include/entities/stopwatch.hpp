@@ -6,7 +6,6 @@
 #include <atomic>
 #include <tuple>
 #include <string>
-#include <mutex>
 #include <SDL2/SDL.h>
 
 #include "utils/renderUtils.hpp"
@@ -75,14 +74,14 @@ class StopwatchBlock : public Renderable {
 private:
     static constexpr int h = 5;
     static constexpr int w = 6;
-    int time;
-    std::mutex& mtx;
+    std::atomic<int> time;
+    mutable int current_time = 0;
     Position start_pos;
     FontSystem* fontSystem;
     math::Matrix<std::tuple<Position, bool>, h, w> matrix;
 
 public: 
-    StopwatchBlock(Position start_pos, FontSystem* fontSystem, std::mutex& time_mutex);
+    StopwatchBlock(Position start_pos, FontSystem* fontSystem);
 
     void setTime(int time);
     int getTime() const ;

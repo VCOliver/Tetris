@@ -1,5 +1,4 @@
 #include <iostream>
-#include <mutex>
 
 #include "core/game.hpp"
 
@@ -49,16 +48,19 @@ void Game::run(){
 
     auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
 
-    std::mutex time_mutex;
-    auto watch = std::make_shared<StopwatchBlock>(Position{0, 0}, fontSystem, time_mutex);
+    auto watch = std::make_shared<StopwatchBlock>(Position{0, 0}, fontSystem);
+    watch->setTime(0);
 
     // Start the stopwatch with a callback to update the clock
-    stopwatch->start([&watch, &time_mutex](int elapsed_seconds) {
-        std::lock_guard<std::mutex> lock(time_mutex);
+    stopwatch->start([&watch, this](int elapsed_seconds) {
         watch->setTime(elapsed_seconds);
     });
 
+    renderSystem->addRenderComponent(watch);
+
     while(true){
+        Uint32 frameStart = SDL_GetTicks();
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 return;
@@ -67,55 +69,20 @@ void Game::run(){
 
         renderSystem->setBackground();
 
-        //const Position center = render::getWindowCenter(window);
-        const Position center = START_POSITION;
-        auto block1 = std::make_shared<Block>(center, Colors::RED);
-        auto block2 = std::make_shared<Block>(Position{center.x+1, center.y}, Colors::CYAN);
-        auto block3 = std::make_shared<Block>(Position{center.x+2, center.y}, Colors::ORANGE);
-        auto block4 = std::make_shared<Block>(Position{center.x+1, center.y+1}, Colors::PURPLE);
-        auto block5 = std::make_shared<Block>(Position{center.x+2, center.y+1}, Colors::YELLOW);
-        auto block6 = std::make_shared<Block>(Position{center.x, center.y+1}, Colors::GREEN);
-        auto block7 = std::make_shared<Block>(Position{center.x+3, center.y}, Colors::GRAY);
-        auto block8 = std::make_shared<Block>(Position{center.x+3, center.y+1}, Colors::GRAY);
-        auto block9 = std::make_shared<Block>(Position{center.x+1, center.y+2}, Colors::PURPLE);
-        auto block10 = std::make_shared<Block>(Position{center.x+2, center.y+2}, Colors::YELLOW);
-        auto block11 = std::make_shared<Block>(Position{center.x, center.y+2}, Colors::GREEN);
-        auto block12 = std::make_shared<Block>(Position{center.x+3, center.y+2}, Colors::GRAY);
-
-        auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
-        
-
-        //renderSystem->addRenderComponent(wall, Colors::GRAY);
-        // renderSystem->addRenderComponent(tetro);
-
-        // renderSystem->addRenderComponent(block1);
-        // renderSystem->addRenderComponent(block2);
-        // renderSystem->addRenderComponent(block3);
-        // renderSystem->addRenderComponent(block4);
-        // renderSystem->addRenderComponent(block5);
-        // renderSystem->addRenderComponent(block6);
-        // renderSystem->addRenderComponent(block7);
-        // renderSystem->addRenderComponent(block8);
-        // renderSystem->addRenderComponent(block9);
-        // renderSystem->addRenderComponent(block10);
-        // renderSystem->addRenderComponent(block11);
-        // renderSystem->addRenderComponent(block12);
-
-        renderSystem->addRenderComponent(watch);
-
 
         renderSystem->render();
 
-        //Write to screen
-        //fontSystem->renderText(renderer, "Hello, world!", SDL_Point(START_POSITION), Colors::WHITE);
-        // {
-        //     std::lock_guard<std::mutex> lock(time_mutex);
-        //     current_time = time;
-        // }
-        // fontSystem->renderText(renderer, current_time, SDL_Point(START_POSITION), Colors::WHITE);
-
         // Atualizar a tela
         SDL_RenderPresent(renderer);
+
+        // Calculate frame duration
+        Uint32 frameTime = SDL_GetTicks() - frameStart;
+
+        if (frameTime < FRAME_DELAY) {
+            SDL_Delay(FRAME_DELAY - frameTime); // Delay to maintain 30 FPS
+        }
+
+
     }
 }
 

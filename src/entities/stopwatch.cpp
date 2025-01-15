@@ -41,8 +41,10 @@ Stopwatch::~Stopwatch(){
     stop();
 }
 
-StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem, std::mutex& time_mutex) 
-    : start_pos(start_pos), fontSystem(fontSystem), time(0), mtx(time_mutex){
+///////////////////////////
+
+StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem) 
+    : start_pos(start_pos), fontSystem(fontSystem), time(0){
     bool visible = false;
     for(int y=0; y<h; y++){
         for(int x=0; x<w; x++){
@@ -57,11 +59,11 @@ StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem, std::
 }
 
 void StopwatchBlock::setTime(int time){
-    this->time = time;
+    this->time.store(time, std::memory_order_relaxed);
 }
 
 int StopwatchBlock::getTime() const {
-    return this->time;
+    return this->time.load(std::memory_order_relaxed);
 }
 
 void StopwatchBlock::render(SDL_Renderer* renderer) const {
@@ -75,14 +77,12 @@ void StopwatchBlock::render(SDL_Renderer* renderer) const {
     }
     SDL_Point p = start_pos.getRealPosition();
     fontSystem->renderText(renderer, "Time:", {p.x+30, p.y+20}, Colors::WHITE);
-    static int current_time = 0;
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        current_time = time;
-    }
+    int temp = getTime();
+    if(temp > 0) current_time = temp;
     int mins = current_time / 60;
     int secs = current_time % 60;
     std::string time_s = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
+
     fontSystem->renderText(renderer, time_s, {p.x+30, p.y+45}, Colors::WHITE);
 
 }
