@@ -47,8 +47,9 @@ void Game::init(){
 void Game::run(){
 
     auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
+    auto score = std::make_shared<ScoreBlock>(Position(START_POSITION), fontSystem);
 
-    auto watch = std::make_shared<StopwatchBlock>(Position{0, 0}, fontSystem);
+    auto watch = std::make_shared<StopwatchBlock>(Position{0, 4}, fontSystem);
     watch->setTime(0);
 
     // Start the stopwatch with a callback to update the clock
@@ -56,6 +57,7 @@ void Game::run(){
         watch->setTime(elapsed_seconds);
     });
 
+    renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
 
     while(true){
@@ -69,6 +71,7 @@ void Game::run(){
 
         renderSystem->setBackground();
 
+        score->increment_score(11);
 
         renderSystem->render();
 
