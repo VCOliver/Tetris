@@ -12,7 +12,7 @@ Tetrion::Tetrion(Position start_pos)
             if(x == 0 || y == 0 || x == TETRION_W-1 || y == TETRION_H-1){
                 visible=true;
             }
-            matrix(y, x) = std::make_tuple(p, visible);
+            matrix(x, y) = std::make_tuple(p, visible);
             visible=false;
         }
     }

@@ -11,7 +11,7 @@ Tetrominos::Tetrominos(Position start_pos, Color color)
         for(int x = 0; x<SHAPES_MATRIX_W; x++){
             Position p = {start_pos.x + x, start_pos.y + y};
             bool visible = shape(y, x);
-            matrix(y, x) = std::make_tuple(p, visible);
+            matrix(x, y) = std::make_tuple(p, visible);
         }
     }
 }

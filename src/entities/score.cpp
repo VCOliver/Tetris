@@ -10,7 +10,7 @@ ScoreBlock::ScoreBlock(Position pos, FontSystem* fontSystem)
             if(x == 0 || y == 0 || x == w-1 || y == h-1){
                 visible=true;
             }
-            matrix(y, x) = std::make_tuple(p, visible);
+            matrix(x, y) = std::make_tuple(p, visible);
             visible=false;
         }
     }
