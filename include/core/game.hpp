@@ -5,6 +5,7 @@
 #include "entities/tetrominos.hpp"
 #include "entities/tetrion.hpp"
 #include "entities/stopwatch.hpp"
+#include "entities/score.hpp"
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"

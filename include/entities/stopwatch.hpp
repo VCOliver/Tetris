@@ -70,21 +70,76 @@ public:
     ~Stopwatch();
 };
 
+/**
+ * @class StopwatchBlock
+ * @brief A class representing a stopwatch block that can be rendered on the screen.
+ * 
+ * This class provides functionality to manage a stopwatch's time, position, and rendering details.
+ */
 class StopwatchBlock : public Renderable {
 private:
+    /**
+     * @brief Height of the stopwatch block.
+     */
     static constexpr int h = 5;
+
+    /**
+     * @brief Width of the stopwatch block.
+     */
     static constexpr int w = 6;
+
+    /**
+     * @brief Current time of the stopwatch in atomic storage for thread safety.
+     */
     std::atomic<int> time;
+
+    /**
+     * @brief A mutable cache for the current time, used during rendering operations.
+     */
     mutable int current_time = 0;
+
+    /**
+     * @brief The starting position of the stopwatch block on the screen.
+     */
     Position start_pos;
+
+    /**
+     * @brief Pointer to the font system used for rendering text.
+     */
     FontSystem* fontSystem;
+
+    /**
+     * @brief A matrix containing tuples of positions and booleans to define the layout of the stopwatch block.
+     */
     math::Matrix<std::tuple<Position, bool>, h, w> matrix;
 
-public: 
+public:
+    /**
+     * @brief Constructs a StopwatchBlock object.
+     * 
+     * @param start_pos The starting position of the stopwatch block.
+     * @param fontSystem A pointer to the FontSystem used for rendering text.
+     */
     StopwatchBlock(Position start_pos, FontSystem* fontSystem);
 
+    /**
+     * @brief Sets the current time of the stopwatch.
+     * 
+     * @param time The time to set (in arbitrary units).
+     */
     void setTime(int time);
-    int getTime() const ;
 
+    /**
+     * @brief Retrieves the current time of the stopwatch.
+     * 
+     * @return The current time of the stopwatch (in arbitrary units).
+     */
+    int getTime() const;
+
+    /**
+     * @brief Renders the stopwatch block on the screen.
+     * 
+     * @param renderer A pointer to the SDL_Renderer used for rendering graphics.
+     */
     void render(SDL_Renderer* renderer) const;
 };
