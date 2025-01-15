@@ -12,7 +12,7 @@ RenderSystem::~RenderSystem(){
 
 void RenderSystem::setBackground(Color color){
     // Limpar a tela
-    render::setRenderDrawColor(renderer, color); // Cor preta para o fundo
+    render::setRenderDrawColor(renderer, color); // Cor para o fundo
     SDL_RenderClear(renderer);
 }
 

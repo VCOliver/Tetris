@@ -20,6 +20,7 @@ struct Triangle {
 
 namespace render {
 
+
     /**
      * @brief Gets the center Position for possible block coordinates of the given SDL_Window.
      * 

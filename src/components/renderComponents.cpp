@@ -7,7 +7,7 @@
 BlockBorder::BlockBorder(Position start_position, int thickness)
     : thickness(thickness)
 {
-    Position start_pos = start_position.getRealPosition();
+    SDL_Point start_pos = start_position.getRealPosition();
     light[0] =  {start_pos, 
                 {start_pos.x + thickness, start_pos.y+thickness}, 
                 {start_pos.x, start_pos.y + STD_BLOCK_H}, 
@@ -16,7 +16,7 @@ BlockBorder::BlockBorder(Position start_position, int thickness)
                 {start_pos.x + STD_BLOCK_W, start_pos.y}, 
                 {start_pos.x+thickness, start_pos.y + thickness}, 
                 {start_pos.x + STD_BLOCK_H - thickness, start_pos.y + thickness}};
-    Position end_pos = {start_pos.x + STD_BLOCK_W, start_pos.y + STD_BLOCK_H};
+    SDL_Point end_pos = {start_pos.x + STD_BLOCK_W, start_pos.y + STD_BLOCK_H};
     shadow[0] = {{end_pos.x-STD_BLOCK_W+thickness, end_pos.y-thickness}, 
                 {end_pos.x -thickness, end_pos.y-thickness}, 
                 {end_pos.x-STD_BLOCK_W, end_pos.y}, 
@@ -59,7 +59,7 @@ Block::~Block(){
 }
 
 void Block::render(SDL_Renderer* renderer) const {
-    Position p = this->pos.getRealPosition();
+    SDL_Point p = this->pos.getRealPosition();
     int h = this->height;
     int w = this->width;
 

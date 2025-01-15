@@ -38,13 +38,29 @@ void Game::init(){
     }
 
     renderSystem = new RenderSystem(renderer);
+    fontSystem = new FontSystem();
+    fontSystem->loadFont();
+
+    stopwatch = new Stopwatch();
 }   
 
 void Game::run(){
 
     auto tetro = std::make_shared<Tetrominos>(Position(START_POSITION), Colors::PURPLE);
 
+    auto watch = std::make_shared<StopwatchBlock>(Position{0, 0}, fontSystem);
+    watch->setTime(0);
+
+    // Start the stopwatch with a callback to update the clock
+    stopwatch->start([&watch, this](int elapsed_seconds) {
+        watch->setTime(elapsed_seconds);
+    });
+
+    renderSystem->addRenderComponent(watch);
+
     while(true){
+        Uint32 frameStart = SDL_GetTicks();
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 return;
@@ -53,38 +69,28 @@ void Game::run(){
 
         renderSystem->setBackground();
 
-        const Position center = render::getWindowCenter(window);
-        auto block1 = std::make_shared<Block>(center, Colors::RED);
-        auto block2 = std::make_shared<Block>(Position{center.x+1, center.y}, Colors::CYAN);
-        auto block3 = std::make_shared<Block>(Position{center.x-1, center.y}, Colors::ORANGE);
-        auto block4 = std::make_shared<Block>(Position{center.x+1, center.y-1}, Colors::PURPLE);
-        auto block5 = std::make_shared<Block>(Position{center.x-1, center.y-1}, Colors::YELLOW);
-        auto block6 = std::make_shared<Block>(Position{center.x, center.y-1}, Colors::GREEN);
-
-        auto wall = std::make_shared<Tetrion>(Position(START_POSITION));
-        
-
-        //renderSystem->addRenderComponent(wall, Colors::GRAY);
-        // renderSystem->addRenderComponent(tetro);
-
-        renderSystem->addRenderComponent(block1);
-        renderSystem->addRenderComponent(block2);
-        renderSystem->addRenderComponent(block3);
-        renderSystem->addRenderComponent(block4);
-        renderSystem->addRenderComponent(block5);
-        renderSystem->addRenderComponent(block6);
-
 
         renderSystem->render();
 
         // Atualizar a tela
         SDL_RenderPresent(renderer);
+
+        // Calculate frame duration
+        Uint32 frameTime = SDL_GetTicks() - frameStart;
+
+        if (frameTime < FRAME_DELAY) {
+            SDL_Delay(FRAME_DELAY - frameTime); // Delay to maintain 30 FPS
+        }
+
+
     }
 }
 
 void Game::close(){
     // Clean up
     delete renderSystem;
+    delete fontSystem;
+    delete stopwatch;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
