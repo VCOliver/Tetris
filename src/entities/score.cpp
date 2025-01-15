@@ -10,14 +10,15 @@ ScoreBlock::ScoreBlock(Position pos, FontSystem* fontSystem)
             if(x == 0 || y == 0 || x == w-1 || y == h-1){
                 visible=true;
             }
-            matrix(y, x) = std::make_tuple(p, visible);
+            matrix(x, y) = std::make_tuple(p, visible);
             visible=false;
         }
     }
 }
 
 void ScoreBlock::increment_score(int points){
-    this->score += points;
+    int temp = (score+points) % 10000000;
+    this->score = temp;
 }
 
 void ScoreBlock::render(SDL_Renderer* renderer) const {
@@ -30,6 +31,10 @@ void ScoreBlock::render(SDL_Renderer* renderer) const {
         }
     }
     SDL_Point p = start_pos.getRealPosition();
-    fontSystem->renderText(renderer, "Score:", {p.x+30, p.y+20}, Colors::WHITE);
-    fontSystem->renderText(renderer, std::to_string(score), {p.x+30, p.y+45}, Colors::WHITE);
+    fontSystem->renderText(renderer, "Score:", {p.x+40, p.y+20}, Colors::WHITE);
+    SDL_Surface* surface = fontSystem->createSurface(std::to_string(score), Colors::WHITE);
+    p = Position({start_pos.x + w-1, start_pos.y+2}).getRealPosition();
+    p.x -= surface->w + 7;
+    p.y += 5;
+    fontSystem->renderText(renderer, surface, p, true);
 }

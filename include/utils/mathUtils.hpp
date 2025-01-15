@@ -39,11 +39,11 @@ namespace math {
         }
 
         // Overload () for multi-dimensional access
-        T& operator()(size_t row, size_t col) {
+        T& operator()(size_t col, size_t row) {
             return data[row][col];
         }
 
-        const T& operator()(size_t row, size_t col) const {
+        const T& operator()(size_t col, size_t row) const {
             return data[row][col];
         }
 

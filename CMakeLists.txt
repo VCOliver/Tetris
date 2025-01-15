@@ -35,6 +35,7 @@ set(SOURCES
     src/entities/tetrominos.cpp
     src/entities/stopwatch.cpp
     src/entities/score.cpp
+    src/entities/playfield.cpp
 )
 
 # Add the executables
