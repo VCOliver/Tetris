@@ -54,7 +54,7 @@ void Game::run(){
     int x = std::rand() % (TETRION_W-1);
     const auto tetro_pos = Position({tetrion_pos.x + x, 2});
 
-    auto wall = std::make_shared<Tetrion>(tetrion_pos);
+    auto field = std::make_shared<Playfield>(tetrion_pos);
     auto tetro = std::make_shared<Tetrominos>(tetro_pos, Colors::RED);
     auto score = std::make_shared<ScoreBlock>(score_pos, fontSystem);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos, fontSystem);
@@ -66,7 +66,7 @@ void Game::run(){
     });
 
     renderSystem->addRenderComponent(tetro);
-    renderSystem->addRenderComponent(wall);
+    renderSystem->addRenderComponent(field);
     renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
 
