@@ -6,7 +6,6 @@
 
 Tetrominos::Tetrominos(Position start_pos, Color color) 
     : start_pos(start_pos), color(color){
-    std::srand(std::time(nullptr)); // Seed the random number generator
     auto shape = getRandomShape();
     for(int y = 0; y<SHAPES_MATRIX_H; y++){
         for(int x = 0; x<SHAPES_MATRIX_W; x++){
