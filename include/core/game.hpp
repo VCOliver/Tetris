@@ -9,6 +9,7 @@
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"
+#include "events/event.hpp"
 
 constexpr int FRAME_RATE = 24;
 constexpr int FRAME_DELAY = 1000 / FRAME_RATE; // Time per frame in milliseconds
@@ -22,8 +23,8 @@ class Game {
 
     SDL_Window* window; ///< Pointer to the SDL_Window.
     SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
-    SDL_Event event; ///< SDL_Event for handling events.
 
+    EventManager eventManager;
     RenderSystem* renderSystem; ///< Pointer to the RenderSystem for managing rendering.
     FontSystem* fontSystem;
     Stopwatch* stopwatch;

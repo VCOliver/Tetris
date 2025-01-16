@@ -26,6 +26,7 @@ set(SOURCES
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
     src/systems/fontSystem.cpp
+    src/systems/physicsSystem.cpp
     src/utils/position.cpp
     src/utils/colors.cpp
     src/utils/renderUtils.cpp
@@ -36,6 +37,10 @@ set(SOURCES
     src/entities/stopwatch.cpp
     src/entities/score.cpp
     src/entities/playfield.cpp
+    src/events/eventManager.cpp
+    src/input/inputManager.cpp
+    src/input/inputMapping.cpp
+    src/commands/commands.cpp
 )
 
 # Add the executables

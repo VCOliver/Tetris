@@ -69,11 +69,7 @@ void Game::run(){
     while(true){
         Uint32 frameStart = SDL_GetTicks();
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                return;
-            }
-        }
+        eventManager.pollEvents(); // Working
 
         renderSystem->setBackground();
 
