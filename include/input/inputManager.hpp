@@ -8,9 +8,12 @@ class InputManager {
 private:
     std::unique_ptr<InputMapping> inputMapping;
 
+    void handleKeydown(SDL_Keycode key);
+    void handleKeyup(SDL_Keycode key);
+
 public:
 
     explicit InputManager(std::unique_ptr<InputMapping> mapping);
 
-    void handleInput(SDL_KeyCode key);
+    void handleInput(SDL_Event e);
 };

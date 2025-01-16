@@ -11,22 +11,21 @@
 class EventManager {
 public:
     enum EventType {
-        QUIT,
-        KEY_DOWN,
-        KEY_UP
+        QUIT = SDL_QUIT,
+        KEY_DOWN = SDL_KEYDOWN,
+        KEY_UP = SDL_KEYUP
     };
-
+private: 
+    using callback_t = std::function<void(const SDL_Event&)>;
+public:
+    void addListener(EventType type, callback_t callback);
+    void handleEvents();
 private:
-
-    using quit_handler = std::function<void(void)>;
-    using keyboard_handler = std::function<void(Input)>;
-    using callback_t = std::variant<quit_handler, keyboard_handler>;
 
 
     SDL_Event event; ///< SDL_Event for handling events.
 
-    void handleEvents();
-    void addListener(EventType type, callback_t callback);
+    void NotifyAll();
 
     std::unordered_map<EventType, std::vector<callback_t>> eventListeners;
 };

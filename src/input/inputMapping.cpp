@@ -6,11 +6,11 @@ InputMapping::InputMapping(){
     };
 }
 
-void InputMapping::bindKey(SDL_KeyCode key, command_ptr command){
+void InputMapping::bindKey(SDL_Keycode key, command_ptr command){
     command_map[key] = command;
 }
 
-InputMapping::command_ptr InputMapping::getCommand(SDL_KeyCode key) const {
+InputMapping::command_ptr InputMapping::getCommand(SDL_Keycode key) const {
     auto it = command_map.find(key); // Use find to locate the key
     if (it != command_map.end()) {
         return it->second; // Access the value via the iterator

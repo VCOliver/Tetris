@@ -43,6 +43,9 @@ void Game::init(){
 
     stopwatch = new Stopwatch();
 
+    auto inputMapping = std::make_unique<InputMapping>();
+    inputManager = new InputManager(std::move(inputMapping));
+
     std::srand(std::time(nullptr)); // Seed the random number generator
 }   
 
@@ -66,14 +69,18 @@ void Game::run(){
     renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
 
+    eventManager.addListener(EventType::KEY_DOWN, [this](const SDL_Event& event) {
+        inputManager->handleInput(event);
+    });
+
     while(true){
         Uint32 frameStart = SDL_GetTicks();
 
-        eventManager.pollEvents(); // Working
+        eventManager.handleEvents(); // Working
 
         renderSystem->setBackground();
 
-        score->increment_score(91119);
+        score->increment_score(2);
 
         renderSystem->render();
 
@@ -96,6 +103,7 @@ void Game::close(){
     delete renderSystem;
     delete fontSystem;
     delete stopwatch;
+    delete inputManager;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
