@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 /// @brief Defines the default start position as {0, 0} from the top left corner.
 #define START_POSITION {0, 0}

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <array>
-#include <iostream>
+#include "pch.h"
 #include <initializer_list>
 
 #include "position.hpp"

@@ -1,8 +1,6 @@
 #pragma once
 
-#include <array>
-#include <tuple>
-#include <unordered_map>
+#include "pch.h"
 
 #include "utils/shapes.hpp"
 #include "utils/colors.hpp"
@@ -11,18 +9,30 @@
 #include "components/renderComponents.hpp"
 
 class Tetrominos : public Renderable {
-using Matrix = math::Matrix<std::tuple<Position, bool>, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
-using shapes_map = std::unordered_map<char, shapes::Matrix>;
+public:
+    enum AllowedMovementDirections {
+        RIGHT,
+        LEFT,
+        DOWN
+    };
 
 private:
+    using Matrix = math::Matrix<std::tuple<Position, bool>, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
+    using shapes_map = std::unordered_map<char, shapes::Matrix>;
+    using Dir = AllowedMovementDirections;
     Matrix matrix;
     Position start_pos;
     Color color;
+    void moveDown();
 
 public:
+
     Tetrominos(Position start_pos, Color color);
+    Tetrominos(Position start_pos, Color color, shapes::Matrix shape);
 
     shapes::Matrix getRandomShape() const;
+
+    void move(Dir dir);
 
     void render(SDL_Renderer* renderer) const;
 };

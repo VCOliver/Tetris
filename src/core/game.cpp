@@ -73,6 +73,11 @@ void Game::run(){
         inputManager->handleInput(event);
     });
 
+    eventManager.addListener(EventType::QUIT, [this](const SDL_Event& event){
+        this->close();
+        exit(1);
+    });
+
     while(true){
         Uint32 frameStart = SDL_GetTicks();
 

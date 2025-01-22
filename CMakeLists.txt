@@ -52,6 +52,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2TT
 # Link SDL2 library
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
 
+# Add precompiled headers
+target_precompile_headers(${PROJECT_NAME} PRIVATE include/pch.h)
+
 # Copy assets folder after build
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "tetrion.hpp"
 #include "tetrominos.hpp"

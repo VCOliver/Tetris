@@ -1,10 +1,6 @@
 #pragma once
 
-#include <unordered_map>
-#include <vector>
-#include <variant>
-#include <functional>
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "input/inputMapping.hpp"
 
