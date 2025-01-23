@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "window.hpp"
 #include "entities/tetrominos.hpp"
 #include "entities/playfield.hpp"
 #include "entities/stopwatch.hpp"
@@ -27,7 +28,7 @@ constexpr int FRAME_DELAY = 1000 / FRAME_RATE; // Time per frame in milliseconds
 class Game {
     int width, height; ///< Width and height of the game window.
 
-    SDL_Window* window; ///< Pointer to the SDL_Window.
+    std::unique_ptr<Window> window;
     SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
 
     InputManager* inputManager;
