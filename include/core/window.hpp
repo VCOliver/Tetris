@@ -2,6 +2,7 @@
 
 #include "pch.h"
 
+#include "utils/position.hpp"
 #include "events/event.hpp"
 
 class Window {
@@ -21,6 +22,7 @@ public:
     inline void onUpdate(){}
     unsigned int getHeight() const;
     unsigned int getWidth() const;
+    const Position getWindowCenter();
     void setEventCallback(const EventCallback& callback);
 private:
     void shutdown();

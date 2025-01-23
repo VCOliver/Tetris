@@ -40,6 +40,17 @@ unsigned int Window::getWidth() const {
     return width;
 }
 
+const Position Window::getWindowCenter(){
+    int w;
+    int h;
+    SDL_GetWindowSize(window, &w, &h);
+    w /= 2;
+    h /= 2;
+    w /= STD_BLOCK_W;
+    h /= STD_BLOCK_H;
+    return {w, h};
+}
+
 void Window::setEventCallback(const EventCallback& callback){
     data.eventCallback = callback; 
 }

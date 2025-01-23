@@ -2,8 +2,9 @@
 
 #include "pch.h"
 
+#include "core/base.hpp"
+#include "utils/mathUtils.hpp"
 #include "utils/position.hpp"
-#include "component.hpp"
 #include "utils/colors.hpp"
 
 /// @brief Render components Interface
@@ -22,27 +23,14 @@ public:
 };
 
 /**
- * @struct Trapezium
- * @brief Represents a trapezium shape with four positions.
- */
-struct Trapezium {
-    SDL_Point top_left; ///< Top-left position of the trapezium.
-    SDL_Point top_right; ///< Top-right position of the trapezium.
-    SDL_Point bottom_left; ///< Bottom-left position of the trapezium.
-    SDL_Point bottom_right; ///< Bottom-right position of the trapezium.
-
-    Trapezium() = default;
-};
-
-/**
  * @class BlockBorder
  * @brief Represents the border of a block with light and shadow trapeziums.
  */
 class BlockBorder : public IRenderComponent {
 private:
     int thickness; ///< Thickness of the border.
-    Trapezium light[2]; ///< Light trapeziums for the border.
-    Trapezium shadow[2]; ///< Shadow trapeziums for the border.
+    math::Trapezium light[2]; ///< Light trapeziums for the border.
+    math::Trapezium shadow[2]; ///< Shadow trapeziums for the border.
 
 public:
     /**

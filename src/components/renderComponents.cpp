@@ -2,7 +2,7 @@
 
 #include "components/renderComponents.hpp"
 #include "utils/colors.hpp"
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
 
 BlockBorder::BlockBorder(Position start_position, int thickness)
     : thickness(thickness)
@@ -29,8 +29,8 @@ BlockBorder::BlockBorder(Position start_position, int thickness)
 
 
 void BlockBorder::render(SDL_Renderer* renderer) const {
-    SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
-    render::setRenderDrawColor(renderer, Colors::WHITE, 80);
+    Renderer::setDrawBlendMode(BlendMode::BLEND); // Enable blending mode
+    Renderer::setRenderDrawColor(Colors::WHITE, 80);
 
     // Draw upper border lines
     for(int i = 0; i < 2; i++){

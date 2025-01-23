@@ -17,7 +17,7 @@ void Game::init(){
 
     
 
-    renderSystem = new RenderSystem(renderer);
+    Renderer::Init(window.getSDL_Window());
     fontSystem = new FontSystem();
     fontSystem->loadFont();
 
