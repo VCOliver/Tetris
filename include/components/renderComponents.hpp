@@ -19,7 +19,7 @@
 class IRenderComponent{
 public:
     virtual ~IRenderComponent() = default;
-    virtual void render(SDL_Renderer* renderer) const = 0;        
+    virtual void render() const = 0;        
 };
 
 /**
@@ -42,11 +42,9 @@ public:
     BlockBorder(Position start_position, int thickness=STD_LINE_THICKNESS);
 
     /**
-     * @brief Renders the block border using the given SDL_Renderer.
-     * 
-     * @param renderer Pointer to the SDL_Renderer.
+     * @brief Renders the block.
      */
-    void render(SDL_Renderer* renderer) const override;
+    void render() const override;
 };
 
 /**
@@ -78,9 +76,7 @@ public:
     ~Block();
 
     /**
-     * @brief Renders the block using the given SDL_Renderer.
-     * 
-     * @param renderer Pointer to the SDL_Renderer.
+     * @brief Renders the block 
      */
-    void render(SDL_Renderer* renderer) const override;
+    void render() const override;
 };
