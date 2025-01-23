@@ -16,6 +16,17 @@ Tetrominos::Tetrominos(Position start_pos, Color color)
     }
 }
 
+Tetrominos::Tetrominos(Position start_pos, Color color, shapes::Matrix shape) 
+    : start_pos(start_pos), color(color){
+    for(int y = 0; y<SHAPES_MATRIX_H; y++){
+        for(int x = 0; x<SHAPES_MATRIX_W; x++){
+            Position p = {start_pos.x + x, start_pos.y + y};
+            bool visible = shape(x, y);
+            matrix(x, y) = std::make_tuple(p, visible);
+        }
+    }
+}
+
 shapes::Matrix Tetrominos::getRandomShape() const {
     std::array<char, 7> keys;
     int i=0;
@@ -27,6 +38,14 @@ shapes::Matrix Tetrominos::getRandomShape() const {
     int randomIndex = std::rand() % keys.size();
     char randomKey = keys[randomIndex];
     return shapes::shapes_map.at(randomKey);
+
+}
+
+void Tetrominos::moveDown(){
+    
+}
+
+void Tetrominos::move(Dir dir){
 
 }
 

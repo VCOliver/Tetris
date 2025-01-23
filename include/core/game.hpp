@@ -1,6 +1,8 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <queue>
+
+#include "pch.h"
 
 #include "entities/tetrominos.hpp"
 #include "entities/playfield.hpp"
@@ -9,6 +11,11 @@
 #include "utils/renderUtils.hpp"
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"
+#include "events/event.hpp"
+#include "events/keyEvent.hpp"
+#include "events/windowEvent.hpp"
+#include "events/eventDispatcher.hpp"
+#include "input/inputManager.hpp"
 
 constexpr int FRAME_RATE = 24;
 constexpr int FRAME_DELAY = 1000 / FRAME_RATE; // Time per frame in milliseconds
@@ -22,11 +29,14 @@ class Game {
 
     SDL_Window* window; ///< Pointer to the SDL_Window.
     SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
-    SDL_Event event; ///< SDL_Event for handling events.
 
+    InputManager* inputManager;
     RenderSystem* renderSystem; ///< Pointer to the RenderSystem for managing rendering.
     FontSystem* fontSystem;
     Stopwatch* stopwatch;
+
+    bool running = true;
+    std::queue<std::unique_ptr<Event>> eventQueue;
 
 public:
     /**
@@ -51,4 +61,9 @@ public:
      * @brief Closes the game, cleaning up resources.
      */
     void close();
+
+private:
+    void processEvents();
+    void update();
+    bool onWindowClose(WindowCloseEvent& e);
 };

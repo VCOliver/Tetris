@@ -1,7 +1,6 @@
 #pragma once
 
-#include <tuple>
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "utils/renderUtils.hpp"
 #include "utils/mathUtils.hpp"

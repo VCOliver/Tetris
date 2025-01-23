@@ -43,19 +43,52 @@ void Game::init(){
 
     stopwatch = new Stopwatch();
 
+    auto inputMapping = std::make_unique<InputMapping>();
+    inputManager = new InputManager(std::move(inputMapping));
+
     std::srand(std::time(nullptr)); // Seed the random number generator
 }   
 
+void Game::processEvents(){
+    SDL_Event sdlEvent;
+    while (SDL_PollEvent(&sdlEvent))
+    {
+        auto event = TranslateSDLEvent(sdlEvent); // Custom function translating SDL to Hazel events
+        if (event)
+        {
+            eventQueue.push(std::move(event));
+        }
+    }
+}
+
+void Game::update()
+{
+    while (!eventQueue.empty())
+    {
+        auto& event = eventQueue.front();
+        EventDispatcher dispatcher(*event);
+
+        // Example: Handle key press events
+        dispatcher.Dispatch<KeyPressedEvent>([](KeyPressedEvent& e) {
+            std::cout << e.ToString() << std::endl; 
+            return true; // Mark as handled
+        });
+
+        // Example: Handle window close event
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Game::onWindowClose));
+
+        eventQueue.pop();
+    }
+}
+
+
 void Game::run(){
 
-    const auto tetrion_pos = Position({14, 3});
-    const auto score_pos = Position({tetrion_pos.x+TETRION_W, tetrion_pos.y});
-    const auto watch_pos = Position({score_pos.x, score_pos.y+4});
-    int x = std::rand() % (TETRION_W-1);
-    const auto tetro_pos = Position({tetrion_pos.x + x, 2});
+    const Position tetrion_pos = {14, 3};
+    const Position score_pos = {tetrion_pos.x+TETRION_W, tetrion_pos.y};
+    const Position watch_pos = {score_pos.x, score_pos.y+4};
 
     auto field = std::make_shared<Playfield>(tetrion_pos);
-    auto tetro = std::make_shared<Tetrominos>(tetro_pos, Colors::RED);
     auto score = std::make_shared<ScoreBlock>(score_pos, fontSystem);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos, fontSystem);
     watch->setTime(0);
@@ -65,23 +98,20 @@ void Game::run(){
         watch->setTime(elapsed_seconds);
     });
 
-    renderSystem->addRenderComponent(tetro);
     renderSystem->addRenderComponent(field);
     renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
 
-    while(true){
+
+    while(running){
         Uint32 frameStart = SDL_GetTicks();
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                return;
-            }
-        }
+        processEvents();
+        update();
 
         renderSystem->setBackground();
 
-        score->increment_score(91119);
+        score->increment_score(2);
 
         renderSystem->render();
 
@@ -99,11 +129,20 @@ void Game::run(){
     }
 }
 
+bool Game::onWindowClose(WindowCloseEvent& e)
+	{
+        std::cout << "Window close event!" << std::endl;
+		running = false;
+		return true;
+	}
+
+
 void Game::close(){
     // Clean up
     delete renderSystem;
     delete fontSystem;
     delete stopwatch;
+    delete inputManager;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

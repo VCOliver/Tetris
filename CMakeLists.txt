@@ -26,6 +26,7 @@ set(SOURCES
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
     src/systems/fontSystem.cpp
+    src/systems/physicsSystem.cpp
     src/utils/position.cpp
     src/utils/colors.cpp
     src/utils/renderUtils.cpp
@@ -36,6 +37,9 @@ set(SOURCES
     src/entities/stopwatch.cpp
     src/entities/score.cpp
     src/entities/playfield.cpp
+    src/input/inputManager.cpp
+    src/input/inputMapping.cpp
+    src/events/event.cpp
 )
 
 # Add the executables
@@ -46,6 +50,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2TT
 
 # Link SDL2 library
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
+
+# Add precompiled headers
+target_precompile_headers(${PROJECT_NAME} PRIVATE include/pch.h)
 
 # Copy assets folder after build
 add_custom_command(

@@ -1,13 +1,15 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "tetrion.hpp"
+#include "tetrominos.hpp"
 #include "utils/renderUtils.hpp"
 
 class Playfield : public Renderable {
 private:
     Tetrion* tetrion;
+    Tetrominos* tetromino;
     Position start_pos;
 
 public:

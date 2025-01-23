@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "utils/position.hpp"
 #include "component.hpp"

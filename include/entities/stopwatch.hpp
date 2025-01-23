@@ -1,12 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <functional>
-#include <thread>
-#include <atomic>
-#include <tuple>
-#include <string>
-#include <SDL2/SDL.h>
+#include "pch.h"
 
 #include "utils/renderUtils.hpp"
 #include "utils/mathUtils.hpp"

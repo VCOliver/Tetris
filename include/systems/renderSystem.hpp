@@ -1,6 +1,6 @@
-#include <memory>
-#include <vector>
-#include <tuple>
+#pragma once
+
+#include "pch.h"
 
 #include "utils/colors.hpp"
 #include "utils/position.hpp"
