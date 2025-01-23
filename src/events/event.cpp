@@ -6,8 +6,10 @@ std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent)
 {
     switch (sdlEvent.type)
     {
+        case SDL_KEYUP:
+            return std::make_unique<KeyReleasedEvent>(sdlEvent.key.keysym.sym);
         case SDL_KEYDOWN:
-            return std::make_unique<KeyPressedEvent>(sdlEvent.key.keysym.sym);
+            return std::make_unique<KeyPressedEvent>(sdlEvent.key.keysym.sym, sdlEvent.key.repeat);
         case SDL_QUIT:
             return std::make_unique<WindowCloseEvent>();
         // Handle other SDL2 event types here
