@@ -11,30 +11,17 @@ void Game::init(){
         exit(1);
     }
 
-    window = SDL_CreateWindow(
-        "Tetris",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        width,
-        height,
-        SDL_WINDOW_SHOWN
-    );
+    window = std::make_unique<Window>("Tetris", width, height);
 
-    if (!window) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        exit(1);
-    }
+    window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
     renderer = SDL_CreateRenderer(
-        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+        window->getSDL_Window(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
 
     if (!renderer) {
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        exit(1);
+        close();
     }
 
     renderSystem = new RenderSystem(renderer);
@@ -68,13 +55,16 @@ void Game::update()
         auto& event = eventQueue.front();
         EventDispatcher dispatcher(*event);
 
-        // Example: Handle key press events
         dispatcher.Dispatch<KeyPressedEvent>([](KeyPressedEvent& e) {
             std::cout << e.ToString() << std::endl; 
             return true; // Mark as handled
         });
 
-        // Example: Handle window close event
+        dispatcher.Dispatch<WindowResizeEvent>([](WindowResizeEvent& e){
+            std::cout << e.ToString() << std::endl;
+            return true;
+        });
+
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Game::onWindowClose));
 
         eventQueue.pop();
@@ -144,7 +134,6 @@ void Game::close(){
     delete stopwatch;
     delete inputManager;
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
     SDL_Quit();
 }
 

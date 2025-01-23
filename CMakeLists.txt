@@ -23,6 +23,7 @@ find_package(SDL2_ttf REQUIRED)
 set(SOURCES
     src/main.cpp
     src/core/game.cpp
+    src/core/window.cpp
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
     src/systems/fontSystem.cpp
