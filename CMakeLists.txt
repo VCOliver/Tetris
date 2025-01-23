@@ -37,10 +37,9 @@ set(SOURCES
     src/entities/stopwatch.cpp
     src/entities/score.cpp
     src/entities/playfield.cpp
-    src/events/eventManager.cpp
     src/input/inputManager.cpp
     src/input/inputMapping.cpp
-    src/commands/commands.cpp
+    src/events/event.cpp
 )
 
 # Add the executables

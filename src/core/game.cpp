@@ -49,6 +49,39 @@ void Game::init(){
     std::srand(std::time(nullptr)); // Seed the random number generator
 }   
 
+void Game::processEvents(){
+    SDL_Event sdlEvent;
+    while (SDL_PollEvent(&sdlEvent))
+    {
+        auto event = TranslateSDLEvent(sdlEvent); // Custom function translating SDL to Hazel events
+        if (event)
+        {
+            eventQueue.push(std::move(event));
+        }
+    }
+}
+
+void Game::update()
+{
+    while (!eventQueue.empty())
+    {
+        auto& event = eventQueue.front();
+        EventDispatcher dispatcher(*event);
+
+        // Example: Handle key press events
+        dispatcher.Dispatch<KeyPressedEvent>([](KeyPressedEvent& e) {
+            std::cout << e.ToString() << std::endl; 
+            return true; // Mark as handled
+        });
+
+        // Example: Handle window close event
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Game::onWindowClose));
+
+        eventQueue.pop();
+    }
+}
+
+
 void Game::run(){
 
     const Position tetrion_pos = {14, 3};
@@ -69,19 +102,12 @@ void Game::run(){
     renderSystem->addRenderComponent(score);
     renderSystem->addRenderComponent(watch);
 
-    eventManager.addListener(EventType::KEY_DOWN, [this](const SDL_Event& event) {
-        inputManager->handleInput(event);
-    });
 
-    eventManager.addListener(EventType::QUIT, [this](const SDL_Event& event){
-        this->close();
-        exit(1);
-    });
-
-    while(true){
+    while(running){
         Uint32 frameStart = SDL_GetTicks();
 
-        eventManager.handleEvents(); // Working
+        processEvents();
+        update();
 
         renderSystem->setBackground();
 
@@ -102,6 +128,14 @@ void Game::run(){
 
     }
 }
+
+bool Game::onWindowClose(WindowCloseEvent& e)
+	{
+        std::cout << "Window close event!" << std::endl;
+		running = false;
+		return true;
+	}
+
 
 void Game::close(){
     // Clean up

@@ -11,6 +11,7 @@ struct Input{
 
 class InputMapping {
 public:
+    using Command = ICommands*;
     using command_ptr = std::shared_ptr<Command>;
 private:
     std::unordered_map<SDL_Keycode, command_ptr> command_map;

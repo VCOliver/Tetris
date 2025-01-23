@@ -2,6 +2,7 @@
 
 #include "pch.h"
 
+#include "core/base.hpp"
 #include "inputMapping.hpp"
 
 class InputManager {
@@ -16,8 +17,6 @@ public:
     void handleInput(SDL_Event e);
 
 private:
-
-    using KeyCode = SDL_Keycode;
 
     std::unique_ptr<InputMapping> inputMapping;
     std::unordered_map<KeyCode, KeyState>  keyState_map;
