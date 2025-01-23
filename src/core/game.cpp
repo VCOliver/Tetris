@@ -15,14 +15,7 @@ void Game::init(){
 
     window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
-    renderer = SDL_CreateRenderer(
-        window->getSDL_Window(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    );
-
-    if (!renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        close();
-    }
+    
 
     renderSystem = new RenderSystem(renderer);
     fontSystem = new FontSystem();

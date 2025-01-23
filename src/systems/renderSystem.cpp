@@ -3,24 +3,50 @@
 
 #include "systems/renderSystem.hpp"
 
-RenderSystem::RenderSystem(SDL_Renderer* renderer)
-    : renderer(renderer){}
+bool Renderer::Init(SDL_Window* window){
+    renderer = SDL_CreateRenderer(
+        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    );
 
-RenderSystem::~RenderSystem(){
-    this->clearComponents();
+    if (!renderer) {
+        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    return true;
 }
 
-void RenderSystem::setBackground(Color color){
+void Renderer::Shutdown(){
+    clearComponents();
+    SDL_DestroyRenderer(renderer);
+}
+
+void Renderer::setRenderDrawColor(Color color, rgba_t alpha){
+    SDL_SetRenderDrawColor(renderer, color.red, color.green, color.blue, alpha);
+}
+
+void Renderer::setBackground(Color color){
     // Limpar a tela
-    render::setRenderDrawColor(renderer, color); // Cor para o fundo
+    setRenderDrawColor(color); // Cor para o fundo
     SDL_RenderClear(renderer);
 }
 
-void RenderSystem::addRenderComponent(const renderables_ptr& component){
+void Renderer::DrawRect(Position start_pos, uint width, uint height){
+    auto real_pos = start_pos.getRealPosition();
+    SDL_Rect rect = {real_pos.x, real_pos.y, width, height}; // x, y, width, height
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
+void Renderer::FillRect(Position start_pos, uint width, uint height){
+    auto real_pos = start_pos.getRealPosition();
+    SDL_Rect rect = {real_pos.x, real_pos.y, width, height}; // x, y, width, height
+    SDL_RenderFillRect(renderer, &rect);
+}
+
+void Renderer::addRenderComponent(const renderables_ptr& component){
     renderComponents.emplace_back(component);
 }
 
-void RenderSystem::removeRenderComponent(const renderables_ptr& component) {
+void Renderer::removeRenderComponent(const renderables_ptr& component) {
     renderComponents.erase(std::remove_if(
         renderComponents.begin(), renderComponents.end(),
         [&component](const renderables_ptr& item) {
@@ -29,11 +55,11 @@ void RenderSystem::removeRenderComponent(const renderables_ptr& component) {
         renderComponents.end());
 }
 
-void RenderSystem::clearComponents(){
+void Renderer::clearComponents(){
     renderComponents.clear();
 }
 
-void RenderSystem::render() const {
+void Renderer::render() {
     for (const auto& component : renderComponents) {
 
         // Render the component

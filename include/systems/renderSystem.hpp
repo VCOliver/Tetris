@@ -16,11 +16,11 @@ using renderables_ptr = std::shared_ptr<Renderable>;
  * @class RenderSystem
  * @brief Manages and renders components using SDL_Renderer.
  */
-class RenderSystem {
+class Renderer {
 
-    SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
+    static SDL_Renderer* renderer; ///< Pointer to the SDL_Renderer.
 
-    std::vector<renderables_ptr> renderComponents; ///< Vector of render components with associated colors.
+    static std::vector<renderables_ptr> renderComponents; ///< Vector of render components with associated colors.
 
 public:
     /**
@@ -28,7 +28,7 @@ public:
      * 
      * @param renderer Pointer to the SDL_Renderer.
      */
-    RenderSystem(SDL_Renderer* renderer);
+    static bool Init(SDL_Window* window);
 
     /**
      * @brief Destructor for the RenderSystem class.
@@ -36,21 +36,33 @@ public:
      * This destructor is responsible for cleaning up any resources
      * that the RenderSystem class may have allocated during its lifetime.
      */
-    ~RenderSystem();
+    static void Shutdown();
+
+    static void setRenderDrawColor(Color color, rgba_t alpha=255);
+
+    static void setDrawBlendMode(); // TODO
 
     /**
      * @brief Sets the background color for the renderer.
      * 
      * @param color The background color to set. Default is Colors::BLACK.
      */
-    void setBackground(Color color=Colors::BLACK);
+    static void setBackground(Color color=Colors::BLACK);
+
+    /// @brief Draw borders of Rectangle
+    /// @param start_pos Position in Game coordinates
+    /// @param width In pixels
+    /// @param height In pixels
+    static void DrawRect(Position start_pos, uint width, uint height);
+
+    static void FillRect(Position start_pos, uint width, uint height);
 
     /**
      * @brief Adds a render component with the specified color.
      * 
      * @param component Shared pointer to the render component.
      */
-    void addRenderComponent(const renderables_ptr& component);
+    static void addRenderComponent(const renderables_ptr& component);
 
     /**
      * @brief Removes a render component.
@@ -59,15 +71,15 @@ public:
      * 
      * @note Not in use
      */
-    void removeRenderComponent(const renderables_ptr& component);
+    static void removeRenderComponent(const renderables_ptr& component);
 
     /**
      * @brief Clears all render components.
      */
-    void clearComponents();
+    static void clearComponents();
     
     /**
      * @brief Renders all the components.
      */
-    void render() const;
+    static void render();
 };
