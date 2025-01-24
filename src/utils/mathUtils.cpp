@@ -8,8 +8,7 @@ namespace math{
     }
 
     // Helper function to check if a point is inside the trapezium
-    bool isPointInTrapezium(int px, int py, const Trapezium& trapz) {
-        SDL_Point p = {px, py};
+    bool isPointInTrapezium(SDL_Point& p, const Trapezium& trapz) {
         Triangle tri1 = {{trapz.top_left.x, trapz.top_left.y},
                         {trapz.top_right.x, trapz.top_right.y},
                         {trapz.bottom_left.x, trapz.bottom_left.y}
@@ -21,7 +20,7 @@ namespace math{
         return isPointInTriangle(p, tri1) || isPointInTriangle(p, tri2);
     }
 
-    bool isPointInTriangle(SDL_Point p, Triangle& tri) {
+    bool isPointInTriangle(SDL_Point& p, Triangle& tri) {
         int px = p.x;
         int py = p.y;
 

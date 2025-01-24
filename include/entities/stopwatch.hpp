@@ -2,7 +2,8 @@
 
 #include "pch.h"
 
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
+#include "components/renderComponents.hpp"
 #include "utils/mathUtils.hpp"
 #include "systems/fontSystem.hpp"
 
@@ -135,5 +136,5 @@ public:
      * 
      * @param renderer A pointer to the SDL_Renderer used for rendering graphics.
      */
-    void render(SDL_Renderer* renderer) const;
+    void render() const;
 };

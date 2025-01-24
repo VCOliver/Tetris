@@ -18,12 +18,12 @@ Tetrion::Tetrion(Position start_pos)
     }
 }
 
-void Tetrion::render(SDL_Renderer* renderer) const {
+void Tetrion::render() const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
                 Block block = Block(pos, Colors::GRAY);
-                block.render(renderer);
+                block.render();
             }
         }
     }

@@ -16,5 +16,5 @@ public:
     Playfield(Position pos);
     ~Playfield();
 
-    void render(SDL_Renderer* renderer) const;
+    void render() const;
 };

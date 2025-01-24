@@ -13,21 +13,16 @@ Playfield::~Playfield(){
     delete tetromino;
 }
 
-void Playfield::render(SDL_Renderer* renderer) const {
-    tetromino->render(renderer); // Renders Tetromino
-
-    Renderer::FillRect(start_pos, w, h);
-    Renderer::setRenderDrawColor(Colors::BLACK);
-
+void Playfield::render() const {
+    tetromino->render(); // Renders Tetromino    
     // Cover Tetromino part above Tetrion
-    // SDL_Point p = start_pos.getRealPosition();
-    // int w = (TETRION_W+1)*20;
-    // int h = p.y;
-    // p.y = 0;
-    // SDL_Rect rect = {p.x, p.y, w, h};
-    // render::setRenderDrawColor(renderer, Colors::BLACK);
-    // SDL_RenderFillRect(renderer, &rect);
+    SDL_Point p = start_pos.getRealPosition();
+    int w = (TETRION_W+1)*20;
+    int h = p.y;
+    p.y = 0;
+    Renderer::setRenderDrawColor(Colors::BLACK);
+    Renderer::SDL_FillRect(p, w, h);
 
     // // Renders Tetrion
-    tetrion->render(renderer);
+    tetrion->render();
 }

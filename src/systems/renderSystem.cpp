@@ -3,6 +3,9 @@
 
 #include "systems/renderSystem.hpp"
 
+SDL_Renderer* Renderer::renderer = nullptr;
+std::vector<renderables_ptr> Renderer::renderComponents = {}; 
+
 bool Renderer::Init(SDL_Window* window){
     renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
@@ -12,6 +15,8 @@ bool Renderer::Init(SDL_Window* window){
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         return false;
     }
+    std::cout << "Initializing Renderer!" << std::endl;
+    clearComponents();
     return true;
 }
 
@@ -21,7 +26,7 @@ void Renderer::Shutdown(){
 }
 
 void Renderer::setDrawBlendMode(BlendMode mode){
-    SDL_SetRenderDrawBlendMode(renderer, *(SDL_BlendMode*)mode);
+    SDL_SetRenderDrawBlendMode(renderer, static_cast<SDL_BlendMode>(mode));
 }
 
 void Renderer::setRenderDrawColor(Color color, rgba_t alpha){
@@ -36,13 +41,23 @@ void Renderer::setBackground(Color color){
 
 void Renderer::DrawRect(Position start_pos, uint width, uint height){
     auto real_pos = start_pos.getRealPosition();
-    SDL_Rect rect = {real_pos.x, real_pos.y, width, height}; // x, y, width, height
+    SDL_Rect rect = {real_pos.x, real_pos.y, (int)width, (int)height}; // x, y, width, height
     SDL_RenderDrawRect(renderer, &rect);
 }
 
 void Renderer::FillRect(Position start_pos, uint width, uint height){
     auto real_pos = start_pos.getRealPosition();
-    SDL_Rect rect = {real_pos.x, real_pos.y, width, height}; // x, y, width, height
+    SDL_Rect rect = {real_pos.x, real_pos.y, (int)width, (int)height}; // x, y, width, height
+    SDL_RenderFillRect(renderer, &rect);
+}
+
+void Renderer::SDL_DrawRect(SDL_Point p, uint width, uint height){
+    SDL_Rect rect = {p.x, p.y, (int)width, (int)height}; // x, y, width, height
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
+void Renderer::SDL_FillRect(SDL_Point p, uint width, uint height){
+    SDL_Rect rect = {p.x, p.y, (int)width, (int)height}; // x, y, width, height
     SDL_RenderFillRect(renderer, &rect);
 }
 
@@ -54,7 +69,8 @@ void Renderer::FillTrapz(const math::Trapezium& trapezium) {
 
     for (int y = minY; y <= maxY; y++) {
         for (int x = minX; x <= maxX; x++) {
-            if (math::isPointInTrapezium(x, y, trapezium)) {
+            SDL_Point p = {x, y};
+            if (math::isPointInTrapezium(p, trapezium)) {
                 SDL_RenderDrawPoint(renderer, x, y);
             }
         }
@@ -90,9 +106,12 @@ void Renderer::render() {
 
         // Render the component
         if (component) {
-            component->render(renderer);
+            component->render();
         }
     }
 
+}
+
+void Renderer::RenderPresent(){
     SDL_RenderPresent(renderer);
 }

@@ -60,10 +60,8 @@ Block::~Block(){
 
 void Block::render() const {
     Renderer::setRenderDrawColor(color);
-
     // Fill square
     Renderer::FillRect(pos, width, height);
-
     border->render();
 
 }

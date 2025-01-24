@@ -21,20 +21,20 @@ void ScoreBlock::increment_score(int points){
     this->score = temp;
 }
 
-void ScoreBlock::render(SDL_Renderer* renderer) const {
+void ScoreBlock::render() const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
                 Block block = Block(pos, Colors::GRAY);
-                block.render(renderer);
+                block.render();
             }
         }
     }
     SDL_Point p = start_pos.getRealPosition();
-    fontSystem->renderText(renderer, "Score:", {p.x+40, p.y+20}, Colors::WHITE);
+    fontSystem->renderText(Renderer::getSDL_Renderer(), "Score:", {p.x+40, p.y+20}, Colors::WHITE);
     SDL_Surface* surface = fontSystem->createSurface(std::to_string(score), Colors::WHITE);
     p = Position({start_pos.x + w-1, start_pos.y+2}).getRealPosition();
     p.x -= surface->w + 7;
     p.y += 5;
-    fontSystem->renderText(renderer, surface, p, true);
+    fontSystem->renderText(Renderer::getSDL_Renderer(), surface, p, true);
 }

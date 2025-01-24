@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
 #include "utils/mathUtils.hpp"
 #include "systems/fontSystem.hpp"
 
@@ -33,6 +33,6 @@ public:
 
     void increment_score(int points);
 
-    void render(SDL_Renderer* renderer) const ;
+    void render() const ;
 
 };

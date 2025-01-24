@@ -37,9 +37,9 @@ namespace math {
     /// @note Not being used
     float calculateDistace(Position& p1, Position& p2);
 
-    bool isPointInTrapezium(int px, int py, const Trapezium& trapz);
+    bool isPointInTrapezium(SDL_Point& p, const Trapezium& trapz);
 
-    bool isPointInTriangle(SDL_Point p, Triangle& tri);
+    bool isPointInTriangle(SDL_Point& p, Triangle& tri);
 
     template <typename T, size_t Rows, size_t Cols>
     struct Matrix {

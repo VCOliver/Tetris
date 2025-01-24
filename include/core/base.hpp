@@ -7,7 +7,11 @@
 // Block defines
 #define STD_BLOCK_W 20
 #define STD_BLOCK_H 20 
-#define STD_LINE_THICKNESS 3
+#define STD_LINE_THICKNESS 2
+
+// Tetrion defines
+#define TETRION_H 24
+#define TETRION_W 12
 
 // Window defines
 #define STD_WINDOW_WIDTH 800

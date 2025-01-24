@@ -45,6 +45,8 @@ public:
      */
     static void Shutdown();
 
+    static SDL_Renderer* getSDL_Renderer(){return renderer;}
+
     static void setRenderDrawColor(Color color, rgba_t alpha=255);
 
     static void setDrawBlendMode(BlendMode mode); // TODO
@@ -61,8 +63,10 @@ public:
     /// @param width In pixels
     /// @param height In pixels
     static void DrawRect(Position start_pos, uint width, uint height);
+    static void SDL_DrawRect(SDL_Point p, uint width, uint height);
 
     static void FillRect(Position start_pos, uint width, uint height);
+    static void SDL_FillRect(SDL_Point p, uint width, uint height);
 
     static void DrawTrapz(const math::Trapezium& trapz);
 
@@ -93,4 +97,6 @@ public:
      * @brief Renders all the components.
      */
     static void render();
+
+    static void RenderPresent();
 };

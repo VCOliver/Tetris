@@ -19,6 +19,8 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
         exit(1);
     }
 
+    std::cout << "Initializing window!" << std::endl;
+
     data.title = title;
     data.height = height;
     data.width = width;
