@@ -19,6 +19,7 @@ public:
 
     inline SDL_Window* getSDL_Window() const {return window;}
     inline void showWindow(){ SDL_ShowWindow(window);}
+    inline void Shutdown(){ SDL_DestroyWindow(window); };
     
     inline void onUpdate(){}
     unsigned int getHeight() const;
@@ -26,7 +27,6 @@ public:
     const Position getWindowCenter();
     void setEventCallback(const EventCallback& callback);
 private:
-    void shutdown();
 
     struct WindowData {
         std::string title;

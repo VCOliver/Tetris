@@ -17,8 +17,13 @@
 #include "events/eventDispatcher.hpp"
 #include "input/inputManager.hpp"
 
-constexpr int FRAME_RATE = 24;
+constexpr int FRAME_RATE = 60;
 constexpr int FRAME_DELAY = 1000 / FRAME_RATE; // Time per frame in milliseconds
+
+#define GAME_SHUTDOWN FontSystem::Shutdown(); \
+                      Renderer::Shutdown(); \
+                      window->Shutdown(); \
+                      SDL_Quit();
 
 /**
  * @class Game

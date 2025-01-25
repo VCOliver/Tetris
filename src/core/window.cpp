@@ -10,7 +10,7 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
         SDL_WINDOWPOS_CENTERED,
         width,
         height,
-        SDL_WINDOW_RESIZABLE| SDL_WINDOW_HIDDEN
+        WINDOW_FLAGS
     );
 
     if (!window) {
@@ -28,11 +28,7 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
 }
 
 Window::~Window(){
-    shutdown();
-}
-
-void Window::shutdown(){
-    SDL_DestroyWindow(window);
+    Shutdown();
 }
 
 unsigned int Window::getHeight() const {

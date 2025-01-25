@@ -15,9 +15,9 @@ void Game::init(){
 
     window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
-    if(!Renderer::Init(window->getSDL_Window())) TERMINATE_GAME(EXIT_FAILURE);
+    if(!Renderer::Init(window->getSDL_Window())){ TERMINATE_GAME(EXIT_FAILURE) }
 
-    if(!FontSystem::Init(fontPath)) TERMINATE_GAME(EXIT_FAILURE);
+    if(!FontSystem::Init(fontPath)){ TERMINATE_GAME(EXIT_FAILURE) }
 
     stopwatch = new Stopwatch();
 
@@ -104,7 +104,7 @@ void Game::run(){
         Uint32 frameTime = SDL_GetTicks() - frameStart;
 
         if (frameTime < FRAME_DELAY) {
-            SDL_Delay(FRAME_DELAY - frameTime); // Delay to maintain 30 FPS
+            SDL_Delay(FRAME_DELAY - frameTime); // Delay to maintain 60 FPS
         }
 
 
@@ -112,19 +112,17 @@ void Game::run(){
 }
 
 bool Game::onWindowClose(WindowCloseEvent& e)
-	{
-        std::cout << "Window close event!" << std::endl;
-		running = false;
-		return true;
-	}
+{
+    std::cout << "Window close event!" << std::endl;
+    running = false;
+    return true;
+}
 
 
 void Game::close(){
     // Clean up
-    Renderer::Shutdown();
-    FontSystem::Shutdown();
+    GAME_SHUTDOWN
     delete stopwatch;
     delete inputManager;
-    SDL_Quit();
 }
 

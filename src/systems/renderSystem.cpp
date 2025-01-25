@@ -8,7 +8,7 @@ std::vector<renderables_ptr> Renderer::renderComponents = {};
 
 bool Renderer::Init(SDL_Window* window){
     renderer = SDL_CreateRenderer(
-        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+        window, -1, RENDER_FLAGS
     );
 
     if (!renderer) {
