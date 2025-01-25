@@ -16,3 +16,5 @@
 // Window defines
 #define STD_WINDOW_WIDTH 800
 #define STD_WINDOW_HEIGHT 600
+
+constexpr char fontPath[] = "assets/fonts/Minecraftia-Regular.ttf";

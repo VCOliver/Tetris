@@ -7,17 +7,18 @@
 #include "utils/position.hpp"
 
 class FontSystem {
-    TTF_Font* font;
-    const std::string fontPath = "assets/fonts/Minecraftia-Regular.ttf";
-    int size;
+    static TTF_Font* font;
+    static char* m_fontPath;
+    static int m_size;
 
 public:
-    FontSystem(int size = 20);
-    ~FontSystem();
+    static bool Init(const char*& fontPath, int size = 20);
+    static void Shutdown();
 
-    void setFontSize(int size);
-    bool loadFont();
-    SDL_Surface* createSurface(const std::string& text, Color color);
-    void renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) const;
-    void renderText(SDL_Renderer* renderer, SDL_Surface* surface, SDL_Point pos, bool destroySurface=false) const;
+    static bool setFontSize(int size);
+    static bool loadFont();
+    static bool loadFont(const char*& fontPath);
+    static SDL_Surface* createSurface(const std::string& text, Color color);
+    static void renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color);
+    static void renderText(SDL_Renderer* renderer, SDL_Surface* surface, SDL_Point pos, bool destroySurface=false);
 };
