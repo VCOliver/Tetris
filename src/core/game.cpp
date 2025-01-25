@@ -15,7 +15,7 @@ void Game::init(){
 
     window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
-    Renderer::Init(window->getSDL_Window());
+    if(!Renderer::Init(window->getSDL_Window())) this->close();
 
     fontSystem = new FontSystem();
     fontSystem->loadFont();
@@ -85,6 +85,8 @@ void Game::run(){
     Renderer::addRenderComponent(score);
     Renderer::addRenderComponent(watch);
 
+    window->showWindow();
+
     while(running){
         Uint32 frameStart = SDL_GetTicks();
 
@@ -95,9 +97,8 @@ void Game::run(){
 
         score->increment_score(2);
 
+        // Draw on the screen
         Renderer::render();
-
-        // Atualizar a tela
         Renderer::RenderPresent();
 
         // Calculate frame duration

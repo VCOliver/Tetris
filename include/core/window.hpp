@@ -18,6 +18,7 @@ public:
     ~Window();
 
     inline SDL_Window* getSDL_Window() const {return window;}
+    inline void showWindow(){ SDL_ShowWindow(window);}
     
     inline void onUpdate(){}
     unsigned int getHeight() const;

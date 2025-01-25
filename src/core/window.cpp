@@ -10,7 +10,7 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
         SDL_WINDOWPOS_CENTERED,
         width,
         height,
-        SDL_WINDOW_RESIZABLE| SDL_WINDOW_SHOWN
+        SDL_WINDOW_RESIZABLE| SDL_WINDOW_HIDDEN
     );
 
     if (!window) {
@@ -24,6 +24,7 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
     data.title = title;
     data.height = height;
     data.width = width;
+
 }
 
 Window::~Window(){
