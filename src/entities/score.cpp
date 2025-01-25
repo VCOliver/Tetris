@@ -1,7 +1,7 @@
 #include "entities/score.hpp"
 
-ScoreBlock::ScoreBlock(Position pos, FontSystem* fontSystem)
-    : start_pos(pos), score(0), fontSystem(fontSystem)
+ScoreBlock::ScoreBlock(Position pos)
+    : start_pos(pos), score(0)
 {
     bool visible = false;
     for(int y=0; y<h; y++){
@@ -31,10 +31,10 @@ void ScoreBlock::render() const {
         }
     }
     SDL_Point p = start_pos.getRealPosition();
-    fontSystem->renderText(Renderer::getSDL_Renderer(), "Score:", {p.x+40, p.y+20}, Colors::WHITE);
-    SDL_Surface* surface = fontSystem->createSurface(std::to_string(score), Colors::WHITE);
+    FontSystem::renderText(Renderer::getSDL_Renderer(), "Score:", {p.x+40, p.y+20}, Colors::WHITE);
+    SDL_Surface* surface = FontSystem::createSurface(std::to_string(score), Colors::WHITE);
     p = Position({start_pos.x + w-1, start_pos.y+2}).getRealPosition();
     p.x -= surface->w + 7;
     p.y += 5;
-    fontSystem->renderText(Renderer::getSDL_Renderer(), surface, p, true);
+    FontSystem::renderText(Renderer::getSDL_Renderer(), surface, p, true);
 }

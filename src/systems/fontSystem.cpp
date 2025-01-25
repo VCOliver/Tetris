@@ -2,7 +2,11 @@
 
 #include "systems/fontSystem.hpp"
 
-bool FontSystem::Init(const char*& fontPath, int size) {
+TTF_Font* FontSystem::font = nullptr;
+char* FontSystem::m_fontPath = nullptr;
+int FontSystem::m_size = 0;
+
+bool FontSystem::Init(const char* fontPath, int size) {
     m_size = size;
     if (TTF_Init() == -1) {
         std::cerr << "Failed to initialize SDL_ttf: " << TTF_GetError() << "\n";
@@ -24,8 +28,8 @@ bool FontSystem::setFontSize(int size) {
         if (font) {
             TTF_CloseFont(font);
         }
-        return loadFont();
     }
+    return loadFont();
 }
 
 bool FontSystem::loadFont() {
@@ -37,7 +41,7 @@ bool FontSystem::loadFont() {
     return true;
 }
 
-bool FontSystem::loadFont(const char*& fontPath) {
+bool FontSystem::loadFont(const char* fontPath) {
     m_fontPath = const_cast<char*>(fontPath);
     font = TTF_OpenFont(m_fontPath, m_size);
     if (!font) {

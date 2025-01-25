@@ -17,8 +17,7 @@ void Game::init(){
 
     if(!Renderer::Init(window->getSDL_Window())) this->close();
 
-    fontSystem = new FontSystem();
-    fontSystem->loadFont();
+    FontSystem::Init(fontPath);
 
     stopwatch = new Stopwatch();
 
@@ -72,8 +71,8 @@ void Game::run(){
     const Position watch_pos = {score_pos.x, score_pos.y+4};
 
     auto field = std::make_shared<Playfield>(tetrion_pos);
-    auto score = std::make_shared<ScoreBlock>(score_pos, fontSystem);
-    auto watch = std::make_shared<StopwatchBlock>(watch_pos, fontSystem);
+    auto score = std::make_shared<ScoreBlock>(score_pos);
+    auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     watch->setTime(0);
 
     // Start the stopwatch with a callback to update the clock
@@ -123,7 +122,7 @@ bool Game::onWindowClose(WindowCloseEvent& e)
 void Game::close(){
     // Clean up
     Renderer::Shutdown();
-    delete fontSystem;
+    FontSystem::Shutdown();
     delete stopwatch;
     delete inputManager;
     SDL_Quit();

@@ -43,8 +43,8 @@ Stopwatch::~Stopwatch(){
 
 ///////////////////////////
 
-StopwatchBlock::StopwatchBlock(Position start_pos, FontSystem* fontSystem) 
-    : start_pos(start_pos), fontSystem(fontSystem), time(0){
+StopwatchBlock::StopwatchBlock(Position start_pos) 
+    : start_pos(start_pos), time(0){
     bool visible = false;
     for(int y=0; y<h; y++){
         for(int x=0; x<w; x++){
@@ -76,13 +76,13 @@ void StopwatchBlock::render() const {
         }
     }
     SDL_Point p = start_pos.getRealPosition();
-    fontSystem->renderText(Renderer::getSDL_Renderer(), "Time:", {p.x+50, p.y+20}, Colors::WHITE);
+    FontSystem::renderText(Renderer::getSDL_Renderer(), "Time:", {p.x+50, p.y+20}, Colors::WHITE);
     int temp = getTime();
     if(temp > 0) current_time = temp;
     int mins = current_time / 60;
     int secs = current_time % 60;
     std::string time_s = (mins < 10 ? "0" : "") + std::to_string(mins) + ":" + (secs < 10 ? "0" : "") + std::to_string(secs);
 
-    fontSystem->renderText(Renderer::getSDL_Renderer(), time_s, {p.x+47, p.y+45}, Colors::WHITE);
+    FontSystem::renderText(Renderer::getSDL_Renderer(), time_s, {p.x+47, p.y+45}, Colors::WHITE);
 
 }
