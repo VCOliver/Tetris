@@ -18,3 +18,5 @@
 #define STD_WINDOW_HEIGHT 600
 
 constexpr char fontPath[] = "assets/fonts/Minecraftia-Regular.ttf";
+
+#define TERMINATE_GAME(status) this->close(); exit(status)

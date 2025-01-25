@@ -15,9 +15,9 @@ void Game::init(){
 
     window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
-    if(!Renderer::Init(window->getSDL_Window())) this->close();
+    if(!Renderer::Init(window->getSDL_Window())) TERMINATE_GAME(EXIT_FAILURE);
 
-    FontSystem::Init(fontPath);
+    if(!FontSystem::Init(fontPath)) TERMINATE_GAME(EXIT_FAILURE);
 
     stopwatch = new Stopwatch();
 
