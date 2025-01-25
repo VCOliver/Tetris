@@ -2,8 +2,9 @@
 
 #include "pch.h"
 
+#include "core/base.hpp"
+#include "utils/mathUtils.hpp"
 #include "utils/position.hpp"
-#include "component.hpp"
 #include "utils/colors.hpp"
 
 /// @brief Render components Interface
@@ -18,20 +19,7 @@
 class IRenderComponent{
 public:
     virtual ~IRenderComponent() = default;
-    virtual void render(SDL_Renderer* renderer) const = 0;        
-};
-
-/**
- * @struct Trapezium
- * @brief Represents a trapezium shape with four positions.
- */
-struct Trapezium {
-    SDL_Point top_left; ///< Top-left position of the trapezium.
-    SDL_Point top_right; ///< Top-right position of the trapezium.
-    SDL_Point bottom_left; ///< Bottom-left position of the trapezium.
-    SDL_Point bottom_right; ///< Bottom-right position of the trapezium.
-
-    Trapezium() = default;
+    virtual void render() const = 0;        
 };
 
 /**
@@ -41,8 +29,8 @@ struct Trapezium {
 class BlockBorder : public IRenderComponent {
 private:
     int thickness; ///< Thickness of the border.
-    Trapezium light[2]; ///< Light trapeziums for the border.
-    Trapezium shadow[2]; ///< Shadow trapeziums for the border.
+    math::Trapezium light[2]; ///< Light trapeziums for the border.
+    math::Trapezium shadow[2]; ///< Shadow trapeziums for the border.
 
 public:
     /**
@@ -54,11 +42,9 @@ public:
     BlockBorder(Position start_position, int thickness=STD_LINE_THICKNESS);
 
     /**
-     * @brief Renders the block border using the given SDL_Renderer.
-     * 
-     * @param renderer Pointer to the SDL_Renderer.
+     * @brief Renders the block.
      */
-    void render(SDL_Renderer* renderer) const override;
+    void render() const override;
 };
 
 /**
@@ -90,9 +76,7 @@ public:
     ~Block();
 
     /**
-     * @brief Renders the block using the given SDL_Renderer.
-     * 
-     * @param renderer Pointer to the SDL_Renderer.
+     * @brief Renders the block 
      */
-    void render(SDL_Renderer* renderer) const override;
+    void render() const override;
 };

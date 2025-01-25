@@ -2,7 +2,7 @@
 
 #include "components/renderComponents.hpp"
 #include "utils/colors.hpp"
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
 
 BlockBorder::BlockBorder(Position start_position, int thickness)
     : thickness(thickness)
@@ -28,24 +28,24 @@ BlockBorder::BlockBorder(Position start_position, int thickness)
 }
 
 
-void BlockBorder::render(SDL_Renderer* renderer) const {
-    SDL_SetRenderDrawBlendMode(renderer, BLENDMODE); // Enable blending mode
-    render::setRenderDrawColor(renderer, Colors::WHITE, 80);
+void BlockBorder::render() const {
+    Renderer::setDrawBlendMode(BlendMode::BLEND); // Enable blending mode
+    Renderer::setRenderDrawColor(Colors::WHITE, 80);
 
     // Draw upper border lines
     for(int i = 0; i < 2; i++){
-        render::renderFillTrapz(renderer, light[i]);  
+        Renderer::FillTrapz(light[i]);
     }
     
-    render::setRenderDrawColor(renderer, Colors::BLACK, 127);
+    Renderer::setRenderDrawColor(Colors::BLACK, 127);
 
     // Draw lower border lines
     for(int i = 0; i < 2; i++){
-        render::renderFillTrapz(renderer, shadow[i]);  
+        Renderer::FillTrapz(shadow[i]);
     }
 
     // Deactivate blending mode
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+    Renderer::setDrawBlendMode(BlendMode::NONE);
 }
 
 Block::Block(Position pos, Color color, int w, int h, rgba_t alpha)
@@ -58,18 +58,10 @@ Block::~Block(){
     delete border;
 }
 
-void Block::render(SDL_Renderer* renderer) const {
-    SDL_Point p = this->pos.getRealPosition();
-    int h = this->height;
-    int w = this->width;
-
-    SDL_Rect square = { p.x, p.y, w, h }; // x, y, width, height
-
-    render::setRenderDrawColor(renderer, color);
-
+void Block::render() const {
+    Renderer::setRenderDrawColor(color);
     // Fill square
-    SDL_RenderFillRect(renderer, &square);
-
-    border->render(renderer);
+    Renderer::FillRect(pos, width, height);
+    border->render();
 
 }

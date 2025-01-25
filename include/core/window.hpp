@@ -2,6 +2,7 @@
 
 #include "pch.h"
 
+#include "utils/position.hpp"
 #include "events/event.hpp"
 
 class Window {
@@ -17,10 +18,12 @@ public:
     ~Window();
 
     inline SDL_Window* getSDL_Window() const {return window;}
+    inline void showWindow(){ SDL_ShowWindow(window);}
     
     inline void onUpdate(){}
     unsigned int getHeight() const;
     unsigned int getWidth() const;
+    const Position getWindowCenter();
     void setEventCallback(const EventCallback& callback);
 private:
     void shutdown();

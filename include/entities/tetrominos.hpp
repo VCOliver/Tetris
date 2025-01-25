@@ -5,7 +5,7 @@
 #include "utils/shapes.hpp"
 #include "utils/colors.hpp"
 #include "utils/mathUtils.hpp"
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
 #include "components/renderComponents.hpp"
 
 class Tetrominos : public Renderable {
@@ -34,5 +34,5 @@ public:
 
     void move(Dir dir);
 
-    void render(SDL_Renderer* renderer) const;
+    void render() const;
 };

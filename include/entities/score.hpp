@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
 #include "utils/mathUtils.hpp"
 #include "systems/fontSystem.hpp"
 
@@ -18,21 +18,16 @@ private:
      */
     static constexpr int w = 8;
 
-    /**
-     * @brief Pointer to the font system used for rendering text.
-     */
-    FontSystem* fontSystem;
-
     int score;
 
     Position start_pos;
     math::Matrix<std::tuple<Position, bool>, h, w> matrix;
 
 public:
-    ScoreBlock(Position pos, FontSystem* fontSystem);
+    ScoreBlock(Position pos);
 
     void increment_score(int points);
 
-    void render(SDL_Renderer* renderer) const ;
+    void render() const ;
 
 };

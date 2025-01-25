@@ -2,7 +2,8 @@
 
 #include "pch.h"
 
-#include "utils/renderUtils.hpp"
+#include "systems/renderSystem.hpp"
+#include "components/renderComponents.hpp"
 #include "utils/mathUtils.hpp"
 #include "systems/fontSystem.hpp"
 
@@ -98,11 +99,6 @@ private:
     Position start_pos;
 
     /**
-     * @brief Pointer to the font system used for rendering text.
-     */
-    FontSystem* fontSystem;
-
-    /**
      * @brief A matrix containing tuples of positions and booleans to define the layout of the stopwatch block.
      */
     math::Matrix<std::tuple<Position, bool>, h, w> matrix;
@@ -114,7 +110,7 @@ public:
      * @param start_pos The starting position of the stopwatch block.
      * @param fontSystem A pointer to the FontSystem used for rendering text.
      */
-    StopwatchBlock(Position start_pos, FontSystem* fontSystem);
+    StopwatchBlock(Position start_pos);
 
     /**
      * @brief Sets the current time of the stopwatch.
@@ -135,5 +131,5 @@ public:
      * 
      * @param renderer A pointer to the SDL_Renderer used for rendering graphics.
      */
-    void render(SDL_Renderer* renderer) const;
+    void render() const;
 };

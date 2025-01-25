@@ -30,7 +30,6 @@ set(SOURCES
     src/systems/physicsSystem.cpp
     src/utils/position.cpp
     src/utils/colors.cpp
-    src/utils/renderUtils.cpp
     src/utils/mathUtils.cpp
     src/utils/shapes.cpp
     src/entities/tetrion.cpp

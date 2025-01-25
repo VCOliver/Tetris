@@ -2,7 +2,6 @@
 #include <ctime>
 
 #include "entities/tetrominos.hpp"
-#include "utils/renderUtils.hpp"
 
 Tetrominos::Tetrominos(Position start_pos, Color color) 
     : start_pos(start_pos), color(color){
@@ -49,12 +48,12 @@ void Tetrominos::move(Dir dir){
 
 }
 
-void Tetrominos::render(SDL_Renderer* renderer) const {
+void Tetrominos::render() const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){
             if(visible){
                 Block block = Block(pos,color);
-                block.render(renderer);
+                block.render();
             }
         }
     }

@@ -15,18 +15,9 @@ void Game::init(){
 
     window->setEventCallback(BIND_EVENT_FN(Game::processEvents));
 
-    renderer = SDL_CreateRenderer(
-        window->getSDL_Window(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    );
+    if(!Renderer::Init(window->getSDL_Window())) this->close();
 
-    if (!renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        close();
-    }
-
-    renderSystem = new RenderSystem(renderer);
-    fontSystem = new FontSystem();
-    fontSystem->loadFont();
+    FontSystem::Init(fontPath);
 
     stopwatch = new Stopwatch();
 
@@ -34,6 +25,7 @@ void Game::init(){
     inputManager = new InputManager(std::move(inputMapping));
 
     std::srand(std::time(nullptr)); // Seed the random number generator
+    std::cout << "Game initialized!" << std::endl;
 }   
 
 void Game::processEvents(){
@@ -79,8 +71,8 @@ void Game::run(){
     const Position watch_pos = {score_pos.x, score_pos.y+4};
 
     auto field = std::make_shared<Playfield>(tetrion_pos);
-    auto score = std::make_shared<ScoreBlock>(score_pos, fontSystem);
-    auto watch = std::make_shared<StopwatchBlock>(watch_pos, fontSystem);
+    auto score = std::make_shared<ScoreBlock>(score_pos);
+    auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     watch->setTime(0);
 
     // Start the stopwatch with a callback to update the clock
@@ -88,10 +80,11 @@ void Game::run(){
         watch->setTime(elapsed_seconds);
     });
 
-    renderSystem->addRenderComponent(field);
-    renderSystem->addRenderComponent(score);
-    renderSystem->addRenderComponent(watch);
+    Renderer::addRenderComponent(field);
+    Renderer::addRenderComponent(score);
+    Renderer::addRenderComponent(watch);
 
+    window->showWindow();
 
     while(running){
         Uint32 frameStart = SDL_GetTicks();
@@ -99,14 +92,13 @@ void Game::run(){
         processEvents();
         update();
 
-        renderSystem->setBackground();
+        Renderer::setBackground();
 
         score->increment_score(2);
 
-        renderSystem->render();
-
-        // Atualizar a tela
-        SDL_RenderPresent(renderer);
+        // Draw on the screen
+        Renderer::render();
+        Renderer::RenderPresent();
 
         // Calculate frame duration
         Uint32 frameTime = SDL_GetTicks() - frameStart;
@@ -129,11 +121,10 @@ bool Game::onWindowClose(WindowCloseEvent& e)
 
 void Game::close(){
     // Clean up
-    delete renderSystem;
-    delete fontSystem;
+    Renderer::Shutdown();
+    FontSystem::Shutdown();
     delete stopwatch;
     delete inputManager;
-    SDL_DestroyRenderer(renderer);
     SDL_Quit();
 }
 

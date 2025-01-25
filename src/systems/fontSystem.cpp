@@ -2,34 +2,48 @@
 
 #include "systems/fontSystem.hpp"
 
-FontSystem::FontSystem(int size) : font(nullptr), size(size) {
+TTF_Font* FontSystem::font = nullptr;
+char* FontSystem::m_fontPath = nullptr;
+int FontSystem::m_size = 0;
+
+bool FontSystem::Init(const char* fontPath, int size) {
+    m_size = size;
     if (TTF_Init() == -1) {
         std::cerr << "Failed to initialize SDL_ttf: " << TTF_GetError() << "\n";
+        return false;
     }
+    return loadFont(fontPath);
 }
 
-FontSystem::~FontSystem() {
+void FontSystem::Shutdown() {
     if (font) {
         TTF_CloseFont(font);
     }
     TTF_Quit();
 }
 
-void FontSystem::setFontSize(int size) {
-    if (this->size != size) {
-        this->size = size;
+bool FontSystem::setFontSize(int size) {
+    if (m_size != size) {
+        m_size = size;
         if (font) {
             TTF_CloseFont(font);
         }
-        font = TTF_OpenFont(fontPath.c_str(), size);
-        if (!font) {
-            std::cerr << "Failed to reload font: " << TTF_GetError() << "\n";
-        }
     }
+    return loadFont();
 }
 
 bool FontSystem::loadFont() {
-    font = TTF_OpenFont(fontPath.c_str(), size);
+    font = TTF_OpenFont(m_fontPath, m_size);
+    if (!font) {
+        std::cerr << "Failed to load font: " << TTF_GetError() << "\n";
+        return false;
+    }
+    return true;
+}
+
+bool FontSystem::loadFont(const char* fontPath) {
+    m_fontPath = const_cast<char*>(fontPath);
+    font = TTF_OpenFont(m_fontPath, m_size);
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << "\n";
         return false;
@@ -52,7 +66,7 @@ SDL_Surface* FontSystem::createSurface(const std::string& text, Color color){
     return surface;
 }
 
-void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) const {
+void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, SDL_Point pos, Color color) {
     if (!font) {
         std::cerr << "Font not initialized!\n";
         return;
@@ -77,7 +91,7 @@ void FontSystem::renderText(SDL_Renderer* renderer, const std::string& text, SDL
     SDL_DestroyTexture(texture);
 }
 
-void FontSystem::renderText(SDL_Renderer* renderer, SDL_Surface* surface, SDL_Point pos, bool destroySurface) const {
+void FontSystem::renderText(SDL_Renderer* renderer, SDL_Surface* surface, SDL_Point pos, bool destroySurface) {
     if (!surface) {
         std::cerr << "No surface param passed: " << TTF_GetError() << "\n";
         return;
