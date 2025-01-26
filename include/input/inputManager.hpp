@@ -3,6 +3,7 @@
 #include "pch.h"
 
 #include "core/base.hpp"
+#include "events/keyEvent.hpp"
 #include "inputMapping.hpp"
 
 class InputManager {
@@ -14,7 +15,8 @@ public:
 
     explicit InputManager(std::unique_ptr<InputMapping> mapping);
 
-    void handleInput(SDL_Event e);
+    void onEvent(KeyEvent* e);
+    void handleInput(KeyEvent::Key key, EventType type);
 
 private:
 
