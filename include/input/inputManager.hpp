@@ -15,7 +15,7 @@ public:
 
     explicit InputManager(std::unique_ptr<InputMapping> mapping);
 
-    void onEvent(KeyEvent* e);
+    void onEvent(KeyEvent& e);
     void handleInput(KeyEvent::Key key, EventType type);
 
 private:

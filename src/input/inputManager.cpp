@@ -1,17 +1,23 @@
 #include "input/inputManager.hpp"
 
+#include "events/eventDispatcher.hpp"
+
 InputManager::InputManager(std::unique_ptr<InputMapping> mapping)
     : inputMapping(std::move(mapping)) {}
 
-void InputManager::onEvent(KeyEvent* e){
-    if (e->GetEventType() == EventType::KeyPressed){
-        auto key = static_cast<KeyPressedEvent*>(e)->getKey();
-        handleInput(key, EventType::KeyPressed);
-    }
-    else if (e->GetEventType() == EventType::KeyReleased){
-        auto key = static_cast<KeyReleasedEvent*>(e)->getKey();
-        handleInput(key, EventType::KeyReleased);
-    }
+void InputManager::onEvent(KeyEvent& e){
+    EventDispatcher dispatcher(e);
+
+    dispatcher.notify<KeyPressedEvent>([this](KeyPressedEvent& e){
+
+        handleInput(e.key, EventType::KeyPressed);
+        return true;
+    });
+
+    dispatcher.notify<KeyReleasedEvent>([this](KeyReleasedEvent& e){
+        handleInput(e.key, EventType::KeyReleased);
+        return true;
+    });
 }
 
 using command_ptr = InputMapping::command_ptr;

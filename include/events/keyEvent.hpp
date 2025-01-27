@@ -5,13 +5,14 @@
 
 class KeyEvent : public Event
 {
-public:
+public: 
     struct Key{
         KeyCode keycode;
         bool isRepeat;
-    };  
+    }; 
     inline Key getKey() const { return key;}
     KeyCode GetKeyCode() const { return keyCode; }
+    Key key;
 
     EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 protected:
@@ -19,7 +20,6 @@ protected:
         : keyCode(keycode) {}
 
     KeyCode keyCode;
-    Key key;
 };
 
 class KeyPressedEvent : public KeyEvent

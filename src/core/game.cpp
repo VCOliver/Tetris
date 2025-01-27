@@ -47,7 +47,7 @@ void Game::update()
         auto& event = eventQueue.front();
         EventDispatcher dispatcher(*event);
 
-        dispatcher.Dispatch<KeyEvent>([this](KeyEvent* e) {
+        dispatcher.Dispatch<KeyEvent>([this](KeyEvent& e) {
             inputManager->onEvent(e);
             return true; // Mark as handled
         });
