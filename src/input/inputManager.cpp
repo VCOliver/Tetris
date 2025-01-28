@@ -23,14 +23,11 @@ void InputManager::onEvent(KeyEvent& e){
 using command_ptr = InputMapping::command_ptr;
 
 void InputManager::handleInput(KeyEvent::Key key, EventType type){
-    if(inputMapping->getCommand(key.keycode)){
+    auto command = inputMapping->getCommand(key.keycode);
+    if(command){
         if(type == EventType::KeyPressed){
-            setKeyState(key.keycode, KeyState::PRESSED);
-            std::cout << "Key pressed event: " << key.keycode << " (repeat = " << key.isRepeat << ")" << std::endl;
-        }
-        else if(type == EventType::KeyReleased){
-            setKeyState(key.keycode, KeyState::RELEASED);
-            std::cout << "Key released event: " << key.keycode << std::endl;
+            
+            command->execute();
         }
     }
 }

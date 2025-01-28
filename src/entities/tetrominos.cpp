@@ -41,11 +41,23 @@ shapes::Matrix Tetrominos::getRandomShape() const {
 }
 
 void Tetrominos::moveDown(){
-    
+    for(auto& row : matrix){
+        for(auto& [pos, _] : row){
+            pos.y += 1;
+        }
+    }
 }
 
 void Tetrominos::move(Dir dir){
-
+    switch(dir){
+        case DOWN:
+            moveDown();
+            break;
+        case LEFT:
+            break;
+        case RIGHT:
+            break;
+    }
 }
 
 void Tetrominos::render() const {

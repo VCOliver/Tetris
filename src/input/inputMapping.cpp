@@ -2,7 +2,7 @@
 
 InputMapping::InputMapping(){
     command_map = {
-        {SDLK_s, std::make_shared<Command>()}
+        {SDLK_s, std::make_shared<DownCommand>()}
     };
 }
 

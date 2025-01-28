@@ -17,6 +17,7 @@ public:
 
     void onEvent(KeyEvent& e);
     void handleInput(KeyEvent::Key key, EventType type);
+    bool isKeyPressed(KeyCode key) const;
 
 private:
 
@@ -24,5 +25,4 @@ private:
     std::unordered_map<KeyCode, KeyState>  keyState_map;
 
     void setKeyState(KeyCode key, KeyState state);
-    bool isKeyPressed(KeyCode key) const;
 };
