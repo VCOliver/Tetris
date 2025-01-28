@@ -42,8 +42,34 @@ public:
         current_tetro = &tetro;
     }
 
-    void execute() override {
+    void execute() override {   
         std::cout << "Executing command!" << std::endl;
         current_tetro->move(Tetrominos::LEFT);
+    }
+};
+
+class RotateClockwiseCommand : public ICommands {
+    Tetrominos* current_tetro;
+public:
+    void bindNewPiece(Tetrominos& tetro) override {
+        current_tetro = &tetro;
+    }
+
+    void execute() override {   
+        std::cout << "Executing command!" << std::endl;
+        current_tetro->rotate(Tetrominos::ROTATE_CLOCKWISE);
+    }
+};
+
+class RotateCounterClockwiseCommand : public ICommands {
+    Tetrominos* current_tetro;
+public:
+    void bindNewPiece(Tetrominos& tetro) override {
+        current_tetro = &tetro;
+    }
+
+    void execute() override {   
+        std::cout << "Executing command!" << std::endl;
+        current_tetro->rotate(Tetrominos::ROTATE_COUNTERCLOCKWISE);
     }
 };

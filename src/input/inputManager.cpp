@@ -23,10 +23,10 @@ void InputManager::onEvent(KeyEvent& e){
 using command_ptr = InputMapping::command_ptr;
 
 void InputManager::handleInput(KeyEvent::Key key, EventType type){
-    std::cout<< "Key pressed: " << (char)key.keycode << std::endl;
     auto command = inputMapping->getCommand(key.keycode);
     if(command){
         if(type == EventType::KeyPressed){
+            std::cout<< "Key pressed: " << (char)key.keycode << std::endl;
             command->execute();
         }
     }

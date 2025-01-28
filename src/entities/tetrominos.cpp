@@ -5,11 +5,11 @@
 
 Tetrominos::Tetrominos(Position start_pos, Color color) 
     : start_pos(start_pos), color(color){
-    auto shape = getRandomShape();
+    shape = getRandomShape();
     for(int y = 0; y<SHAPES_MATRIX_H; y++){
         for(int x = 0; x<SHAPES_MATRIX_W; x++){
             Position p = {start_pos.x + x, start_pos.y + y};
-            bool visible = shape(y, x);
+            bool visible = shape(x, y);
             matrix(x, y) = std::make_tuple(p, visible);
         }
     }
@@ -77,6 +77,44 @@ void Tetrominos::move(Dir dir){
             break;
         case RIGHT:
             moveRight();
+            break;
+        default:
+            std::cout << "Invalid direction!" << std::endl;
+            break;
+    }
+}
+
+void Tetrominos::rotateClockwise(){
+    std::cout << "Rotating Tetromino instance clockwise!" << std::endl;
+    this->shape = this->shape.rotateClockwise();
+    for(int y = 0; y<SHAPES_MATRIX_H; y++){
+        for(int x = 0; x<SHAPES_MATRIX_W; x++){
+            Position p = std::get<0>(matrix(x, y));
+            bool visible = shape(x, y);
+            matrix(x, y) = std::make_tuple(p, visible);
+        }
+    }
+}
+
+void Tetrominos::rotateCounterClockwise(){
+    std::cout << "Rotating Tetromino instance counterclockwise!" << std::endl;
+    this->shape = this->shape.rotateCounterclockwise();
+    for(int y = 0; y<SHAPES_MATRIX_H; y++){
+        for(int x = 0; x<SHAPES_MATRIX_W; x++){
+            Position p = std::get<0>(matrix(x, y));
+            bool visible = shape(x, y);
+            matrix(x, y) = std::make_tuple(p, visible);
+        }
+    }
+}
+
+void Tetrominos::rotate(Dir rollDir){
+    switch(rollDir){
+        case ROTATE_CLOCKWISE:
+            rotateClockwise();
+            break;
+        case ROTATE_COUNTERCLOCKWISE:
+            rotateCounterClockwise();
             break;
         default:
             std::cout << "Invalid direction!" << std::endl;

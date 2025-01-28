@@ -89,7 +89,76 @@ namespace math {
         typename matrix_t::const_iterator end() const {
             return data.end();
         }
+
+        Matrix rotateClockwise() const {
+            static_assert(Rows == Cols, "In-place rotation requires a square matrix.");
+            Matrix result = *this;
+            for (size_t layer = 0; layer < Rows / 2; ++layer) {
+            size_t first = layer;
+            size_t last = Rows - 1 - layer;
+            for (size_t i = first; i < last; ++i) {
+                size_t offset = i - first;
+                T top = result.data[first][i];
+
+                // Left -> Top
+                result.data[first][i] = result.data[last - offset][first];
+
+                // Bottom -> Left
+                result.data[last - offset][first] = result.data[last][last - offset];
+
+                // Right -> Bottom
+                result.data[last][last - offset] = result.data[i][last];
+
+                // Top -> Right
+                result.data[i][last] = top;
+            }
+            }
+            return result;
+        }
+
+        Matrix rotateCounterclockwise() const {
+            static_assert(Rows == Cols, "In-place rotation requires a square matrix.");
+            Matrix result = *this;
+            for (size_t layer = 0; layer < Rows / 2; ++layer) {
+            size_t first = layer;
+            size_t last = Rows - 1 - layer;
+            for (size_t i = first; i < last; ++i) {
+                size_t offset = i - first;
+                T top = result.data[first][i];
+
+                // Right -> Top
+                result.data[first][i] = result.data[i][last];
+
+                // Bottom -> Right
+                result.data[i][last] = result.data[last][last - offset];
+
+                // Left -> Bottom
+                result.data[last][last - offset] = result.data[last - offset][first];
+
+                // Top -> Left
+                result.data[last - offset][first] = top;
+            }
+            }
+            return result;
+        }
+
+
+        // Overload the << operator for Matrix
+        template <typename U, size_t R, size_t C>
+        friend std::ostream& operator<<(std::ostream& os, const Matrix<U, R, C>& matrix);
+
     };
+
+    template <typename U, size_t R, size_t C>
+    std::ostream& operator<<(std::ostream& os, const Matrix<U, R, C>& matrix) {
+        for (const auto& row : matrix) {
+            for (const auto& elem : row) {
+                os << elem << " ";
+            }
+            os << "\n";
+        }
+        return os;
+    }
 
 } // namespace math
 

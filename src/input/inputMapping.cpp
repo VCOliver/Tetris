@@ -4,7 +4,9 @@ InputMapping::InputMapping(){
     command_map = {
         {SDLK_s, std::make_shared<DownCommand>()},
         {SDLK_a, std::make_shared<LeftCommand>()},
-        {SDLK_d, std::make_shared<RightCommand>()}
+        {SDLK_d, std::make_shared<RightCommand>()},
+        {SDLK_e, std::make_shared<RotateClockwiseCommand>()},
+        {SDLK_q, std::make_shared<RotateCounterClockwiseCommand>()}
     };
 }
 

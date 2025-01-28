@@ -18,13 +18,15 @@
 class Tetrominos : public Renderable {
 public:
     /**
-     * @enum AllowedMovementDirections
+     * @enum AllowedMovements
      * @brief Defines the allowed movement directions for a Tetromino.
      */
-    enum AllowedMovementDirections {
+    enum AllowedMovements {
         RIGHT, /**< Move the Tetromino to the right. */
         LEFT,  /**< Move the Tetromino to the left. */
-        DOWN   /**< Move the Tetromino downward. */
+        DOWN,   /**< Move the Tetromino downward. */
+        ROTATE_CLOCKWISE, /** Rotatee the Tetromino clockwise */
+        ROTATE_COUNTERCLOCKWISE /** Rotate the Tetromino counterclockwise */
     };
 
 private:
@@ -46,11 +48,12 @@ private:
 
     /**
      * @typedef Dir
-     * @brief A shorthand for the AllowedMovementDirections enum.
+     * @brief A shorthand for the AllowedMovements enum.
      */
-    using Dir = AllowedMovementDirections;
+    using Dir = AllowedMovements;
 
     Matrix matrix;          /**< The matrix representing the Tetromino's current state. */
+    shapes::Matrix shape;           /**< The shape of the Tetromino. */
     Position start_pos;     /**< The starting position of the Tetromino. */
     Color color;            /**< The color of the Tetromino. */
 
@@ -68,6 +71,10 @@ private:
      * @brief Moves the Tetromino to the right.
      */
     void moveRight();
+
+    void rotateClockwise();
+
+    void rotateCounterClockwise();
 
 public:
     /**
@@ -96,6 +103,8 @@ public:
      * @param dir The direction to move the Tetromino (RIGHT, LEFT, or DOWN).
      */
     void move(Dir dir);
+
+    void rotate(Dir rollDir);
 
     /**
      * @brief Renders the Tetromino on the screen.
