@@ -13,6 +13,13 @@ Playfield::~Playfield(){
     delete tetromino;
 }
 
+void Playfield::spawnTetromino(){
+    int x = std::rand() % (TETRION_W-SHAPES_MATRIX_W-1);
+    x++;
+    Position tetromino_pos = {start_pos.x+x, start_pos.y-1};
+    tetromino = new Tetrominos(tetromino_pos, Colors::YELLOW);
+}
+
 void Playfield::render() const {
     tetromino->render(); // Renders Tetromino    
     // Cover Tetromino part above Tetrion
