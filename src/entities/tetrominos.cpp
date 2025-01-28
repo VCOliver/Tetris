@@ -49,14 +49,37 @@ void Tetrominos::moveDown(){
     }
 }
 
+void Tetrominos::moveLeft(){
+    std::cout << "Moving Tetromino instance left!" << std::endl;
+    for(auto& row : matrix){
+        for(auto& [pos, _] : row){
+            pos.x -= 1;
+        }
+    }
+}
+
+void Tetrominos::moveRight(){
+    std::cout << "Moving Tetromino instance right!" << std::endl;
+    for(auto& row : matrix){
+        for(auto& [pos, _] : row){
+            pos.x += 1;
+        }
+    }
+}
+
 void Tetrominos::move(Dir dir){
     switch(dir){
         case DOWN:
             moveDown();
             break;
         case LEFT:
+            moveLeft();
             break;
         case RIGHT:
+            moveRight();
+            break;
+        default:
+            std::cout << "Invalid direction!" << std::endl;
             break;
     }
 }
