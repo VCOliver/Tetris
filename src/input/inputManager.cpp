@@ -26,7 +26,7 @@ void InputManager::handleInput(KeyEvent::Key key, EventType type){
     auto command = inputMapping->getCommand(key.keycode);
     if(command){
         if(type == EventType::KeyPressed){
-            
+            std::cout<< "Key pressed: " << (char)key.keycode << std::endl;
             command->execute();
         }
     }
@@ -40,3 +40,4 @@ bool InputManager::isKeyPressed(KeyCode key) const {
     auto it = keyState_map.find(key);
     return it != keyState_map.end() && it->second;
 } 
+

@@ -74,6 +74,7 @@ void Game::run(){
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     watch->setTime(0);
+    inputManager->setTarget(*field->getTetromino());
 
     // Start the stopwatch with a callback to update the clock
     stopwatch->start([&watch, this](int elapsed_seconds) {

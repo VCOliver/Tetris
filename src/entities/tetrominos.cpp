@@ -41,6 +41,7 @@ shapes::Matrix Tetrominos::getRandomShape() const {
 }
 
 void Tetrominos::moveDown(){
+    std::cout << "Moving Tetromino instance down!" << std::endl;
     for(auto& row : matrix){
         for(auto& [pos, _] : row){
             pos.y += 1;

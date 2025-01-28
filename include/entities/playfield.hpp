@@ -16,5 +16,8 @@ public:
     Playfield(Position pos);
     ~Playfield();
 
+    void spawnTetromino();
+    Tetrominos* getTetromino() const { return tetromino; }
+
     void render() const;
 };

@@ -5,7 +5,7 @@
 class ICommands {
 public:
     virtual ~ICommands() = default;
-    virtual void getNewPiece(Tetrominos& tetro) = 0;
+    virtual void bindNewPiece(Tetrominos& tetro) = 0;
     virtual void execute() = 0;
 };
 
@@ -17,6 +17,33 @@ public:
     }
 
     void execute() override {
+        std::cout << "Executing command!" << std::endl;
         current_tetro->move(Tetrominos::DOWN);
+    }
+};
+
+class RightCommand : public ICommands {
+    Tetrominos* current_tetro;
+public:
+    void bindNewPiece(Tetrominos& tetro) override {
+        current_tetro = &tetro;
+    }
+
+    void execute() override {
+        std::cout << "Executing command!" << std::endl;
+        current_tetro->move(Tetrominos::RIGHT);
+    }
+};
+
+class LeftCommand : public ICommands {
+    Tetrominos* current_tetro;
+public:
+    void bindNewPiece(Tetrominos& tetro) override {
+        current_tetro = &tetro;
+    }
+
+    void execute() override {
+        std::cout << "Executing command!" << std::endl;
+        current_tetro->move(Tetrominos::LEFT);
     }
 };
