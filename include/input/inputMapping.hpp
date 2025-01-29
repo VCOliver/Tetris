@@ -9,6 +9,11 @@ struct Input{
     char key;
 };
 
+enum KeyMapOptions{
+    WASD,
+    ARROWS
+};
+
 class InputMapping {
 public:
     using Command = ICommands;
@@ -17,7 +22,7 @@ private:
     std::unordered_map<SDL_Keycode, command_ptr> command_map;
 
 public:
-    InputMapping();
+    InputMapping(KeyMapOptions keyMap);
 
     void bindKey(SDL_Keycode key, command_ptr command);
     void setNewTarget(Tetrominos& tetro);

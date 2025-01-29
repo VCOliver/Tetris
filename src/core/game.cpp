@@ -21,7 +21,7 @@ void Game::init(){
 
     stopwatch = new Stopwatch();
 
-    auto inputMapping = std::make_unique<InputMapping>();
+    auto inputMapping = std::make_unique<InputMapping>(WASD);
     inputManager = new InputManager(std::move(inputMapping));
 
     std::srand(std::time(nullptr)); // Seed the random number generator
