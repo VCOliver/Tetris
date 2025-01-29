@@ -15,6 +15,17 @@ class EventDispatcher
 		template<typename T, typename F>
 		bool Dispatch(const F& func)
 		{
+			if (event.GetCategoryFlags() == T::GetStaticCategoryFlags())
+			{
+				event.Handled |= func(static_cast<T&>(event));
+				return true;
+			}
+			return false;
+		}
+
+		template<typename T, typename F>
+		bool notify(const F& func)
+		{
 			if (event.GetEventType() == T::GetStaticType())
 			{
 				event.Handled |= func(static_cast<T&>(event));

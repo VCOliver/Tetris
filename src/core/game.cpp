@@ -21,7 +21,7 @@ void Game::init(){
 
     stopwatch = new Stopwatch();
 
-    auto inputMapping = std::make_unique<InputMapping>();
+    auto inputMapping = std::make_unique<InputMapping>(WASD);
     inputManager = new InputManager(std::move(inputMapping));
 
     std::srand(std::time(nullptr)); // Seed the random number generator
@@ -47,8 +47,8 @@ void Game::update()
         auto& event = eventQueue.front();
         EventDispatcher dispatcher(*event);
 
-        dispatcher.Dispatch<KeyPressedEvent>([](KeyPressedEvent& e) {
-            std::cout << e.ToString() << std::endl; 
+        dispatcher.Dispatch<KeyEvent>([this](KeyEvent& e) {
+            inputManager->onEvent(e);
             return true; // Mark as handled
         });
 
@@ -74,6 +74,7 @@ void Game::run(){
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     watch->setTime(0);
+    inputManager->setTarget(*field->getTetromino());
 
     // Start the stopwatch with a callback to update the clock
     stopwatch->start([&watch, this](int elapsed_seconds) {

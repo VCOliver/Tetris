@@ -4,12 +4,29 @@
 # -------------------------------------------------------------------
 
 cmake_minimum_required(VERSION 3.25.1)
-project(tetris VERSION 0.0.9 LANGUAGES CXX)
+project(tetris VERSION 0.0.10 LANGUAGES CXX)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
+
+# Ensure a default build type if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+# Supported build types
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
+
+# Set additional flags for Debug build
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+
+# Set output directories for binaries and libraries
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/release)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/release/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/build/debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/build/debug/lib)
 
 # Include directories
 include_directories(include)
@@ -54,9 +71,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
 # Add precompiled headers
 target_precompile_headers(${PROJECT_NAME} PRIVATE include/pch.h)
 
+# Define output directories for debug and release builds
+set(COPY_DEST_DEBUG ${CMAKE_BINARY_DIR}/debug/assets)
+set(COPY_DEST_RELEASE ${CMAKE_BINARY_DIR}/release/assets)
+
 # Copy assets folder after build
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory 
+            $<IF:$<CONFIG:Debug>,${COPY_DEST_DEBUG},${COPY_DEST_RELEASE}>
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets
+            ${CMAKE_SOURCE_DIR}/assets
+            $<IF:$<CONFIG:Debug>,${COPY_DEST_DEBUG},${COPY_DEST_RELEASE}>
 )

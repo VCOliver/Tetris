@@ -5,22 +5,30 @@
 
 class KeyEvent : public Event
 {
+public: 
+    struct Key{
+        KeyCode keycode;
+        bool isRepeat;
+    }; 
+    inline Key getKey() const { return key;}
+    KeyCode GetKeyCode() const { return keyCode; }
+    Key key;
+
+    EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 protected:
     KeyEvent(const KeyCode keycode)
         : keyCode(keycode) {}
 
     KeyCode keyCode;
-public:
-    KeyCode GetKeyCode() const { return keyCode; }
-
-    EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 };
 
 class KeyPressedEvent : public KeyEvent
 {
 public:
     KeyPressedEvent(const KeyCode keycode, bool isRepeat = false)
-        : KeyEvent(keycode), isRepeat(isRepeat) {}
+        : KeyEvent(keycode), isRepeat(isRepeat) {
+            key = {keycode, isRepeat};
+        }
 
     bool IsRepeat() const { return isRepeat; }
 
@@ -41,7 +49,9 @@ class KeyReleasedEvent : public KeyEvent
 {
 public:
     KeyReleasedEvent(const KeyCode keycode)
-        : KeyEvent(keycode) {}
+        : KeyEvent(keycode) {
+            key = {keycode};
+        }
 
     std::string ToString() const override
     {
