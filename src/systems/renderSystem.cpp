@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "systems/renderSystem.hpp"
+#include "core/log.hpp"
 
 SDL_Renderer* Renderer::renderer = nullptr;
 std::vector<renderables_ptr> Renderer::renderComponents = {}; 
@@ -12,10 +13,10 @@ bool Renderer::Init(SDL_Window* window){
     );
 
     if (!renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        LOG_ERROR("SDL_CreateRenderer Error: ", SDL_GetError());
         return false;
     }
-    std::cout << "Initializing Renderer!" << std::endl;
+    LOG_INFO("Initializing Renderer!");
     clearComponents();
     return true;
 }

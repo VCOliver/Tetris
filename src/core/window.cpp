@@ -1,6 +1,7 @@
 #include "core/window.hpp"
 
 #include "pch.h"
+#include "core/log.hpp"
 
 Window::Window(const std::string& title, unsigned int width, unsigned int height)
     : title(title), width(width), height(height){
@@ -14,12 +15,12 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
     );
 
     if (!window) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        LOG_ERROR("SDL_CreateWindow Error: ", SDL_GetError());
         SDL_Quit();
         exit(1);
     }
 
-    std::cout << "Initializing window!" << std::endl;
+    LOG_INFO("Initializing window!");
 
     data.title = title;
     data.height = height;

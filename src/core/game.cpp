@@ -7,7 +7,7 @@ Game::Game(int w, int h) : width(w), height(h){}
 void Game::init(){
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        LOG_ERROR("SDL_Init Error: ", SDL_GetError());
         exit(1);
     }
 
@@ -27,7 +27,7 @@ void Game::init(){
     inputManager = new InputManager(std::move(inputMapping));
 
     std::srand(std::time(nullptr)); // Seed the random number generator
-    std::cout << "Game initialized!" << std::endl;
+    LOG_INFO("Game initialized!");
 }   
 
 void Game::processEvents(){
@@ -77,14 +77,13 @@ void Game::run(){
     auto field = std::make_shared<Playfield>(tetrion_pos);
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
-    watch->setTime(0);
-    field->spawnTetromino();
-    inputManager->setTarget(field->getTetromino());
-
     // Start the stopwatch with a callback to update the clock
     stopwatch->start([&watch, this](int elapsed_seconds) {
         watch->setTime(elapsed_seconds);
     });
+    
+    field->spawnTetromino();
+    inputManager->setTarget(field->getTetromino());
 
     physicsSystem->setActiveTetromino(field->getTetromino());
 
@@ -93,6 +92,8 @@ void Game::run(){
     Renderer::addRenderComponent(watch);
 
     window->showWindow();
+    LOG_INFO("Window shown!");
+    watch->setTime(0);
 
     while(running){
         Uint32 frameStart = SDL_GetTicks();
@@ -121,13 +122,14 @@ void Game::run(){
 
 bool Game::onWindowClose(WindowCloseEvent& e)
 {
-    std::cout << "Window close event!" << std::endl;
+    LOG_INFO("Window close event!");
     running = false;
     return true;
 }
 
 
 void Game::close(){
+    LOG_INFO("Closing game!");
     // Clean up
     GAME_SHUTDOWN
     delete stopwatch;

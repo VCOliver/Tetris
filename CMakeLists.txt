@@ -41,6 +41,7 @@ set(SOURCES
     src/main.cpp
     src/core/game.cpp
     src/core/window.cpp
+    src/core/log.cpp
     src/components/renderComponents.cpp
     src/systems/renderSystem.cpp
     src/systems/fontSystem.cpp
@@ -70,6 +71,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
 
 # Add precompiled headers
 target_precompile_headers(${PROJECT_NAME} PRIVATE include/pch.h)
+target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG_LOGGING)
 
 # Define output directories for debug and release builds
 set(COPY_DEST_DEBUG ${CMAKE_BINARY_DIR}/debug/assets)
