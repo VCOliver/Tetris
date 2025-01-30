@@ -23,7 +23,7 @@ void InputMapping::bindKey(SDL_Keycode key, command_ptr command){
     command_map[key] = command;
 }
 
-void InputMapping::setNewTarget(Tetrominos& tetro){
+void InputMapping::setNewTarget(Tetrominos* tetro){
     for(auto& [_, command] : command_map){
         command->bindNewPiece(tetro);
     }

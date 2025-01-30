@@ -25,6 +25,6 @@ public:
     InputMapping(KeyMapOptions keyMap);
 
     void bindKey(SDL_Keycode key, command_ptr command);
-    void setNewTarget(Tetrominos& tetro);
+    void setNewTarget(Tetrominos* tetro);
     command_ptr getCommand(SDL_Keycode) const;
 };

@@ -8,7 +8,7 @@
 
 class Playfield : public Renderable {
 private:
-    Tetrion* tetrion;
+    std::unique_ptr<Tetrion> tetrion;
     Tetrominos* tetromino;
     Position start_pos;
 
