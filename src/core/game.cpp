@@ -27,7 +27,7 @@ void Game::init(){
     inputManager = new InputManager(std::move(inputMapping));
 
     std::srand(std::time(nullptr)); // Seed the random number generator
-    std::cout << "Game initialized!" << std::endl;
+    LOG_INFO("Game initialized!");
 }   
 
 void Game::processEvents(){
@@ -77,14 +77,13 @@ void Game::run(){
     auto field = std::make_shared<Playfield>(tetrion_pos);
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
-    watch->setTime(0);
-    field->spawnTetromino();
-    inputManager->setTarget(field->getTetromino());
-
     // Start the stopwatch with a callback to update the clock
     stopwatch->start([&watch, this](int elapsed_seconds) {
         watch->setTime(elapsed_seconds);
     });
+    
+    field->spawnTetromino();
+    inputManager->setTarget(field->getTetromino());
 
     physicsSystem->setActiveTetromino(field->getTetromino());
 
@@ -93,6 +92,7 @@ void Game::run(){
     Renderer::addRenderComponent(watch);
 
     window->showWindow();
+    watch->setTime(0);
 
     while(running){
         Uint32 frameStart = SDL_GetTicks();

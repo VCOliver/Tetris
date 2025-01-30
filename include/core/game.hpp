@@ -4,6 +4,7 @@
 
 #include "pch.h"
 
+#include "core/log.hpp"
 #include "window.hpp"
 #include "entities/tetrominos.hpp"
 #include "entities/playfield.hpp"
