@@ -1,17 +1,18 @@
 #include "core/log.hpp"
 
-void Log::Info(const std::string& message){
-    std::cout << COLOR_INFO << "[INFO] " << message << COLOR_RESET << std::endl;
-}
-
-void Log::Warning(const std::string& message){
-    std::cout << COLOR_WARNING << "[WARNING] " << message << COLOR_RESET << std::endl;
-}
-
-void Log::Error(const std::string& message){
-    std::cout << COLOR_ERROR << "[ERROR] " << message << COLOR_RESET << std::endl;
-}
-
-void Log::Debug(const std::string& message){
-    std::cout << COLOR_DEBUG << "[DEBUG] " << message << COLOR_RESET << std::endl;
+void Log::LogMessage(Level level, const std::string& msg) {
+    switch (level) {
+        case Level::INFO:
+            std::cout << COLOR_INFO << "[INFO] " << msg << COLOR_RESET << std::endl;
+            break;
+        case Level::WARNING:
+            std::cout << COLOR_WARNING << "[WARNING] " << msg << COLOR_RESET << std::endl;
+            break;
+        case Level::ERROR:
+            std::cerr << COLOR_ERROR << "[ERROR] " << msg << COLOR_RESET << std::endl;
+            break;
+        case Level::DEBUG:
+            std::cout << COLOR_DEBUG << "[DEBUG] " << msg << COLOR_RESET << std::endl;
+            break;
+    }
 }

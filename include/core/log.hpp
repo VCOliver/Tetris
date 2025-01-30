@@ -20,20 +20,50 @@ public:
     };
 
     // Static method to log messages with a specific level
-    static void Info(const std::string& message);
-    static void Warning(const std::string& message);
-    static void Error(const std::string& message);
-    static void Debug(const std::string& message);
+    template <typename... Args>
+    static void Info(Args&&... args) {
+        std::ostringstream oss;
+        (oss << ... << args);
+        LogMessage(Level::INFO, oss.str());
+    }
+
+    template <typename... Args>
+    static void Warning(Args&&... args) {
+        std::ostringstream oss;
+        (oss << ... << args);
+        LogMessage(Level::WARNING, oss.str());
+    }
+
+    template <typename... Args>
+    static void Error(Args&&... args) {
+        std::ostringstream oss;
+        (oss << ... << args);
+        LogMessage(Level::ERROR, oss.str());
+    }
+
+    template <typename... Args>
+    static void Debug(Args&&... args) {
+        std::ostringstream oss;
+        (oss << ... << args);
+        LogMessage(Level::DEBUG, oss.str());
+    }
 
 private:
     // Private constructor to prevent instantiation
     Log() = default;
 
+    static void LogMessage(Level level, const std::string& msg);
+
 };
 
 #ifdef DEBUG_LOGGING
-    #define LOG_INFO(message) Log::Info(message)
-    #define LOG_WARNING(message) Log::Warning(message)
-    #define LOG_ERROR(message) Log::Error(message)
-    #define LOG_DEBUG(message) Log::Debug(message)
+    #define LOG_INFO(...) Log::Info(__VA_ARGS__)
+    #define LOG_WARNING(...) Log::Warning(__VA_ARGS__)
+    #define LOG_ERROR(...) Log::Error(__VA_ARGS__)
+    #define LOG_DEBUG(...) Log::Debug(__VA_ARGS__)
+#else
+    #define LOG_INFO(...)
+    #define LOG_WARNING(...)
+    #define LOG_ERROR(...)
+    #define LOG_DEBUG(...)
 #endif

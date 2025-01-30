@@ -16,8 +16,7 @@ std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent)
             {
                 auto window = sdlEvent.window;
                 switch (window.event) {
-                    case SDL_WINDOWEVENT_SHOWN:
-                        std::cout << "Window shown!" << std::endl;
+                    case SDL_WINDOWEVENT_SHOWN:;
                         return nullptr;
                     case SDL_WINDOWEVENT_RESIZED:
                         return std::make_unique<WindowResizeEvent>(window.data1, window.data2);

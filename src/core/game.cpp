@@ -7,7 +7,7 @@ Game::Game(int w, int h) : width(w), height(h){}
 void Game::init(){
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        LOG_ERROR("SDL_Init Error: ", SDL_GetError());
         exit(1);
     }
 
@@ -92,6 +92,7 @@ void Game::run(){
     Renderer::addRenderComponent(watch);
 
     window->showWindow();
+    LOG_INFO("Window shown!");
     watch->setTime(0);
 
     while(running){
@@ -121,13 +122,14 @@ void Game::run(){
 
 bool Game::onWindowClose(WindowCloseEvent& e)
 {
-    std::cout << "Window close event!" << std::endl;
+    LOG_INFO("Window close event!");
     running = false;
     return true;
 }
 
 
 void Game::close(){
+    LOG_INFO("Closing game!");
     // Clean up
     GAME_SHUTDOWN
     delete stopwatch;
