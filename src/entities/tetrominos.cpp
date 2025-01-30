@@ -2,6 +2,7 @@
 #include <ctime>
 
 #include "entities/tetrominos.hpp"
+#include "core/log.hpp"
 
 Tetrominos::Tetrominos(Position start_pos, Color color) 
     : start_pos(start_pos), color(color){
@@ -41,7 +42,7 @@ shapes::Matrix Tetrominos::getRandomShape() const {
 }
 
 void Tetrominos::moveDown(){
-    std::cout << "Moving Tetromino instance down!" << std::endl;
+    LOG_DEBUG("Moving Tetromino instance down!");
     for(auto& row : matrix){
         for(auto& [pos, _] : row){
             pos.y += 1;
@@ -50,7 +51,7 @@ void Tetrominos::moveDown(){
 }
 
 void Tetrominos::moveLeft(){
-    std::cout << "Moving Tetromino instance left!" << std::endl;
+    LOG_DEBUG("Moving Tetromino instance left!");
     for(auto& row : matrix){
         for(auto& [pos, _] : row){
             pos.x -= 1;
@@ -59,7 +60,7 @@ void Tetrominos::moveLeft(){
 }
 
 void Tetrominos::moveRight(){
-    std::cout << "Moving Tetromino instance right!" << std::endl;
+    LOG_DEBUG("Moving Tetromino instance right!");
     for(auto& row : matrix){
         for(auto& [pos, _] : row){
             pos.x += 1;
@@ -79,13 +80,13 @@ void Tetrominos::move(Dir dir){
             moveRight();
             break;
         default:
-            std::cout << "Invalid direction!" << std::endl;
+            LOG_ERROR("Invalid direction!");
             break;
     }
 }
 
 void Tetrominos::rotateClockwise(){
-    std::cout << "Rotating Tetromino instance clockwise!" << std::endl;
+    LOG_DEBUG("Rotating Tetromino instance clockwise!");
     this->shape = this->shape.rotateClockwise();
     for(int y = 0; y<SHAPES_MATRIX_H; y++){
         for(int x = 0; x<SHAPES_MATRIX_W; x++){
@@ -97,7 +98,7 @@ void Tetrominos::rotateClockwise(){
 }
 
 void Tetrominos::rotateCounterClockwise(){
-    std::cout << "Rotating Tetromino instance counterclockwise!" << std::endl;
+    LOG_DEBUG("Rotating Tetromino instance counterclockwise!");
     this->shape = this->shape.rotateCounterclockwise();
     for(int y = 0; y<SHAPES_MATRIX_H; y++){
         for(int x = 0; x<SHAPES_MATRIX_W; x++){
@@ -117,7 +118,7 @@ void Tetrominos::rotate(Dir rollDir){
             rotateCounterClockwise();
             break;
         default:
-            std::cout << "Invalid direction!" << std::endl;
+            LOG_DEBUG("Invalid direction!");
             break;
     }
 }

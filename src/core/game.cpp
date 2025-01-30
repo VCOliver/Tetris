@@ -97,7 +97,7 @@ void Game::run(){
 
     while(running){
         Uint32 frameStart = SDL_GetTicks();
-
+        LogUtils::UpdateFPS(frameStart);
         processEvents();
         update();
 

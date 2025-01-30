@@ -67,3 +67,7 @@ private:
     #define LOG_ERROR(...)
     #define LOG_DEBUG(...)
 #endif
+
+namespace LogUtils {
+    void UpdateFPS(Uint32 currentTime);
+}

@@ -1,5 +1,7 @@
 #include "systems/physicsSystem.hpp"
 
+#include "core/log.hpp"
+
 void PhysicsSystem::update(){
     auto now = std::chrono::steady_clock::now();
     if (now - lastUpdateTime >= gravityInterval) {
@@ -14,7 +16,7 @@ void PhysicsSystem::onLevelUpEvent(){
         chrono::milliseconds(100),
         this->getGravitySpeed() - chrono::milliseconds(50)
     ));
-    cout << "Difficulty increased! New gravity speed: " 
-            << this->getGravitySpeed().count() << "ms\n";
+    LOG_DEBUG("Difficulty increased! New gravity speed: ", 
+               this->getGravitySpeed().count(), "ms");
 }
 

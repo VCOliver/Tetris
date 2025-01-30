@@ -16,3 +16,25 @@ void Log::LogMessage(Level level, const std::string& msg) {
             break;
     }
 }
+
+namespace LogUtils{
+    void UpdateFPS(Uint32 currentTime) {
+        static Uint32 previousTime = 0;
+        static int frameCount = 0;
+        static float accumulatedTime = 0;
+        auto deltaTime = (currentTime - previousTime) / 1000.0f; // In seconds
+        previousTime = currentTime;
+        accumulatedTime += deltaTime;
+        frameCount++;
+
+        int fps = 0;
+        if (accumulatedTime >= 1.0f) {
+            fps = frameCount;
+            frameCount = 0;
+            accumulatedTime -= 1.0f;
+
+            // Print FPS
+            LOG_DEBUG("FPS: ", fps);
+        }
+    }
+}
