@@ -5,15 +5,15 @@
 class ICommands {
 public:
     virtual ~ICommands() = default;
-    virtual void bindNewPiece(Tetrominos& tetro) = 0;
+    virtual void bindNewPiece(Tetrominos* tetro) = 0;
     virtual void execute() = 0;
 };
 
 class DownCommand : public ICommands {
     Tetrominos* current_tetro;
 public:
-    void bindNewPiece(Tetrominos& tetro) override {
-        current_tetro = &tetro;
+    void bindNewPiece(Tetrominos* tetro) override {
+        current_tetro = tetro;
     }
 
     void execute() override {
@@ -25,8 +25,8 @@ public:
 class RightCommand : public ICommands {
     Tetrominos* current_tetro;
 public:
-    void bindNewPiece(Tetrominos& tetro) override {
-        current_tetro = &tetro;
+    void bindNewPiece(Tetrominos* tetro) override {
+        current_tetro = tetro;
     }
 
     void execute() override {
@@ -38,8 +38,8 @@ public:
 class LeftCommand : public ICommands {
     Tetrominos* current_tetro;
 public:
-    void bindNewPiece(Tetrominos& tetro) override {
-        current_tetro = &tetro;
+    void bindNewPiece(Tetrominos* tetro) override {
+        current_tetro = tetro;
     }
 
     void execute() override {   
@@ -51,8 +51,8 @@ public:
 class RotateClockwiseCommand : public ICommands {
     Tetrominos* current_tetro;
 public:
-    void bindNewPiece(Tetrominos& tetro) override {
-        current_tetro = &tetro;
+    void bindNewPiece(Tetrominos* tetro) override {
+        current_tetro = tetro;
     }
 
     void execute() override {   
@@ -64,8 +64,8 @@ public:
 class RotateCounterClockwiseCommand : public ICommands {
     Tetrominos* current_tetro;
 public:
-    void bindNewPiece(Tetrominos& tetro) override {
-        current_tetro = &tetro;
+    void bindNewPiece(Tetrominos* tetro) override {
+        current_tetro = tetro;
     }
 
     void execute() override {   

@@ -11,6 +11,7 @@
 #include "entities/score.hpp"
 #include "systems/renderSystem.hpp"
 #include "systems/fontSystem.hpp"
+#include "systems/physicsSystem.hpp"
 #include "events/event.hpp"
 #include "events/keyEvent.hpp"
 #include "events/windowEvent.hpp"
@@ -38,6 +39,7 @@ class Game {
     InputManager* inputManager;
     FontSystem* fontSystem;
     Stopwatch* stopwatch;
+    std::unique_ptr<PhysicsSystem> physicsSystem;
 
     bool running = true;
     std::queue<std::unique_ptr<Event>> eventQueue;

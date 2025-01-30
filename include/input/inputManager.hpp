@@ -54,7 +54,7 @@ public:
      * @param tetro A reference to a Tetrominos object that will be the new target.
      * @note This method is intended for testing purposes!!
      */
-    void setTarget(Tetrominos& tetro) {
+    void setTarget(Tetrominos* tetro) {
         inputMapping->setNewTarget(tetro);
     }
 

@@ -21,6 +21,8 @@ void Game::init(){
 
     stopwatch = new Stopwatch();
 
+    physicsSystem = std::make_unique<PhysicsSystem>();
+
     auto inputMapping = std::make_unique<InputMapping>(WASD);
     inputManager = new InputManager(std::move(inputMapping));
 
@@ -42,6 +44,8 @@ void Game::processEvents(){
 
 void Game::update()
 {
+    physicsSystem->update();
+
     while (!eventQueue.empty())
     {
         auto& event = eventQueue.front();
@@ -74,12 +78,15 @@ void Game::run(){
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     watch->setTime(0);
-    inputManager->setTarget(*field->getTetromino());
+    field->spawnTetromino();
+    inputManager->setTarget(field->getTetromino());
 
     // Start the stopwatch with a callback to update the clock
     stopwatch->start([&watch, this](int elapsed_seconds) {
         watch->setTime(elapsed_seconds);
     });
+
+    physicsSystem->setActiveTetromino(field->getTetromino());
 
     Renderer::addRenderComponent(field);
     Renderer::addRenderComponent(score);

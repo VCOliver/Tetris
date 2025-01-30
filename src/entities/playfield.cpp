@@ -1,15 +1,10 @@
 #include "entities/playfield.hpp"
 
-Playfield::Playfield(Position pos) : start_pos(pos){
-    tetrion = new Tetrion(start_pos);
-    int x = std::rand() % (TETRION_W-SHAPES_MATRIX_W-1);
-    x++;
-    Position tetromino_pos = {start_pos.x+x, start_pos.y-1};
-    tetromino = new Tetrominos(tetromino_pos, Colors::RED);
+Playfield::Playfield(Position pos) : start_pos(pos), tetromino(nullptr){
+    tetrion = std::make_unique<Tetrion>(pos);
 }
 
 Playfield::~Playfield(){
-    delete tetrion;
     delete tetromino;
 }
 
