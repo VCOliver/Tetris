@@ -19,5 +19,7 @@ public:
     void spawnTetromino();
     Tetrominos* getTetromino() const { return tetromino; }
 
+    void onUpdate();
+
     void render() const;
 };

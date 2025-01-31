@@ -1,5 +1,7 @@
 #include "entities/playfield.hpp"
 
+#include "events/collisionEvent.hpp"
+
 Playfield::Playfield(Position pos) : start_pos(pos), tetromino(nullptr){
     tetrion = std::make_unique<Tetrion>(pos);
 }
@@ -13,6 +15,11 @@ void Playfield::spawnTetromino(){
     x++;
     Position tetromino_pos = {start_pos.x+x, start_pos.y-1};
     tetromino = new Tetrominos(tetromino_pos, Colors::YELLOW);
+}
+
+void Playfield::onUpdate(){
+    CollisionChecker collisionChecker(*tetromino, *tetrion);
+    collisionChecker.checkCollision();
 }
 
 void Playfield::render() const {

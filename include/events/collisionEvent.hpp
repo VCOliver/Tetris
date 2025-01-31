@@ -31,6 +31,13 @@ public:
     EVENT_CLASS_TYPE(TetrionRightCollision)
 };
 
+class TetrionBottomCollisionEvent : public CollisionEvent {
+public:
+    TetrionBottomCollisionEvent() = default;
+
+    EVENT_CLASS_TYPE(TetrionBottomCollision)
+};
+
 class TetrominoCollisionEvent : public CollisionEvent {
 public:
     TetrominoCollisionEvent() = default;
