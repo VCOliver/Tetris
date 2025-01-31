@@ -14,7 +14,7 @@ public:
     KeyCode GetKeyCode() const { return keyCode; }
     Key key;
 
-    EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+    EVENT_CLASS_CATEGORY(KeyboardCategory | InputCategory)
 protected:
     KeyEvent(const KeyCode keycode)
         : keyCode(keycode) {}

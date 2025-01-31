@@ -1,6 +1,7 @@
 #include "events/event.hpp"
 #include "events/keyEvent.hpp"
 #include "events/windowEvent.hpp"
+#include "events/collisionEvent.hpp"
 
 std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent)
 {
@@ -25,6 +26,8 @@ std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent)
                 }
             }
             break;
+        case COLLISION_EVENT:
+            return std::make_unique<CollisionEvent>();
         // Handle other SDL2 event types here
         default:
             return nullptr;

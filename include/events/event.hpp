@@ -11,17 +11,22 @@ enum class EventType
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppUpdate,
     KeyPressed, KeyReleased, KeyTyped,
-    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+    MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+    TetrionCollision, TetrominoCollision,
+    TetrominoSpawned, TetrominoDroped
 };
 
 enum EventCategory
 {
     None = 0,
-    EventCategoryApplication    = BIT(0),
-    EventCategoryInput          = BIT(1),
-    EventCategoryKeyboard       = BIT(2),
-    EventCategoryMouse          = BIT(3),
-    EventCategoryMouseButton    = BIT(4)
+    ApplicationCategory    = BIT(0),
+    InputCategory          = BIT(1),
+    KeyboardCategory       = BIT(2),
+    MouseCategory          = BIT(3),
+    MouseButtonCategory    = BIT(4),
+    WindowCategory         = BIT(5),
+    CollisionCategory      = BIT(6),
+    TetrominoCategory      = BIT(7)
 };
 
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
@@ -45,7 +50,7 @@ public:
 
     bool IsInCategory(EventCategory category)
     {
-        return GetCategoryFlags() & category;
+        return GetCategoryFlags() & static_cast<int>(category);
     }
 
 };
