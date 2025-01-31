@@ -8,15 +8,26 @@
 #include "utils/mathUtils.hpp"
 
 class Tetrion : public Renderable{
-using Matrix = math::Matrix<std::tuple<Position, bool>, TETRION_H, TETRION_W>;
+using drawMatrix = math::Matrix<std::tuple<Position, bool>, TETRION_H, TETRION_W>;
+using OccupiedMatrix = math::Matrix<bool, TETRION_H, TETRION_W>;
 
 private:
-    Matrix matrix;
+    drawMatrix matrix;
+    OccupiedMatrix occupied;
 
     Position start_pos;
 
+    void setOccupiedPositions();
+
 public:
     Tetrion(Position start_pos);
+
+    Position getStartPosition() const { return start_pos; }
+    Position getLastPosition() const { return start_pos + Position({TETRION_W, TETRION_H}); }
+
+    void onUpdate();
+
+    bool isPositionFree(Position pos) const;
 
     void render() const ;
 };

@@ -12,6 +12,7 @@
 
 namespace shapes{
     using Matrix = math::Matrix<int, SHAPES_MATRIX_H, SHAPES_MATRIX_W>;
+    using OccupiedPositionsArray = std::array<Position, 4>;
     
     inline const Matrix square_tetromino =   {{0, 0, 0, 0},
                                               {0, 1, 1, 0},

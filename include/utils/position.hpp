@@ -18,6 +18,8 @@ struct Position {
     /// @return `true` if both x and y coordinates are equal, otherwise `false`.
     bool operator==(const Position& other) const;
 
+    Position operator+(const Position& other) const;
+
     /// @brief Converts the position to an SDL-compatible `SDL_Point` structure.
     /// 
     /// This function is useful when working with SDL rendering functions

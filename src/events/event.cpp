@@ -27,7 +27,7 @@ std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent)
             }
             break;
         case COLLISION_EVENT:
-            return std::make_unique<CollisionEvent>();
+            return std::make_unique<TetrionCollisionEvent>();
         // Handle other SDL2 event types here
         default:
             return nullptr;

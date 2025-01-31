@@ -123,6 +123,21 @@ void Tetrominos::rotate(Dir rollDir){
     }
 }
 
+shapes::OccupiedPositionsArray Tetrominos::getOccupiedPositions() const 
+{
+    shapes::OccupiedPositionsArray positions;
+    int i = 0;
+    for(auto& row : matrix){
+        for(auto& [pos, visible] : row){
+            if(visible){
+                positions[i] = pos;
+                i++;
+            }
+        }
+    }
+    return positions;
+}
+
 void Tetrominos::render() const {
     for(auto& row : matrix){
         for(auto& [pos, visible] : row){

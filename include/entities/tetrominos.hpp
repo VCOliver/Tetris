@@ -106,6 +106,8 @@ public:
 
     void rotate(Dir rollDir);
 
+    shapes::OccupiedPositionsArray getOccupiedPositions() const;
+
     /**
      * @brief Renders the Tetromino on the screen.
      * @note This method overrides the `render` method from the `Renderable` base class.

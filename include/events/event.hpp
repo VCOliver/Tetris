@@ -12,7 +12,7 @@ enum class EventType
     AppUpdate,
     KeyPressed, KeyReleased, KeyTyped,
     MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-    TetrionCollision, TetrominoCollision,
+    TetrionLeftCollision, TetrionRightCollision, TetrionBottomCollision, TetrominoCollision,
     TetrominoSpawned, TetrominoDroped
 };
 

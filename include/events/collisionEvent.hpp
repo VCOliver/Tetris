@@ -3,6 +3,8 @@
 #include "pch.h"
 
 #include "event.hpp"
+#include "entities/tetrion.hpp"
+#include "entities/tetrominos.hpp"
 
 constexpr Uint32 COLLISION_EVENT = SDL_USEREVENT + 1;
 static_assert(COLLISION_EVENT < SDL_LASTEVENT, "COLLISION_EVENT exceeds SDL_LASTEVENT");
@@ -15,11 +17,18 @@ public:
     EVENT_CLASS_CATEGORY(CollisionCategory)
 };
 
-class TetrionCollisionEvent : public CollisionEvent {
+class TetrionLeftCollisionEvent : public CollisionEvent {
 public:
-    TetrionCollisionEvent() = default;
+    TetrionLeftCollisionEvent() = default;
 
-    EVENT_CLASS_TYPE(TetrionCollision)
+    EVENT_CLASS_TYPE(TetrionLeftCollision)
+};
+
+class TetrionRightCollisionEvent : public CollisionEvent {
+public:
+    TetrionRightCollisionEvent() = default;
+
+    EVENT_CLASS_TYPE(TetrionRightCollision)
 };
 
 class TetrominoCollisionEvent : public CollisionEvent {
@@ -29,3 +38,13 @@ public:
     EVENT_CLASS_TYPE(TetrominoCollision)
 };
 
+class CollisionChecker {
+    Tetrominos& tetromino;
+    Tetrion& tetrion;
+public:
+    CollisionChecker(Tetrominos& tetromino, Tetrion& tetrion) 
+                    : tetromino(tetromino), tetrion(tetrion){};
+
+    void setTarget(Tetrominos& tetromino){ this->tetromino = tetromino;}
+    void checkCollision();
+};
