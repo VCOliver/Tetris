@@ -41,6 +41,7 @@ class Game {
     FontSystem* fontSystem;
     Stopwatch* stopwatch;
     std::unique_ptr<PhysicsSystem> physicsSystem;
+    std::shared_ptr<Playfield> field;
 
     bool running = true;
     std::queue<std::unique_ptr<Event>> eventQueue;

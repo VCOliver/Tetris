@@ -3,7 +3,7 @@
 #include "entities/tetrion.hpp"
 
 Tetrion::Tetrion(Position start_pos)
-    : start_pos(START_POSITION){
+    : start_pos(start_pos){
     Position p;
     bool visible = false;
     for(int y = 0; y<TETRION_H; y++){

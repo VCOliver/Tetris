@@ -45,6 +45,7 @@ void Game::processEvents(){
 void Game::update()
 {
     physicsSystem->update();
+    field->onUpdate();
 
     while (!eventQueue.empty())
     {
@@ -74,7 +75,7 @@ void Game::run(){
     const Position score_pos = {tetrion_pos.x+TETRION_W, tetrion_pos.y};
     const Position watch_pos = {score_pos.x, score_pos.y+4};
 
-    auto field = std::make_shared<Playfield>(tetrion_pos);
+    field = std::make_shared<Playfield>(tetrion_pos);
     auto score = std::make_shared<ScoreBlock>(score_pos);
     auto watch = std::make_shared<StopwatchBlock>(watch_pos);
     // Start the stopwatch with a callback to update the clock

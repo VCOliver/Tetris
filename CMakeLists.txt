@@ -58,6 +58,7 @@ set(SOURCES
     src/input/inputManager.cpp
     src/input/inputMapping.cpp
     src/events/event.cpp
+    src/events/collisionEvent.cpp
 )
 
 # Add the executables

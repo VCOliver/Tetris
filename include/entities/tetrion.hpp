@@ -23,7 +23,7 @@ public:
     Tetrion(Position start_pos);
 
     Position getStartPosition() const { return start_pos; }
-    Position getLastPosition() const { return start_pos + Position({TETRION_W, TETRION_H}); }
+    Position getLastPosition() const { return start_pos + Position({TETRION_W-1, TETRION_H-1}); }
 
     void onUpdate();
 
