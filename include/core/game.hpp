@@ -14,6 +14,7 @@
 #include "systems/fontSystem.hpp"
 #include "systems/physicsSystem.hpp"
 #include "events/event.hpp"
+#include "events/collisionEvent.hpp"
 #include "events/keyEvent.hpp"
 #include "events/windowEvent.hpp"
 #include "events/eventDispatcher.hpp"

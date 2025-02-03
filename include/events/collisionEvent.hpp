@@ -54,4 +54,12 @@ public:
 
     void setTarget(Tetrominos& tetromino){ this->tetromino = tetromino;}
     void checkCollision();
+
+private:
+    void pushEvent(EventType type);
+};
+
+class CollisionHandler {
+public:
+    static void handleCollision(CollisionEvent& e);
 };

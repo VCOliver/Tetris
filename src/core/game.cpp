@@ -57,6 +57,11 @@ void Game::update()
             return true; // Mark as handled
         });
 
+        dispatcher.Dispatch<CollisionEvent>([](CollisionEvent& e){
+            CollisionHandler::handleCollision(e);
+            return true;
+        });
+
         dispatcher.Dispatch<WindowResizeEvent>([](WindowResizeEvent& e){
             return true;
         });

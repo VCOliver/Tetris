@@ -2,6 +2,14 @@
 
 #include "core/log.hpp"
 
+void CollisionChecker::pushEvent(EventType type){
+    SDL_Event event;
+    SDL_zero(event);
+    event.type = COLLISION_EVENT;
+    event.user.code = static_cast<Sint32>(type);
+    SDL_PushEvent(&event);
+}
+
 void CollisionChecker::checkCollision(){
     auto occupied = tetromino.getOccupiedPositions();
     auto min_X_pos = tetrion.getStartPosition().x+1;
@@ -9,29 +17,42 @@ void CollisionChecker::checkCollision(){
     auto max_Y_pos = tetrion.getLastPosition().y-1;
     for(auto& pos : occupied){
         if(pos.x == min_X_pos){
-            LOG_DEBUG("Collision detected on the Left side");
-            SDL_Event event;
-            event.type = COLLISION_EVENT;
-            event.user.code = static_cast<Sint32>(EventType::TetrionLeftCollision);
-            SDL_PushEvent(&event);
-            return;
+            pushEvent(EventType::TetrionLeftCollision);
+            break;
         }
         if(pos.x == max_X_pos){
-            LOG_DEBUG("Collision detected on the Right side");
-            SDL_Event event;
-            event.type = COLLISION_EVENT;
-            event.user.code = static_cast<Sint32>(EventType::TetrionRightCollision);
-            SDL_PushEvent(&event);
-            return;
+            pushEvent(EventType::TetrionRightCollision);
+            break;
         }
         if(pos.y == max_Y_pos){
-            LOG_DEBUG("Collision detected on the Bottom side");
-            SDL_Event event;
-            event.type = COLLISION_EVENT;
-            event.user.code = static_cast<Sint32>(EventType::TetrionBottomCollision);
-            SDL_PushEvent(&event);
-            return;
+            pushEvent(EventType::TetrionBottomCollision);
+            break;
         }
     }    
 }
 
+void CollisionHandler::handleCollision(CollisionEvent& e){
+    static auto lastCollisionType = EventType::None;
+    auto type = e.GetEventType();
+    if(type == lastCollisionType){
+        return;
+    }
+    lastCollisionType = type;
+    LOG_WARNING("Not fully implemented.");
+    switch(type){
+        case EventType::TetrionLeftCollision:
+            LOG_DEBUG("Handling Left Collision");
+            break;
+        case EventType::TetrionRightCollision:
+            LOG_DEBUG("Handling Right Collision");
+            break;
+        case EventType::TetrionBottomCollision:
+            LOG_DEBUG("Handling Bottom Collision");
+            break;
+        case EventType::TetrominoCollision:
+            LOG_DEBUG("Handling Tetromino Collision");
+            break;
+        default:
+            LOG_ERROR("Unknown Collision Event");
+    }
+}
