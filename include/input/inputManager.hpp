@@ -18,7 +18,9 @@ public:
      */
     enum KeyState {
         PRESSED,  /**< The key is currently pressed. */
-        RELEASED  /**< The key is currently released. */
+        RELEASED,  /**< The key is currently released. */
+        BLOCKED,
+        FREE
     };
 
     /**
@@ -54,8 +56,16 @@ public:
      * @param tetro A reference to a Tetrominos object that will be the new target.
      * @note This method is intended for testing purposes!!
      */
-    void setTarget(Tetrominos* tetro) {
+    inline void setTarget(Tetrominos* tetro) {
         inputMapping->setNewTarget(tetro);
+    }
+
+    inline void blockKey(KeyCode key){
+        setKeyState(key, KeyState::BLOCKED);
+    }
+
+    inline void unBlockKey(KeyCode key){
+        setKeyState(key, KeyState::FREE);
     }
 
 private:

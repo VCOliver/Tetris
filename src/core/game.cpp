@@ -19,7 +19,7 @@ void Game::init(){
 
     if(!FontSystem::Init(fontPath)){ TERMINATE_GAME(EXIT_FAILURE) }
 
-    stopwatch = new Stopwatch();
+    stopwatch = std::make_unique<Stopwatch>();
 
     physicsSystem = std::make_unique<PhysicsSystem>();
 
@@ -58,7 +58,6 @@ void Game::update()
         });
 
         dispatcher.Dispatch<WindowResizeEvent>([](WindowResizeEvent& e){
-            std::cout << e.ToString() << std::endl;
             return true;
         });
 
@@ -133,7 +132,6 @@ void Game::close(){
     LOG_INFO("Closing game!");
     // Clean up
     GAME_SHUTDOWN
-    delete stopwatch;
     delete inputManager;
 }
 

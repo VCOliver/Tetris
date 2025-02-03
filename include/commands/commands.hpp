@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entities/tetrominos.hpp"
+#include "core/log.hpp"
 
 class ICommands {
 public:
@@ -17,7 +18,7 @@ public:
     }
 
     void execute() override {
-        std::cout << "Executing command!" << std::endl;
+        LOG_INFO("Executing Down Command");
         current_tetro->move(Tetrominos::DOWN);
     }
 };
@@ -30,7 +31,7 @@ public:
     }
 
     void execute() override {
-        std::cout << "Executing command!" << std::endl;
+        LOG_INFO("Executing Right Command");
         current_tetro->move(Tetrominos::RIGHT);
     }
 };
@@ -43,7 +44,7 @@ public:
     }
 
     void execute() override {   
-        std::cout << "Executing command!" << std::endl;
+        LOG_INFO("Executing Left Command");
         current_tetro->move(Tetrominos::LEFT);
     }
 };
@@ -56,7 +57,7 @@ public:
     }
 
     void execute() override {   
-        std::cout << "Executing command!" << std::endl;
+        LOG_INFO("Executing Rotate Clockwise Command");
         current_tetro->rotate(Tetrominos::ROTATE_CLOCKWISE);
     }
 };
@@ -69,7 +70,7 @@ public:
     }
 
     void execute() override {   
-        std::cout << "Executing command!" << std::endl;
+        LOG_INFO("Executing Rotate Counter Clockwise Command");
         current_tetro->rotate(Tetrominos::ROTATE_COUNTERCLOCKWISE);
     }
 };

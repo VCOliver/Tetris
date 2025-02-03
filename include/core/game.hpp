@@ -39,7 +39,7 @@ class Game {
 
     InputManager* inputManager;
     FontSystem* fontSystem;
-    Stopwatch* stopwatch;
+    std::unique_ptr<Stopwatch> stopwatch;
     std::unique_ptr<PhysicsSystem> physicsSystem;
     std::shared_ptr<Playfield> field;
 

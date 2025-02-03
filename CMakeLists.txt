@@ -13,8 +13,10 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 # Ensure a default build type if not specified
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 # Supported build types
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
@@ -64,6 +66,11 @@ set(SOURCES
 # Add the executables
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+# Conditionally define DEBUG_LOGGING for Debug builds
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Debug>:DEBUG_LOGGING>
+)
+
 # Include SDL2 headers
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 
@@ -72,7 +79,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} SDL2_ttf)
 
 # Add precompiled headers
 target_precompile_headers(${PROJECT_NAME} PRIVATE include/pch.h)
-target_compile_definitions(${PROJECT_NAME} PRIVATE DEBUG_LOGGING)
 
 # Define output directories for debug and release builds
 set(COPY_DEST_DEBUG ${CMAKE_BINARY_DIR}/debug/assets)
