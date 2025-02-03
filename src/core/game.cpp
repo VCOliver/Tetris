@@ -21,11 +21,11 @@ void Game::init(){
 
     stopwatch = std::make_unique<Stopwatch>();
 
-    physicsSystem = std::make_unique<PhysicsSystem>();
+    physicsSystem = new PhysicsSystem();
 
     auto inputMapping = std::make_unique<InputMapping>(WASD);
     inputManager = new InputManager(std::move(inputMapping));
-    CollisionHandler::Init(inputManager);
+    CollisionHandler::Init(inputManager, physicsSystem);
 
     std::srand(std::time(nullptr)); // Seed the random number generator
     LOG_INFO("Game initialized!");
@@ -53,14 +53,15 @@ void Game::update()
         auto& event = eventQueue.front();
         EventDispatcher dispatcher(*event);
 
-        dispatcher.Dispatch<KeyEvent>([this](KeyEvent& e) {
-            inputManager->onEvent(e);
-            return true; // Mark as handled
-        });
-
         dispatcher.Dispatch<CollisionEvent>([](CollisionEvent& e){
             CollisionHandler::handleCollision(e);
             return true;
+        });
+
+        dispatcher.Dispatch<KeyEvent>([this](KeyEvent& e) {
+            inputManager->onEvent(e);
+            inputManager->Reset();
+            return true; // Mark as handled
         });
 
         dispatcher.Dispatch<WindowResizeEvent>([](WindowResizeEvent& e){
@@ -139,5 +140,6 @@ void Game::close(){
     // Clean up
     GAME_SHUTDOWN
     delete inputManager;
+    delete physicsSystem;
 }
 

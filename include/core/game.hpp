@@ -41,7 +41,7 @@ class Game {
     InputManager* inputManager;
     FontSystem* fontSystem;
     std::unique_ptr<Stopwatch> stopwatch;
-    std::unique_ptr<PhysicsSystem> physicsSystem;
+    PhysicsSystem* physicsSystem;
     std::shared_ptr<Playfield> field;
 
     bool running = true;

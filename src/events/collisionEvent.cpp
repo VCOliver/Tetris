@@ -32,16 +32,11 @@ void CollisionChecker::checkCollision(){
 }
 
 InputManager* CollisionHandler::m_inputManager = nullptr;
+PhysicsSystem* CollisionHandler::m_physicsSystem = nullptr;
 
 void CollisionHandler::handleCollision(CollisionEvent& e){
-    static auto lastCollisionType = EventType::None;
     auto type = e.GetEventType();
-    if(type == lastCollisionType){
-        return;
-    }
-    lastCollisionType = type;
-
-    m_inputManager->Reset();
+    
     auto keys = m_inputManager->getKeyCommands();
     LOG_WARNING("Collision handling not fully implemented.");
     switch(type){
@@ -56,6 +51,7 @@ void CollisionHandler::handleCollision(CollisionEvent& e){
         case EventType::TetrionBottomCollision:
             LOG_DEBUG("Handling Bottom Collision");
             m_inputManager->blockKey(keys.DOWN.first);
+            m_physicsSystem->setGravitySpeed(std::chrono::milliseconds(0));
             break;
         case EventType::TetrominoCollision:
             LOG_DEBUG("Handling Tetromino Collision");

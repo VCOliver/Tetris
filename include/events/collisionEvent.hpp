@@ -6,6 +6,7 @@
 #include "entities/tetrion.hpp"
 #include "entities/tetrominos.hpp"
 #include "input/inputManager.hpp"
+#include "systems/physicsSystem.hpp"
 
 constexpr Uint32 COLLISION_EVENT = SDL_USEREVENT + 1;
 static_assert(COLLISION_EVENT < SDL_LASTEVENT, "COLLISION_EVENT exceeds SDL_LASTEVENT");
@@ -62,9 +63,11 @@ private:
 
 class CollisionHandler {
     static InputManager* m_inputManager;
+    static PhysicsSystem* m_physicsSystem;
 public:
-    static void Init(InputManager* inputManager){
+    static void Init(InputManager*& inputManager, PhysicsSystem*& physicsSystem){
         m_inputManager = inputManager;
+        m_physicsSystem = physicsSystem;
     }
     static void handleCollision(CollisionEvent& e);
 };
