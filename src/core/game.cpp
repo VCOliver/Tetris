@@ -25,6 +25,7 @@ void Game::init(){
 
     auto inputMapping = std::make_unique<InputMapping>(WASD);
     inputManager = new InputManager(std::move(inputMapping));
+    CollisionHandler::Init(inputManager);
 
     std::srand(std::time(nullptr)); // Seed the random number generator
     LOG_INFO("Game initialized!");

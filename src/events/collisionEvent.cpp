@@ -31,6 +31,8 @@ void CollisionChecker::checkCollision(){
     }    
 }
 
+InputManager* CollisionHandler::m_inputManager = nullptr;
+
 void CollisionHandler::handleCollision(CollisionEvent& e){
     static auto lastCollisionType = EventType::None;
     auto type = e.GetEventType();
@@ -38,16 +40,22 @@ void CollisionHandler::handleCollision(CollisionEvent& e){
         return;
     }
     lastCollisionType = type;
-    LOG_WARNING("Not fully implemented.");
+
+    m_inputManager->Reset();
+    auto keys = m_inputManager->getKeyCommands();
+    LOG_WARNING("Collision handling not fully implemented.");
     switch(type){
         case EventType::TetrionLeftCollision:
             LOG_DEBUG("Handling Left Collision");
+            m_inputManager->blockKey(keys.LEFT.first);
             break;
         case EventType::TetrionRightCollision:
             LOG_DEBUG("Handling Right Collision");
+            m_inputManager->blockKey(keys.RIGHT.first);
             break;
         case EventType::TetrionBottomCollision:
             LOG_DEBUG("Handling Bottom Collision");
+            m_inputManager->blockKey(keys.DOWN.first);
             break;
         case EventType::TetrominoCollision:
             LOG_DEBUG("Handling Tetromino Collision");

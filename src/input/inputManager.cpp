@@ -35,8 +35,11 @@ void InputManager::setKeyState(KeyCode key, KeyState state){
     keyState_map[key] = state;
 }
 
-bool InputManager::isKeyPressed(KeyCode key) const {
+InputManager::KeyState InputManager::getKeyState(KeyCode key) const {
     auto it = keyState_map.find(key);
-    return it != keyState_map.end() && it->second;
+    if(it != keyState_map.end()){
+        return it->second;
+    }
+    return FREE;
 } 
 

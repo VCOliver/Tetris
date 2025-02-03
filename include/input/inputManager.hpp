@@ -43,12 +43,7 @@ public:
      */
     void handleInput(KeyEvent::Key key, EventType type);
 
-    /**
-     * @brief Checks if a specific key is currently pressed.
-     * @param key The key code to check (from KeyCode).
-     * @return True if the key is pressed, false otherwise.
-     */
-    bool isKeyPressed(KeyCode key) const;
+    KeyState getKeyState(KeyCode key) const;
 
     // FOR TESTING
     /**
@@ -61,11 +56,19 @@ public:
     }
 
     inline void blockKey(KeyCode key){
-        setKeyState(key, KeyState::BLOCKED);
+        inputMapping->bindKey(key, nullptr);
     }
 
     inline void unBlockKey(KeyCode key){
         setKeyState(key, KeyState::FREE);
+    }
+
+    inline const KeyCommands& getKeyCommands() const {
+        return inputMapping->getKeyCommands();
+    }
+
+    inline void Reset(){
+        inputMapping->Reset();
     }
 
 private:
