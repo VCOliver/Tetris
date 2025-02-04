@@ -6,12 +6,17 @@
 
 class PhysicsSystem {
     Tetrominos* activeTetromino;
+    bool gravity_enabled = false;
     std::chrono::steady_clock::time_point lastUpdateTime;
     std::chrono::milliseconds gravityInterval = std::chrono::milliseconds(1000);
 public:
     PhysicsSystem() : activeTetromino(nullptr) {
         lastUpdateTime = std::chrono::steady_clock::now();
     }
+
+    void startGravity(){ gravity_enabled = true;}
+
+    void stopGravity(){ gravity_enabled = false; }
 
     void setActiveTetromino(Tetrominos* tetromino) {
         activeTetromino = tetromino;

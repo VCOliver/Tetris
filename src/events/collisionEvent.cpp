@@ -35,26 +35,25 @@ InputManager* CollisionHandler::m_inputManager = nullptr;
 PhysicsSystem* CollisionHandler::m_physicsSystem = nullptr;
 
 void CollisionHandler::handleCollision(CollisionEvent& e){
+    static auto prev = EventType::None;
+    if(prev != e.GetEventType()) LOG_WARNING("Collision handling not fully implemented.");
+
     auto type = e.GetEventType();
-    
+    prev = type;
+
     auto keys = m_inputManager->getKeyCommands();
-    LOG_WARNING("Collision handling not fully implemented.");
     switch(type){
         case EventType::TetrionLeftCollision:
-            LOG_DEBUG("Handling Left Collision");
             m_inputManager->blockKey(keys.LEFT.first);
             break;
         case EventType::TetrionRightCollision:
-            LOG_DEBUG("Handling Right Collision");
             m_inputManager->blockKey(keys.RIGHT.first);
             break;
         case EventType::TetrionBottomCollision:
-            LOG_DEBUG("Handling Bottom Collision");
             m_inputManager->blockKey(keys.DOWN.first);
-            m_physicsSystem->setGravitySpeed(std::chrono::milliseconds(0));
+            m_physicsSystem->stopGravity();
             break;
         case EventType::TetrominoCollision:
-            LOG_DEBUG("Handling Tetromino Collision");
             break;
         default:
             LOG_ERROR("Unknown Collision Event");

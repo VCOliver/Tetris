@@ -100,6 +100,7 @@ void Game::run(){
 
     window->showWindow();
     LOG_INFO("Window shown!");
+    physicsSystem->startGravity();
     watch->setTime(0);
 
     while(running){

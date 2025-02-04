@@ -3,6 +3,8 @@
 #include "core/log.hpp"
 
 void PhysicsSystem::update(){
+    if(!gravity_enabled) return; //Prevent gravity from being applied
+
     auto now = std::chrono::steady_clock::now();
     if (now - lastUpdateTime >= gravityInterval) {
         activeTetromino->move(Tetrominos::DOWN);  // Apply gravity
