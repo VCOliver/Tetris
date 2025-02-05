@@ -1,14 +1,8 @@
 #include "events/collisionEvent.hpp"
 
 #include "core/log.hpp"
+#include "events/TetrominoEvent.hpp"
 
-void CollisionChecker::pushEvent(EventType type){
-    SDL_Event event;
-    SDL_zero(event);
-    event.type = COLLISION_EVENT;
-    event.user.code = static_cast<Sint32>(type);
-    SDL_PushEvent(&event);
-}
 
 void CollisionChecker::checkCollision(){
     auto occupied = tetromino.getOccupiedPositions();
@@ -17,15 +11,15 @@ void CollisionChecker::checkCollision(){
     auto max_Y_pos = tetrion.getLastPosition().y-1;
     for(auto& pos : occupied){
         if(pos.x == min_X_pos){
-            pushEvent(EventType::TetrionLeftCollision);
+            Event::pushEvent(COLLISION_EVENT, EventType::TetrionLeftCollision);
             break;
         }
         if(pos.x == max_X_pos){
-            pushEvent(EventType::TetrionRightCollision);
+            Event::pushEvent(COLLISION_EVENT, EventType::TetrionRightCollision);
             break;
         }
         if(pos.y == max_Y_pos){
-            pushEvent(EventType::TetrionBottomCollision);
+            Event::pushEvent(COLLISION_EVENT, EventType::TetrionBottomCollision);
             break;
         }
     }    
@@ -36,7 +30,10 @@ PhysicsSystem* CollisionHandler::m_physicsSystem = nullptr;
 
 void CollisionHandler::handleCollision(CollisionEvent& e){
     static auto prev = EventType::None;
-    if(prev != e.GetEventType()) LOG_WARNING("Collision handling not fully implemented.");
+    if(prev != e.GetEventType()) {
+        LOG_DEBUG("Collision Event: ", e.GetName());
+        LOG_WARNING("Collision handling not fully implemented.");
+    }
 
     auto type = e.GetEventType();
     prev = type;
@@ -52,6 +49,7 @@ void CollisionHandler::handleCollision(CollisionEvent& e){
         case EventType::TetrionBottomCollision:
             m_inputManager->blockKey(keys.DOWN.first);
             m_physicsSystem->stopGravity();
+            Event::pushEvent(TETROMINO_EVENT, EventType::TetrominoDroped);
             break;
         case EventType::TetrominoCollision:
             break;

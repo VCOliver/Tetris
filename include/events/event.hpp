@@ -53,6 +53,15 @@ public:
         return GetCategoryFlags() & static_cast<int>(category);
     }
 
+    static void pushEvent(Uint32 SDL_event_type, EventType game_event_type){
+        SDL_Event event;
+        SDL_zero(event);
+        event.type = SDL_event_type;
+        event.user.code = static_cast<Sint32>(game_event_type);
+        SDL_PushEvent(&event);
+    }
+
 };
 
 std::unique_ptr<Event> TranslateSDLEvent(const SDL_Event& sdlEvent);
+

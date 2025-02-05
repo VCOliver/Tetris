@@ -2,6 +2,8 @@
 
 #define BIT(x) (1 << x)
 
+#define REGISTER_SDL_EVENT(i) SDL_USEREVENT + i
+
 #define KeyCode SDL_Keycode
 
 // Block defines

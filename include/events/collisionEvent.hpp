@@ -8,7 +8,7 @@
 #include "input/inputManager.hpp"
 #include "systems/physicsSystem.hpp"
 
-constexpr Uint32 COLLISION_EVENT = SDL_USEREVENT + 1;
+constexpr Uint32 COLLISION_EVENT = REGISTER_SDL_EVENT(1);
 static_assert(COLLISION_EVENT < SDL_LASTEVENT, "COLLISION_EVENT exceeds SDL_LASTEVENT");
 
 class CollisionEvent : public Event {
